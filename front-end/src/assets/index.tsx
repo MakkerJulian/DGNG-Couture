@@ -1,3 +1,3 @@
-import IWALogo from './LogoIWA_Remake.png'
 import BG_Image from './BG_Image.jpg';
-export { BG_Image, IWALogo};
+import CoutureLogo from './vitacouture_article-removebg-preview.png';
+export { BG_Image, CoutureLogo};

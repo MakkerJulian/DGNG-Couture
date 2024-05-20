@@ -1,7 +1,7 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import axiosInstance, { Token } from '../axios';
-import { BG_Image, IWALogo } from '../assets';
+import { BG_Image, CoutureLogo } from '../assets';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { jwtDecode } from 'jwt-decode';
@@ -24,10 +24,10 @@ export const Login = () => {
                 if (Login) {
                     localStorage.setItem('token', Login);
                     localStorage.setItem('pw', form.password);
-                    const role = (jwtDecode(Login)as Token).role;
+                    const role = (jwtDecode(Login) as Token).role;
                     if (role === 'ADMIN') return navigate('/admin');
                     if (role === 'Sales') return navigate('/sales');
-                    else{
+                    else {
                         return navigate('/');
                     }
                 } else {
@@ -45,13 +45,14 @@ export const Login = () => {
 
 
     return (
-        <>
-            <img src={IWALogo} alt='logo' style={{
-                position: "absolute",
-                width: "15%",
-                left: "44%",
-                bottom: "20%"
-            }}></img>
+        <Box
+            sx={{
+                alignItems: 'center',
+                display: "flex",
+                flexDirection: 'column',
+                justifyContent: 'center',
+                height: "100vh"
+            }}>
             <img src={BG_Image} alt='logo' style={{
                 display: "block",
                 position: "absolute",
@@ -61,21 +62,27 @@ export const Login = () => {
                 top: "0%",
                 objectFit: "fill"
             }}></img>
+
             <Box
                 boxShadow={'0 0 10px rgba(0, 0, 0, 2)'}
                 borderRadius={'25px'}
-                minWidth={'25%'}
-                maxWidth={'30%'}
                 margin={'auto'}
-                position={'absolute'}
-                top={'10%'}
-                left={'38%'}
-                sx={{ background: "white" }}
                 display={'flex'}
                 flexDirection={'column'}
                 alignItems={'center'}
                 onSubmit={() => handlePost()}
-
+                sx={{
+                    background: 'white',
+                    '@media (max-width: 600px)': {
+                        width: '80vw',
+                    },
+                    '@media (min-width: 601px) and (max-width: 1024px)': {
+                        width: '60vw',
+                    },
+                    '@media (min-width: 1025px)': {
+                        width: '20vw',
+                    },
+                }}
             >
                 <Typography
                     variant={'h3'}
@@ -91,7 +98,7 @@ export const Login = () => {
                     onChange={handleChange}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            {handlePost};
+                            { handlePost };
                         }
                     }}
                 >
@@ -105,7 +112,7 @@ export const Login = () => {
                     onChange={handleChange}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            {handlePost};
+                            { handlePost };
                         }
                     }}
                 >
@@ -118,7 +125,11 @@ export const Login = () => {
                     Login
                 </Button>
             </Box>
-        </>
+            <img src={CoutureLogo} alt='logo' style={{
+                height: 'auto'
+            }}></img>
+
+        </Box>
     );
 
 }
