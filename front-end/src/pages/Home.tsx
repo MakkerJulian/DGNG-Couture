@@ -24,7 +24,7 @@ import AcUnitIcon from '@mui/icons-material/AcUnit'; //snow
 import SevereColdIcon from '@mui/icons-material/SevereCold'; //hail
 import ThunderstormIcon from '@mui/icons-material/Thunderstorm'; //thunder
 import TornadoIcon from '@mui/icons-material/Tornado'; //Tornado
-import { IWALogo } from '../assets';
+import { CoutureLogo } from '../assets';
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { useNavigate } from "react-router-dom";
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
@@ -193,7 +193,7 @@ export const Home = () => {
                 left={50}
                 zIndex={1000}
             >
-                <img src={IWALogo} alt='logo' style={{
+                <img src={CoutureLogo} alt='logo' style={{
                     position: "absolute",
                     width: "7vw",
                     height: "13vh",
