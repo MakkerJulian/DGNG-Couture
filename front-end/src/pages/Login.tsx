@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 import { jwtDecode } from 'jwt-decode';
 
 const emptyFrom = {
-    email: '',
+    mail: '',
     password: '',
 }
 
@@ -22,16 +22,12 @@ export const Login = () => {
             .then((res) => {
                 const Login = res.data.access_token;
                 if (Login) {
-                    localStorage.setItem('token', Login);
-                    localStorage.setItem('pw', form.password);
+                    sessionStorage.setItem('token', Login);
                     const role = (jwtDecode(Login) as Token).role;
-                    if (role === 'ADMIN') return navigate('/admin');
-                    if (role === 'Sales') return navigate('/sales');
-                    else {
-                        return navigate('/');
-                    }
+                    enqueueSnackbar('Login success', { variant: 'success' })
                 } else {
                     enqueueSnackbar('Login failed', { variant: 'error' })
+                    // return navigate('/');
                 }
             })
             .catch(() => {
@@ -94,27 +90,19 @@ export const Login = () => {
                 <TextField
                     sx={{ width: '50%', margin: '20px' }}
                     label="Email"
-                    value={form.email}
+                    name='mail'
+                    value={form.mail}
                     onChange={handleChange}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            { handlePost };
-                        }
-                    }}
                 >
                 </TextField>
 
                 <TextField
+                    name='password'
                     sx={{ width: '50%', margin: '20px' }}
                     label="Password"
                     type='password'
                     value={form.password}
                     onChange={handleChange}
-                    onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            { handlePost };
-                        }
-                    }}
                 >
                 </TextField>
 

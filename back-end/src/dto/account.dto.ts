@@ -2,7 +2,6 @@ import {
   IsEmail,
   IsIn,
   IsNotEmpty,
-  IsString,
   MinLength,
 } from 'class-validator';
 
@@ -13,23 +12,19 @@ export class CreateAccountDto {
 
   @IsNotEmpty()
   @IsEmail()
-  email: string;
-
-  @IsString()
-  phone: string;
+  mail: string;
 
   @IsNotEmpty()
   password: string;
 
   @IsNotEmpty()
-  @IsIn(['ADMIN', 'Onderzoek', 'Sales', 'Onderhoud'])
+  @IsIn(['sales', 'research'])
   role: string;
 }
 
 export class LoginDto {
   @IsNotEmpty()
-  @IsEmail()
-  email: string;
+  mail: string;
 
   @IsNotEmpty()
   password: string;

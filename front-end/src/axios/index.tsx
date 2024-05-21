@@ -23,16 +23,16 @@ const token = () => {
     if (!sessiontoken) {
         redirect('/login');
     } else {
-        const exp = jwtDecode(sessiontoken).exp ?? 0;
-        const email = (jwtDecode(sessiontoken) as unknown as Token).email ?? "";
-        const current_time = Date.now().valueOf() / 1000;
-        if (current_time > exp) {
-            const pw = localStorage.getItem('pw');
-            loginInstance.post('/account/login', { email: email, password: pw }).then((res) => {
-                localStorage.setItem('token', res.data.access_token);
-                return res.data.access_token;
-            });
-        }
+        // const exp = jwtDecode(sessiontoken).exp ?? 0;
+        // const email = (jwtDecode(sessiontoken) as unknown as Token).email ?? "";
+        // const current_time = Date.now().valueOf() / 1000;
+        // if (current_time > exp) {
+        //     const pw = localStorage.getItem('pw');
+        //     loginInstance.post('/account/login', { email: email, password: pw }).then((res) => {
+        //         localStorage.setItem('token', res.data.access_token);
+        //         return res.data.access_token;
+        //     });
+        // }
     }
     return sessiontoken;
 }
@@ -44,7 +44,7 @@ const axiosInstance: AxiosInstance = axios.create({
 })
 
 axiosInstance.interceptors.request.use((config) => {
-	const accessToken = token();
+	const accessToken = localStorage.getItem("token");
 
 	if (accessToken) {
 		config.headers.Authorization = `Bearer ${accessToken}`;

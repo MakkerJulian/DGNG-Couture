@@ -26,8 +26,8 @@ export class AccountController {
   }
 
   @Get('id/:id')
-  findAccountById(@Param('id', ParseIntPipe) id: number) {
-    return this.accountService.findAccountByID(id);
+  findAccountById(@Param('id', ParseIntPipe) uuid: string) {
+    return this.accountService.findAccountByID(uuid);
   }
 
   @Post()
