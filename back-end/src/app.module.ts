@@ -4,6 +4,7 @@ import { TypeOrmModule, TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
 import { AccountModule } from './api/account/account.module';
 import configuration from './config/configuration';
 import { AuthGuard } from './api/auth/Authguard';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -17,10 +18,10 @@ import { AuthGuard } from './api/auth/Authguard';
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         url: configService.get('database.uri'),
-        entities: ['dist/**/*.entity.js'],
+        entities: ['dist/**/*.entity.ts'],
         autoLoadEntities: true,
         migrationsRun: true,
-        migrations: ['dist/migrations/*.js'],
+        migrations: ['dist/migrations/*.ts'],
         synchronize: false,
       }),
       inject: [ConfigService],
@@ -28,6 +29,6 @@ import { AuthGuard } from './api/auth/Authguard';
     AccountModule,
   ],
   controllers: [],
-  providers: [{ provide: 'APP_GUARD', useValue: AuthGuard }],
+  providers: [AppService, { provide: 'APP_GUARD', useValue: AuthGuard }],
 })
 export class AppModule {}

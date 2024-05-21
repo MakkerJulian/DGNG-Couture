@@ -1,24 +1,22 @@
-import { IsEmail } from 'class-validator';
+import { IsEmail, IsIn } from 'class-validator';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Account {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  uuid: string;
 
   @Column()
   name: string;
 
   @Column({ nullable: true })
   @IsEmail()
-  email: string;
-
-  @Column({ nullable: true })
-  phone: string;
+  mail: string;
 
   @Column()
   password: string;
 
   @Column()
+  @IsIn(['research','salaes'])
   role: string;
 }

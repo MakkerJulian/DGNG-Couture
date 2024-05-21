@@ -21,12 +21,16 @@ export class AccountService {
     return this.accountRepository.save(newAccount);
   }
 
-  findAccountByID(id: number) {
-    return this.accountRepository.findOne({ where: { id: id } });
+  findAccountByID(uuid: string) {
+    return this.accountRepository.findOne({ where: { uuid: uuid } });
   }
 
   findbyEmail(email: string) {
-    return this.accountRepository.findOne({ where: { email: email } });
+    return this.accountRepository.findOne({ where: { mail: email } });
+  }
+
+  async seedAccounts() {
+    return await this.createAccount({ name: 'sales', mail: 'Sales@mail.com', password: 'sales', role: 'sales' });
   }
 
   async loginAccount(loginAccountDto: LoginDto) {
@@ -34,12 +38,15 @@ export class AccountService {
       .createHash('sha256')
       .update(loginAccountDto.password)
       .digest('hex');
-    const account = await this.findbyEmail(loginAccountDto.email);
+    const account = await this.findbyEmail(loginAccountDto.mail);
+    if (!account) {
+      throw new UnauthorizedException();
+    }
 
     if (account.password === password) {
       const payload = {
-        sub: account.id,
-        email: account.email,
+        sub: account.uuid,
+        email: account.mail,
         role: account.role,
       };
       return {
