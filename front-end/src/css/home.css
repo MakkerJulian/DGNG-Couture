@@ -1,0 +1,34 @@
+.logoBar{
+    background-image: linear-gradient(to right, black, rgb(250, 93, 93), black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15vh;
+}
+
+.homeContent{
+    background-color: hsla(33, 100%, 56%, 0.205);
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+/* Add a condition for when users are on mobile */
+@media (max-width: 768px){
+    .homeContent{
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+    .countryCard{
+        width: 90vw;
+        margin: 1vh;
+    }
+}
+
+.countryCard{
+    width: 45vw;
+    height: 35vh;
+    background-size: cover;
+}

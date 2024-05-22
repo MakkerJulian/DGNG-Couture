@@ -1,10 +1,9 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import axiosInstance, { Token } from '../axios';
+import axiosInstance from '../axios';
 import { BG_Image, CoutureLogo } from '../assets';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { jwtDecode } from 'jwt-decode';
 
 const emptyFrom = {
     mail: '',
@@ -23,11 +22,10 @@ export const Login = () => {
                 const Login = res.data.access_token;
                 if (Login) {
                     sessionStorage.setItem('token', Login);
-                    const role = (jwtDecode(Login) as Token).role;
                     enqueueSnackbar('Login success', { variant: 'success' })
+                    return navigate('/home');
                 } else {
                     enqueueSnackbar('Login failed', { variant: 'error' })
-                    // return navigate('/');
                 }
             })
             .catch(() => {
