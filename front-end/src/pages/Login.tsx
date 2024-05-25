@@ -35,8 +35,7 @@ export const Login = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
-    }
-
+    };
 
     return (
         <Box
@@ -111,8 +110,9 @@ export const Login = () => {
                     Login
                 </Button>
             </Box>
+
             <img src={CoutureLogo} alt='logo' style={{
-                height: 'auto'
+                height: 'auto',
             }}></img>
 
         </Box>

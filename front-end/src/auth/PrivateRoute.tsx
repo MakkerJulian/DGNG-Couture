@@ -44,6 +44,6 @@ export const PrivateRoutes = ({route}: PrivateRoutesProps) => {
             ): (
                 <Typography variant="h3">You do not have permission to access this page</Typography>
             )
-        ) : <Navigate to="/login" />
+        ) : <Navigate to="/" />
     );
 };
