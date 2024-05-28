@@ -7,7 +7,6 @@ import { LogoutButton } from "../components/logoutButton";
 
 export const Home = () => {
     const role = getRole();
-    console.log(role);
     return (
         <Box display={'flex'} flexDirection={'column'}>
             <Box className={'logoBar'}>
