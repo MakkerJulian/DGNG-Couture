@@ -1,71 +1,35 @@
-import { Box, Typography } from "@mui/material";
-import { AmericaHomeBg, CoutureLogo, FranceHomeBg, MexicoHomeBg, SpainHomeBg } from "../assets";
+import { Box } from "@mui/material";
+import { AlaskaHomeBg, AmericaHomeBg, CoutureLogo, FranceHomeBg, FinlandHomeBg, GreenlandHomeBg, MexicoHomeBg, NorwayHomeBg, SpainHomeBg } from "../assets";
 import '../css/home.css'
-import { CloudIcon, TornadoIcon, WaterDropIcon, WbSunnyIcon } from "../icons";
+import { CountryTab } from "../components/countryTab";
+import { getRole } from "../util/getrole";
+import { LogoutButton } from "../components/logoutButton";
 
 export const Home = () => {
+    const role = getRole();
+    console.log(role);
     return (
         <Box display={'flex'} flexDirection={'column'}>
             <Box className={'logoBar'}>
                 <img src={CoutureLogo} className="logo"></img>
+                <LogoutButton />
             </Box>
             <Box className={'homeContent'}>
-                <Box className="countryCard" sx={{ backgroundImage: `url(${MexicoHomeBg})` }}>
-                    <Box className="countryCardText">
-                        <Typography variant={'h2'}>Mexico</Typography>
-                        <Typography variant="h4">28°</Typography>
-                        <CloudIcon />
-                    </Box>
-
-                    <Box className="countryCardText Right">
-                        <Typography variant={'h6'}>Feels like 30</Typography>
-                        <Typography variant="h6">Humidity 50%</Typography>
-                        <Typography variant="h6">Wind 15km/h</Typography>
-                        <Typography variant="h6">Precip 20%</Typography>
-                    </Box>
-                </Box>
-                <Box className="countryCard" sx={{ backgroundImage: `url(${FranceHomeBg})` }}>
-                    <Box className="countryCardText">
-                        <Typography variant={'h2'}>France</Typography>
-                        <Typography variant="h4">19°</Typography>
-                        <WaterDropIcon />
-                    </Box>
-                    <Box className="countryCardText Right">
-                        <Typography variant={'h6'}>Feels like 29</Typography>
-                        <Typography variant="h6">Humidity 80%</Typography>
-                        <Typography variant="h6">Wind 5km/h</Typography>
-                        <Typography variant="h6">Precip 10%</Typography>
-                    </Box>
-                </Box>
-                <Box className="countryCard" sx={{ backgroundImage: `url(${AmericaHomeBg})` }}>
-                    <Box className="countryCardText">
-                        <Typography variant={'h2'}>America</Typography>
-                        <Typography variant="h4">15°</Typography>
-                        <TornadoIcon />
-                    </Box>
-
-                    <Box className="countryCardText Right">
-                        <Typography variant={'h6'}>Feels like 16</Typography>
-                        <Typography variant="h6">Humidity 20%</Typography>
-                        <Typography variant="h6">Wind 60km/h</Typography>
-                        <Typography variant="h6">Precip 100%</Typography>
-                    </Box>
-
-                </Box>
-                <Box className="countryCard" sx={{ backgroundImage: `url(${SpainHomeBg})` }}>
-                    <Box className="countryCardText">
-                        <Typography variant={'h2'}>Spain</Typography>
-                        <Typography variant="h4">32°</Typography>
-                        <WbSunnyIcon />
-                    </Box>
-
-                    <Box className="countryCardText Right">
-                        <Typography variant={'h6'}>Feels like 30</Typography>
-                        <Typography variant="h6">Humidity 10%</Typography>
-                        <Typography variant="h6">Wind 10km/h</Typography>
-                        <Typography variant="h6">Precip 0%</Typography>
-                    </Box>
-                </Box>
+                {role === "sales" ?
+                    <>
+                        <CountryTab country={'Mexico'} temp={28} bgImage={MexicoHomeBg} feelTemp={30} humidity={50} wind={15} precip={20} />
+                        <CountryTab country={'France'} temp={19} bgImage={FranceHomeBg} feelTemp={29} humidity={80} wind={5} precip={10} />
+                        <CountryTab country={'America'} temp={15} bgImage={AmericaHomeBg} feelTemp={16} humidity={20} wind={60} precip={100} />
+                        <CountryTab country={'Spain'} temp={32} bgImage={SpainHomeBg} feelTemp={30} humidity={10} wind={10} precip={0} />
+                    </>
+                    :
+                    <>
+                        <CountryTab country={'Greenland'} temp={28} bgImage={GreenlandHomeBg} feelTemp={30} humidity={50} wind={15} precip={20} />
+                        <CountryTab country={'Norway'} temp={19} bgImage={NorwayHomeBg} feelTemp={29} humidity={80} wind={5} precip={10} />
+                        <CountryTab country={'Alaska'} temp={15} bgImage={AlaskaHomeBg} feelTemp={16} humidity={20} wind={60} precip={100} />
+                        <CountryTab country={'Finland'} temp={32} bgImage={FinlandHomeBg} feelTemp={30} humidity={10} wind={10} precip={0} />
+                    </>
+                }
             </Box>
         </Box>
     );

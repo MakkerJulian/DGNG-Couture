@@ -18,6 +18,6 @@ export const routes: Route[] = [
         name: "home",
         path: "/home",
         element: Home,
-        requiredRoles: ["sales"]
+        requiredRoles: ["sales","research"]
     }
 ];

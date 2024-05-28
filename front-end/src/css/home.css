@@ -16,12 +16,35 @@
 }
 
 .logo {
-    width: 20vw;
     height: 15vh;
 }
 
+.countryCard {
+    display: flex;
+    justify-content: space-between;
+    height: 35vh;
+    background-size: cover;
+}
+
+.countryCardText {
+    margin-left: 1vw;
+}
+
+.Right {
+    margin-right: 1vw;
+    margin-top: 2.5vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: fit-content;
+    padding: 1%;
+    border-radius: 15px;
+    color: rgb(231, 230, 230);
+}
+
 /* Add a condition for when users are on mobile */
-@media (max-width: 768px) {
+@media only screen and (min-width: 1px) {
     .homeContent {
         flex-direction: column;
         flex-wrap: nowrap;
@@ -49,22 +72,17 @@
     }
 }
 
-.countryCard {
-    display: flex;
-    justify-content: space-between;
-    width: 45vw;
-    height: 35vh;
-    background-size: cover;
-}
+@media only screen and (min-width: 768px){
+    .homeContent {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
 
-.countryCardText {
-    margin-left: 1vw;
-}
+    .countryCard {
+        width: 45vw;
+    }
 
-.Right {
-    margin-right: 1vw;
-    margin-top: 10%;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
+    .logo {
+        width: 20vw;
+    }
 }

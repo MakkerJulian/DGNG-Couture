@@ -112,7 +112,7 @@ export const Login = () => {
             </Box>
 
             <img src={CoutureLogo} alt='logo' style={{
-                height: 'auto',
+                height: '30vh'
             }}></img>
 
         </Box>
