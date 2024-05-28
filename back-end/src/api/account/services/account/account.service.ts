@@ -12,7 +12,7 @@ export class AccountService {
     @InjectRepository(Account)
     private readonly accountRepository: Repository<Account>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   createAccount(CreateAccountDto: CreateAccountDto) {
     const password = CreateAccountDto.password;
@@ -30,7 +30,18 @@ export class AccountService {
   }
 
   async seedAccounts() {
-    return await this.createAccount({ name: 'sales', mail: 'Sales@mail.com', password: 'sales', role: 'sales' });
+    await this.createAccount({
+      name: 'researcher',
+      mail: 'Research@mail.com',
+      password: 'research',
+      role: 'research',
+    })
+    return await this.createAccount({
+      name: 'sales',
+      mail: 'Sales@mail.com',
+      password: 'sales',
+      role: 'sales'
+    });
   }
 
   async loginAccount(loginAccountDto: LoginDto) {
