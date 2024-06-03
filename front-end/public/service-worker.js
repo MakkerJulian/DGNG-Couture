@@ -6,6 +6,7 @@ const CACHE_NAME = 'vite-react-cache';
 // Files to cache
 const urlsToCache = [
     '/',
+    '/home',
     '/index.html',
     '/favicon.ico',
     // Add other static assets you want to cache here

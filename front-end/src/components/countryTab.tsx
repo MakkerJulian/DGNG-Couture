@@ -6,11 +6,11 @@ type CountryTabProps = {
     temp: number;
     bgImage: string;
     feelTemp: number;
-    humidity: number;
     wind: number;
     precip: number;
 }
-export const CountryTab = ({ country, temp, bgImage, feelTemp, humidity, wind, precip}: CountryTabProps) => {
+export const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip}: CountryTabProps) => {
+    
     return (
         <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }}>
             <Box className="countryCardText">
@@ -21,7 +21,6 @@ export const CountryTab = ({ country, temp, bgImage, feelTemp, humidity, wind, p
 
             <Box className="countryCardText Right">
                 <Typography variant='h6'>Feels like {feelTemp}</Typography>
-                <Typography variant="h6">Humidity {humidity}%</Typography>
                 <Typography variant="h6">Wind {wind}km/h</Typography>
                 <Typography variant="h6">Precip {precip}%</Typography>
             </Box>

@@ -1,9 +1,9 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import axiosInstance from '../axios';
 import { BG_Image, CoutureLogo } from '../assets';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { axiosInstance } from '../axios';
 
 const emptyFrom = {
     mail: '',
