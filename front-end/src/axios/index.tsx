@@ -8,7 +8,7 @@ export type Token = JwtPayload & {
 }
 
 const axiosInstance: AxiosInstance = axios.create({
-    baseURL: `http://${import.meta.env.VITE_APP_URL ?? "localhost"}:3000`,
+    baseURL: `http://${import.meta.env.VITE_APP_URL ?? "localhost"}:3002`,
     timeout: 5000,
     proxy: false
 })
