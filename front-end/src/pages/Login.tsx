@@ -1,10 +1,9 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import axiosInstance, { Token } from '../axios';
+import axiosInstance from '../axios';
 import { BG_Image, CoutureLogo } from '../assets';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
-import { jwtDecode } from 'jwt-decode';
 
 const emptyFrom = {
     mail: '',
@@ -17,17 +16,17 @@ export const Login = () => {
 
     const [form, setForm] = useState(emptyFrom);
 
-    const handlePost = async () => {
+    const handlePost = async (event: React.FormEvent<HTMLFormElement> ) => {
+        event.preventDefault();
         await axiosInstance.post('/account/login', form)
             .then((res) => {
                 const Login = res.data.access_token;
                 if (Login) {
                     sessionStorage.setItem('token', Login);
-                    const role = (jwtDecode(Login) as Token).role;
                     enqueueSnackbar('Login success', { variant: 'success' })
+                    return navigate('/home');
                 } else {
                     enqueueSnackbar('Login failed', { variant: 'error' })
-                    // return navigate('/');
                 }
             })
             .catch(() => {
@@ -37,8 +36,7 @@ export const Login = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setForm({ ...form, [e.target.name]: e.target.value });
-    }
-
+    };
 
     return (
         <Box
@@ -59,64 +57,66 @@ export const Login = () => {
                 objectFit: "fill"
             }}></img>
 
-            <Box
-                boxShadow={'0 0 10px rgba(0, 0, 0, 2)'}
-                borderRadius={'25px'}
-                margin={'auto'}
-                display={'flex'}
-                flexDirection={'column'}
-                alignItems={'center'}
-                onSubmit={() => handlePost()}
-                sx={{
-                    background: 'white',
-                    '@media (max-width: 600px)': {
-                        width: '80vw',
-                    },
-                    '@media (min-width: 601px) and (max-width: 1024px)': {
-                        width: '60vw',
-                    },
-                    '@media (min-width: 1025px)': {
-                        width: '20vw',
-                    },
-                }}
-            >
-                <Typography
-                    variant={'h3'}
-                    sx={{ margin: '20px' }}
+            <form onSubmit={handlePost}>
+                <Box
+                    boxShadow={'0 0 10px rgba(0, 0, 0, 2)'}
+                    borderRadius={'25px'}
+                    margin={'auto'}
+                    display={'flex'}
+                    flexDirection={'column'}
+                    alignItems={'center'}
+                    sx={{
+                        background: 'white',
+                        '@media (max-width: 600px)': {
+                            width: '80vw',
+                        },
+                        '@media (min-width: 601px) and (max-width: 1024px)': {
+                            width: '60vw',
+                        },
+                        '@media (min-width: 1025px)': {
+                            width: '20vw',
+                        },
+                    }}
                 >
-                    Login
-                </Typography>
+                    <Typography
+                        variant={'h3'}
+                        sx={{ margin: '20px' }}
+                    >
+                        Login
+                    </Typography>
 
-                <TextField
-                    sx={{ width: '50%', margin: '20px' }}
-                    label="Email"
-                    name='mail'
-                    value={form.mail}
-                    onChange={handleChange}
-                >
-                </TextField>
+                    <TextField
+                        sx={{ width: '50%', margin: '20px' }}
+                        label="Email"
+                        name='mail'
+                        value={form.mail}
+                        onChange={handleChange}
+                    >
+                    </TextField>
 
-                <TextField
-                    name='password'
-                    sx={{ width: '50%', margin: '20px' }}
-                    label="Password"
-                    type='password'
-                    value={form.password}
-                    onChange={handleChange}
-                >
-                </TextField>
+                    <TextField
+                        name='password'
+                        sx={{ width: '50%', margin: '20px' }}
+                        label="Password"
+                        type='password'
+                        value={form.password}
+                        onChange={handleChange}
+                    >
+                    </TextField>
 
 
-                <Button onClick={handlePost}
-                    sx={{ background: '#9a9cfb', color: 'white', width: "50%", margin: '20px' }}
-                >
-                    Login
-                </Button>
-            </Box>
+                    <Button
+                        type='submit'
+                        sx={{ background: '#9a9cfb', color: 'white', width: "50%", margin: '20px' }}
+                    >
+                        Login
+                    </Button>
+                </Box>
+            </form>
+
             <img src={CoutureLogo} alt='logo' style={{
-                height: 'auto'
+                height: '30vh'
             }}></img>
-
         </Box>
     );
 

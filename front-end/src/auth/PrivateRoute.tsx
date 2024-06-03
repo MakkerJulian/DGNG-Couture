@@ -1,7 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { AdminIcon } from "../components/adminBar";
 import { jwtDecode } from "jwt-decode";
 import { Token } from "../axios";
 
@@ -22,20 +21,17 @@ type Props = {
 }
 
 const Layout = ({ children }: Props) => (
-    <Box overflow={"hidden"}>
-        {(jwtDecode(localStorage.getItem('token') ?? "") as unknown as Token).role === "ADMIN" && (
-            <AdminIcon />
-        )}
+    <Box>
         {children}
     </Box>
-)
+);
 
 export const PrivateRoutes = ({route}: PrivateRoutesProps) => {
-    const authenticated = localStorage.getItem('token') !== null;
+    const authenticated = sessionStorage.getItem('token') !== null;
 
     const hasRoles = () =>{
         if(route.requiredRoles){
-            const role = (jwtDecode(localStorage.getItem('token') ?? "") as unknown as Token).role;
+            const role = (jwtDecode(sessionStorage.getItem('token') ?? "") as unknown as Token).role;
             return route.requiredRoles.includes(role);
         }
         return true;
@@ -48,6 +44,6 @@ export const PrivateRoutes = ({route}: PrivateRoutesProps) => {
             ): (
                 <Typography variant="h3">You do not have permission to access this page</Typography>
             )
-        ) : <Navigate to="/login" />
+        ) : <Navigate to="/" />
     );
 };

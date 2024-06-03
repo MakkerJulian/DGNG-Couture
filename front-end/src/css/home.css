@@ -1,0 +1,88 @@
+.logoBar {
+    background-image: linear-gradient(to right, black, rgb(250, 93, 93), black);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 15vh;
+}
+
+.homeContent {
+    background-color: hsla(33, 100%, 56%, 0.205);
+    height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.logo {
+    height: 15vh;
+}
+
+.countryCard {
+    display: flex;
+    justify-content: space-between;
+    height: 35vh;
+    background-size: cover;
+}
+
+.countryCardText {
+    margin-left: 1vw;
+}
+
+.Right {
+    margin-right: 1vw;
+    margin-top: 2.5vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: fit-content;
+    padding: 1%;
+    border-radius: 15px;
+    color: rgb(231, 230, 230);
+}
+
+/* Add a condition for when users are on mobile */
+@media only screen and (min-width: 1px) {
+    .homeContent {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .countryCard {
+        width: 90vw;
+        margin: 1vh;
+    }
+
+    .logo {
+        width: 50vw;
+    }
+
+    .countryCardText h2 {
+        font-size: 4vh;
+    }
+
+    .countryCardText h4 {
+        font-size: 2vh;
+    }
+
+    .countryCardText h6 {
+        font-size: 2vh;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    .homeContent {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .countryCard {
+        width: 45vw;
+    }
+
+    .logo {
+        width: 20vw;
+    }
+}
