@@ -4,6 +4,8 @@
     justify-content: center;
     align-items: center;
     height: 15vh;
+    width: 100vw;
+    position: fixed;
 }
 
 .homeContent {
@@ -41,6 +43,55 @@
     padding: 1%;
     border-radius: 15px;
     color: rgb(231, 230, 230);
+}
+
+.cityCard {
+    display: flex;
+    margin-top: 50px;
+    width: 23vw;
+    height: 30vh;
+    background-size: cover;
+}
+
+.cityCardText {
+    margin-left: 1vw;
+}
+
+.cityCardName {
+    text-align: center;
+}
+
+.cityCardTextInfo {
+    float: right;
+}
+
+.countryGraphBox {
+    overflow-y: hidden;
+    margin-top: 15vh;
+    display: grid;
+    position: fixed;
+    grid: auto-flow / 1fr 1fr;
+    float: left;
+    border-right: 2px solid darkred;
+    width: 40vw;
+    height: 85vh;
+}
+
+.countryCityBox {
+    overflow-y: scroll;
+    margin-top: 15vh;
+    display:grid;
+    grid: auto-flow / 1fr 1fr;
+    float: right;
+    width: 54vw;
+}
+
+.graph {
+    background-color: lightgrey;
+    text-align: center;
+    margin: 50px 0 0 35px;
+    width: 300px;
+    height: 300px;
 }
 
 /* Add a condition for when users are on mobile */
