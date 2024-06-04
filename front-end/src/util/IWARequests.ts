@@ -9,7 +9,7 @@ export const getCountry = async (country: CountryOptions) => {
             token: import.meta.env.VITE_APP_IWATOKEN,
             country: country !== 'Alaska' ? country : 'United States'
         }
-    })
+    });
 
     if(country === 'Alaska'){
         return res.data.filter((data: any) => data.weatherstation.geolocation.state === 'Alaska')

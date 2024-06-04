@@ -13,15 +13,15 @@ import { WeatherData } from "../types/Weatherdata";
 export const Home = () => {
     const role = getRole();
 
-    const [mexicoData, setMexicoData] = useState<WeatherData[] | null>();
-    const [franceData, setFranceData] = useState<WeatherData[] | null>();
-    const [americaData, setAmericaData] = useState<WeatherData[] | null>();
-    const [spainData, setSpainData] = useState<WeatherData[] | null>();
+    const [mexicoData, setMexicoData] = useState<WeatherData[]>([]);
+    const [franceData, setFranceData] = useState<WeatherData[]>([]);
+    const [americaData, setAmericaData] = useState<WeatherData[]>([]);
+    const [spainData, setSpainData] = useState<WeatherData[]>([]);
 
-    const [greenlandData, setGreenlandData] = useState<WeatherData[] | null>();
-    const [norwayData, setNorwayData] = useState<WeatherData[] | null>();
-    const [alaskaData, setAlaskaData] = useState<WeatherData[] | null>();
-    const [finlandData, setFinlandData] = useState<WeatherData[] | null>();
+    const [greenlandData, setGreenlandData] = useState<WeatherData[]>([]);
+    const [norwayData, setNorwayData] = useState<WeatherData[]>([]);
+    const [alaskaData, setAlaskaData] = useState<WeatherData[]>([]);
+    const [finlandData, setFinlandData] = useState<WeatherData[]>([]);
 
     useEffect(() => {
         if (role === 'sales') {
