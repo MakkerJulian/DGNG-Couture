@@ -58,11 +58,18 @@
 }
 
 .cityCardName {
+    margin-left:35px;
     text-align: center;
 }
 
 .cityCardTextInfo {
-    float: right;
+    text-align: center;
+    background-color: gray;
+    height: 10vh;
+    width: 7vw;
+    padding: 5px;
+    border-radius: 15px;
+    margin-left:37px;
 }
 
 .countryGraphBox {

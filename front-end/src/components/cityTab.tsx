@@ -10,8 +10,7 @@ type CityTabProps = {
     precip: number;
 }
 
-export const CityTab = ({ city, temp, bgImage, feelTemp, wind, precip}: CityTabProps) => {
-
+export const CityTab = ({ city, temp, bgImage, feelTemp, wind, precip }: CityTabProps) => {
     return (
         <Box className="cityCard" sx={{ backgroundImage: `url(${bgImage})` }}>
             <Box className="cityCardText">
