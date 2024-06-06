@@ -46,7 +46,6 @@
 }
 
 .cityCard {
-    display: flex;
     margin-top: 50px;
     width: 23vw;
     height: 30vh;
@@ -54,7 +53,9 @@
 }
 
 .cityCardText {
-    margin-left: 1vw;
+    position: relative;
+    float:left;
+    margin-left: 5px;
 }
 
 .cityCardName {
@@ -64,7 +65,7 @@
 
 .cityCardTextInfo {
     text-align: center;
-    background-color: gray;
+    background-color: white;
     height: 10vh;
     width: 7vw;
     padding: 5px;

@@ -1,10 +1,14 @@
 import {LineChart} from "@mui/x-charts";
 
-export const Graph = (graphData) => {
+type GraphData = {
+    data: number[]
+}
+
+export const Graph = ({data}: GraphData) => {
     return (
         <LineChart series={[
             {
-                data: graphData
+                data: data
             }
         ]}/>
     )
