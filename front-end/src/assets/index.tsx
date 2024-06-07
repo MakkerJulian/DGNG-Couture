@@ -14,7 +14,9 @@ import FinlandCountryBg from './FinlandCountryBg.png';
 import FinlandHomeBg from './FinlandHomeBg.png';
 import NorwayCountryBg from './NorwayCountryBg.png';
 import NorwayHomeBg from './NorwayHomeBg.png';
-import GreenlandHomeBg from './GreenlandHomeBg.png'
+import GreenlandHomeBg from './GreenlandHomeBg.png';
+import Clouds from './Clouds.png';
+
 export {
     BG_Image,
     CoutureLogo,
@@ -32,5 +34,6 @@ export {
     FinlandHomeBg,
     NorwayCountryBg,
     NorwayHomeBg,
-    GreenlandHomeBg
+    GreenlandHomeBg,
+    Clouds,
 };

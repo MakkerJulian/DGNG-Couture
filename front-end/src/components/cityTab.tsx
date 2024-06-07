@@ -1,5 +1,6 @@
 import {Box, Typography} from "@mui/material";
 import {CloudIcon} from "../icons";
+import {Clouds} from "../assets";
 
 type CityTabProps = {
     city: string;
@@ -12,10 +13,10 @@ type CityTabProps = {
 
 export const CityTab = ({ city, temp, bgImage, feelTemp, wind, precip }: CityTabProps) => {
     return (
-        <Box className="cityCard" sx={{ backgroundImage: `url(${bgImage})` }}>
+        <Box className="cityCard" sx={{ backgroundImage: `url(${Clouds})` }}>
             <Box className="cityCardText">
                 <Typography variant="h4">{temp}°</Typography>
-                <CloudIcon />
+                <CloudIcon/>
             </Box>
 
             <Box className="cityCardTextInfo">

@@ -1,3 +1,7 @@
+body {
+    background-color: #cba8a8;
+}
+
 .logoBar {
     background-image: linear-gradient(to right, black, rgb(250, 93, 93), black);
     display: flex;
@@ -7,8 +11,8 @@
     width: 100vw;
     position: fixed;
     z-index: 1000;
+    border-bottom: 2px black solid;
 }
-
 .homeContent {
     margin-top:15vh;
     background-color: hsla(33, 100%, 56%, 0.205);
@@ -68,7 +72,7 @@
     margin-top: 229px;
     width: 23vw;
     position: relative;
-    background-color: lightseagreen;
+    background-color: #c99696;
     text-align: center;
 }
 
@@ -76,14 +80,14 @@
     margin-left: 297px;
     position: absolute;
     text-align: center;
-    background-color: white;
-    height: 10vh;
+    background-image: linear-gradient(to top, #ce9393, #cba1a1, #f6c9c9);
     width: 7vw;
     padding: 5px;
     border-radius: 15px;
 }
 
 .countryGraphBox {
+    background-image: linear-gradient(to bottom, #b23737, #c99696, #f6c9c9);
     overflow-y: hidden;
     margin-top: 15vh;
     display: grid;
