@@ -6,6 +6,7 @@
     height: 15vh;
     width: 100vw;
     position: fixed;
+    z-index: 1000;
 }
 
 .homeContent {
@@ -59,18 +60,22 @@
 }
 
 .cityCardName {
-    margin-left:35px;
+    margin-top: 229px;
+    width: 23vw;
+    position: relative;
+    background-color: lightseagreen;
     text-align: center;
 }
 
 .cityCardTextInfo {
+    margin-left: 297px;
+    position: absolute;
     text-align: center;
     background-color: white;
     height: 10vh;
     width: 7vw;
     padding: 5px;
     border-radius: 15px;
-    margin-left:37px;
 }
 
 .countryGraphBox {
@@ -86,7 +91,7 @@
 }
 
 .countryCityBox {
-    overflow-y: scroll;
+    overflow-y: hidden;
     margin-top: 15vh;
     display:grid;
     grid: auto-flow / 1fr 1fr;

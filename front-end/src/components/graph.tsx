@@ -10,6 +10,14 @@ export const Graph = ({data}: GraphData) => {
             {
                 data: data
             }
-        ]}/>
+        ]}
+                   yAxis={[{
+                       colorMap: {
+                           type: 'piecewise',
+                           thresholds: [0,30],
+                           colors: ['blue', 'green', 'red']
+                       }
+                   }]}
+        />
     )
 }

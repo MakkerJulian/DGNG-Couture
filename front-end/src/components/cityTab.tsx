@@ -18,15 +18,16 @@ export const CityTab = ({ city, temp, bgImage, feelTemp, wind, precip }: CityTab
                 <CloudIcon />
             </Box>
 
-            <Box className="cityCardName">
-                <Typography variant={'h2'}>{city}</Typography>
-            </Box>
-
             <Box className="cityCardTextInfo">
                 <Typography variant='h6'>Feels like {feelTemp}</Typography>
                 <Typography variant="h6">Wind {wind}km/h</Typography>
                 <Typography variant="h6">Precip {precip}%</Typography>
             </Box>
+
+            <Box className="cityCardName">
+                <Typography variant={'h2'}>- {city} -</Typography>
+            </Box>
+
         </Box>
     )
 }
