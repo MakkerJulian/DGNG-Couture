@@ -10,6 +10,7 @@
 }
 
 .homeContent {
+    margin-top:15vh;
     background-color: hsla(33, 100%, 56%, 0.205);
     height: 85vh;
     display: flex;
@@ -31,6 +32,10 @@
 
 .countryCardText {
     margin-left: 1vw;
+}
+
+.countryButton {
+    position: absolute;
 }
 
 .Right {

@@ -2,10 +2,25 @@ import {Box, Typography} from "@mui/material";
 import {MexicoHomeBg} from "../assets";
 import {CityTab} from "../components/cityTab.tsx";
 import {Graph} from "../components/graph.tsx";
+import {useEffect, useState} from "react";
+import {WeatherData} from "../types/Weatherdata.ts";
+import {getCountry} from "../util/IWARequests.ts";
+import {enqueueSnackbar} from "notistack";
 
 export const Country = () => {
     const queryParameters = new URLSearchParams(window.location.search);
     const country = queryParameters.get("country");
+
+    const [weatherstations, setWeatherStationData] = useState<WeatherData[]>([]);
+
+    useEffect(() => {
+        getCountry(country).then((data) => {
+            setWeatherStationData(data);
+        }).catch(() => {
+            enqueueSnackbar("Could not get Weather data", { variant: 'error' })
+        })
+    }, []);
+
     return (
         <Box>
             <Box class={'logoBar'}>
@@ -18,142 +33,16 @@ export const Country = () => {
                 <Graph data={[15,53,30,7, 5, 1,24, 25, 12]}/>
             </Box>
             <Box class={'countryCityBox '}>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
-                <CityTab
-                    city={'Mexico'}
-                    temp={45}
-                    bgImage={MexicoHomeBg}
-                    feelTemp={45}
-                    wind={45}
-                    precip={24}
-                ></CityTab>
+                {weatherstations.map((weatherstation, index) => (
+                    <CityTab
+                        city={weatherstation.weatherstation.name}
+                        temp={weatherstation.temp}
+                        bgImage={MexicoHomeBg}
+                        feelTemp={weatherstation.temp}
+                        wind={weatherstation.windspeed}
+                        precip={weatherstation.precipitation}
+                    ></CityTab>
+                ))}
             </Box>
         </Box>
     );

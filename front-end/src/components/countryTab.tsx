@@ -1,5 +1,6 @@
-import { Box, Typography } from "@mui/material";
+import {Box, Button, Typography} from "@mui/material";
 import { CloudIcon } from "../icons";
+import {useNavigate} from "react-router-dom";
 
 type CountryTabProps = {
     country: string;
@@ -10,9 +11,10 @@ type CountryTabProps = {
     precip: number;
 }
 export const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip}: CountryTabProps) => {
-    
+    const navigate = useNavigate();
     return (
-        <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }}>
+        <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})`}}>
+            <Button sx={{position: "absolute", width: "45vw", height: "35vh"}} onClick={() => navigate("/country?country=" + country)}/>
             <Box className="countryCardText">
                 <Typography variant={'h2'}>{country}</Typography>
                 <Typography variant="h4">{temp}°</Typography>
