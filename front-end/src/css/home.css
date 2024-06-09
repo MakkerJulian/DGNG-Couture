@@ -1,5 +1,5 @@
 body {
-    background-color: #cba8a8;
+    background-color: rgb(245, 227, 206);
 }
 
 .logoBar {
@@ -97,6 +97,13 @@ body {
     border-right: 2px solid darkred;
     width: 40vw;
     height: 85vh;
+}
+
+.countryGraphInclTitle{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 30vh;
 }
 
 .countryCityBox {

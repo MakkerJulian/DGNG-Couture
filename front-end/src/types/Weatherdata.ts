@@ -35,6 +35,8 @@ type Geolocation = {
     city: string;
     country: Country;
     state: string;
+    place: string;
+    county: string;
 }
 
 type Country = {

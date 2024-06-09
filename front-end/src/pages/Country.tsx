@@ -1,51 +1,33 @@
-import {Box, Typography} from "@mui/material";
-import {MexicoHomeBg} from "../assets";
-import {CityTab} from "../components/cityTab.tsx";
-import {Graph} from "../components/graph.tsx";
-import {useEffect, useState} from "react";
-import {WeatherData} from "../types/Weatherdata.ts";
-import {getCountry} from "../util/IWARequests.ts";
-import {enqueueSnackbar} from "notistack";
-import {calculateAveragePerCountry} from "../util/averagePerCountryCalc.ts";
+import { Box, Typography } from "@mui/material";
+import { MexicoHomeBg } from "../assets";
+import { CityTab } from "../components/cityTab.tsx";
+import { useEffect, useState } from "react";
+import { WeatherData } from "../types/Weatherdata.ts";
+import { getCountry } from "../util/IWARequests.ts";
+import { enqueueSnackbar } from "notistack";
+import { isCountryOption } from "../types/CountryOptions.ts";
+import { LineChart } from "@mui/x-charts";
+import { groupByCity, groupByDateTime } from "../util/WDGroupBy.ts";
 
 export const Country = () => {
     const queryParameters = new URLSearchParams(window.location.search);
     const country = queryParameters.get("country");
 
-    const [weatherstations, setWeatherStationData] = useState<WeatherData[]>([]);
-    const averageData = calculateAveragePerCountry(weatherstations);
-
-    const [graphTemp, setGraphTemp] = useState<number[]>([]);
-    const [graphPrecip, setGraphPrecip] = useState<number[]>([]);
-    const [graphWind, setGraphWind] = useState<number[]>([]);
-    const [graphFeeltemp, setGraphFeeltemp] = useState<number[]>([]);
+    const [cityData, setCityData] = useState<Map<string, WeatherData>>(new Map());
+    const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
 
     useEffect(() => {
-        getCountry(country).then((data) => {
-            setWeatherStationData(data);
-        }).catch(() => {
-            enqueueSnackbar("Could not get Weather data", { variant: 'error' })
-        })
-
-        addToGraphData();
-
-        const updateGraph = setInterval(addToGraphData, 2500);
-        return () => clearInterval(updateGraph);
+        if (country && isCountryOption(country)) {
+            getCountry(country).then((data) => {
+                if (data) {
+                    setCityData(groupByCity(data));
+                    setTimeData(groupByDateTime(data));
+                }
+            }).catch(() => {
+                enqueueSnackbar("Could not get Weather data", { variant: 'error' })
+            })
+        }
     }, []);
-
-    function addToGraphData() {
-        const averageData = calculateAveragePerCountry(weatherstations);
-
-        setGraphTemp(prev => [...prev, 0]);
-        setGraphPrecip(prev => [...prev, averageData.precip]);
-        setGraphWind(prev => [...prev, averageData.wind]);
-        setGraphFeeltemp(prev => [...prev, averageData.feelTemp]);
-
-        console.log("Done");
-    }
-
-
-
 
     return (
         <Box>
@@ -53,22 +35,52 @@ export const Country = () => {
                 <Typography variant={'h1'}>{country}</Typography>
             </Box>
             <Box className={'countryGraphBox'}>
-                <Graph data={graphTemp} name={"Average Temperature"}/>
-                <Graph data={graphPrecip} name={"Average Precipitation"}/>
-                <Graph data={graphWind} name={"Average Windspeed"}/>
-                <Graph data={graphFeeltemp} name={"Average Temp Feel"}/>
+                <Box className={'countryGraphInclTitle'}>
+                    <Typography variant="h4">
+                        Average Temperature
+                    </Typography>
+                    <LineChart
+                        title={"Average Temperature"}
+                        xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
+                        series={[{ data: [1, 3, 5, 1, 4] }]}
+                    />
+                </Box>
+                <Box className={'countryGraphInclTitle'}>
+                    <Typography variant="h4">
+                        Average Wind Speed
+                    </Typography>
+                    <LineChart
+                        title={"Average Wind Speed"}
+                        xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
+                        series={[{ data: [1, 3, 5, 1, 4] }]}
+                    />
+                </Box>
+                <Box className={'countryGraphInclTitle'}>
+                    <Typography variant="h4">
+                        Average Precipitation
+                    </Typography>
+                    <LineChart
+                        title={"Average Precipitation"}
+                        xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
+                        series={[{ data: [1, 3, 5, 1, 4] }]}
+                    />
+                </Box>
             </Box>
             <Box className={'countryCityBox '}>
-                {weatherstations.map((weatherstation, index) => (
-                    <CityTab
-                        city={"ID: "+weatherstation.id}
-                        temp={weatherstation.temp}
-                        bgImage={MexicoHomeBg}
-                        feelTemp={weatherstation.temp}
-                        wind={weatherstation.windspeed}
-                        precip={weatherstation.precipitation}
-                    ></CityTab>
-                ))}
+                {Array.from(cityData).map((data) => {
+                    const weatherData = data[1];
+                    return (
+                        <CityTab
+                            key={data[0]}
+                            city={data[0]}
+                            temp={weatherData.temp}
+                            bgImage={MexicoHomeBg}
+                            feelTemp={weatherData.temp}
+                            wind={weatherData.windspeed}
+                            precip={weatherData.precipitation}
+                        ></CityTab>
+                    );
+                })}
             </Box>
         </Box>
     );
