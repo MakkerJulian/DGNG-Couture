@@ -10,7 +10,7 @@ type CountryTabProps = {
     wind: number;
     precip: number;
 }
-export const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip}: CountryTabProps) => {
+const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip}: CountryTabProps) => {
     const navigate = useNavigate();
     return (
         <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})`}}>
@@ -29,3 +29,4 @@ export const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip}: Co
         </Box>
     )
 }
+export default CountryTab

@@ -1,14 +1,15 @@
 import { Box } from "@mui/material";
 import { AlaskaHomeBg, AmericaHomeBg, CoutureLogo, FranceHomeBg, FinlandHomeBg, GreenlandHomeBg, MexicoHomeBg, NorwayHomeBg, SpainHomeBg } from "../assets";
 import '../css/home.css'
-import { CountryTab } from "../components/countryTab";
 import { getRole } from "../util/getrole";
 import { LogoutButton } from "../components/logoutButton";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { enqueueSnackbar } from "notistack";
 import { calculateAveragePerCountry } from "../util/averagePerCountryCalc";
 import { getCountry } from "../util/IWARequests";
 import { WeatherData } from "../types/Weatherdata";
+
+const LazyCountryTab = React.lazy(() => import("../components/countryTab"));
 
 export const Home = () => {
     const role = getRole();
@@ -83,79 +84,92 @@ export const Home = () => {
             <Box className={'homeContent'}>
                 {role === "sales" ?
                     <>
-                        <CountryTab
-                            country={'Mexico'}
-                            temp={mexicoCalc.avgTemp}
-                            bgImage={MexicoHomeBg}
-                            feelTemp={mexicoCalc.feelTemp}
-                            wind={mexicoCalc.wind}
-                            precip={mexicoCalc.precip}
-                        ></CountryTab>
-
-                        <CountryTab
-                            country={'France'}
-                            temp={franceCalc.avgTemp}
-                            bgImage={FranceHomeBg}
-                            feelTemp={franceCalc.feelTemp}
-                            wind={franceCalc.wind}
-                            precip={franceCalc.precip}
-                        ></CountryTab>
-
-                        <CountryTab
-                            country={'America'}
-                            temp={americaCalc.avgTemp}
-                            bgImage={AmericaHomeBg}
-                            feelTemp={americaCalc.feelTemp}
-                            wind={americaCalc.wind}
-                            precip={americaCalc.precip}
-                        ></CountryTab>
-
-                        <CountryTab
-                            country={'Spain'}
-                            temp={spainCalc.avgTemp}
-                            bgImage={SpainHomeBg}
-                            feelTemp={spainCalc.feelTemp}
-                            wind={spainCalc.wind}
-                            precip={spainCalc.precip}
-                        />
+                        <React.Suspense fallback={<div>Loading Mexico...</div>}>
+                            <LazyCountryTab
+                                country={'Mexico'}
+                                temp={mexicoCalc.avgTemp}
+                                bgImage={MexicoHomeBg}
+                                feelTemp={mexicoCalc.feelTemp}
+                                wind={mexicoCalc.wind}
+                                precip={mexicoCalc.precip}
+                            />
+                        </React.Suspense>
+                        <React.Suspense fallback={<div>Loading France...</div>}>
+                            <LazyCountryTab
+                                country={'France'}
+                                temp={franceCalc.avgTemp}
+                                bgImage={FranceHomeBg}
+                                feelTemp={franceCalc.feelTemp}
+                                wind={franceCalc.wind}
+                                precip={franceCalc.precip}
+                            />
+                        </React.Suspense>
+                        <React.Suspense fallback={<div>Loading America...</div>}>
+                            <LazyCountryTab
+                                country={'America'}
+                                temp={americaCalc.avgTemp}
+                                bgImage={AmericaHomeBg}
+                                feelTemp={americaCalc.feelTemp}
+                                wind={americaCalc.wind}
+                                precip={americaCalc.precip}
+                            />
+                        </React.Suspense>
+                        <React.Suspense fallback={<div>Loading Spain...</div>}>
+                            <LazyCountryTab
+                                country={'Spain'}
+                                temp={spainCalc.avgTemp}
+                                bgImage={SpainHomeBg}
+                                feelTemp={spainCalc.feelTemp}
+                                wind={spainCalc.wind}
+                                precip={spainCalc.precip}
+                            />
+                        </React.Suspense>
                     </>
                     :
                     <>
-                        <CountryTab
-                            country={'Greenland'}
-                            temp={calculateAveragePerCountry(greenlandData ?? []).avgTemp}
-                            bgImage={GreenlandHomeBg}
-                            feelTemp={calculateAveragePerCountry(greenlandData ?? []).feelTemp}
-                            wind={calculateAveragePerCountry(greenlandData ?? []).wind}
-                            precip={calculateAveragePerCountry(greenlandData ?? []).precip}
-                        ></CountryTab>
+                        <React.Suspense fallback={<div>Loading Greenland...</div>}>
+                            <LazyCountryTab
+                                country={'Greenland'}
+                                temp={calculateAveragePerCountry(greenlandData ?? []).avgTemp}
+                                bgImage={GreenlandHomeBg}
+                                feelTemp={calculateAveragePerCountry(greenlandData ?? []).feelTemp}
+                                wind={calculateAveragePerCountry(greenlandData ?? []).wind}
+                                precip={calculateAveragePerCountry(greenlandData ?? []).precip}
+                            />
+                        </React.Suspense>
 
-                        <CountryTab
-                            country={'Norway'}
-                            temp={calculateAveragePerCountry(norwayData ?? []).avgTemp}
-                            bgImage={NorwayHomeBg}
-                            feelTemp={calculateAveragePerCountry(norwayData ?? []).feelTemp}
-                            wind={calculateAveragePerCountry(norwayData ?? []).wind}
-                            precip={calculateAveragePerCountry(norwayData ?? []).precip}
-                        ></CountryTab>
+                        <React.Suspense fallback={<div>Loading Norway...</div>}>
+                            <LazyCountryTab
+                                country={'Norway'}
+                                temp={calculateAveragePerCountry(norwayData ?? []).avgTemp}
+                                bgImage={NorwayHomeBg}
+                                feelTemp={calculateAveragePerCountry(norwayData ?? []).feelTemp}
+                                wind={calculateAveragePerCountry(norwayData ?? []).wind}
+                                precip={calculateAveragePerCountry(norwayData ?? []).precip}
+                            />
+                        </React.Suspense>
 
-                        <CountryTab
-                            country={'Alaska'}
-                            temp={calculateAveragePerCountry(alaskaData ?? []).avgTemp}
-                            bgImage={AlaskaHomeBg}
-                            feelTemp={calculateAveragePerCountry(alaskaData ?? []).feelTemp}
-                            wind={calculateAveragePerCountry(alaskaData ?? []).wind}
-                            precip={calculateAveragePerCountry(alaskaData ?? []).precip}
-                        ></CountryTab>
+                        <React.Suspense fallback={<div>Loading Alaska...</div>}>
+                            <LazyCountryTab
+                                country={'Alaska'}
+                                temp={calculateAveragePerCountry(alaskaData ?? []).avgTemp}
+                                bgImage={AlaskaHomeBg}
+                                feelTemp={calculateAveragePerCountry(alaskaData ?? []).feelTemp}
+                                wind={calculateAveragePerCountry(alaskaData ?? []).wind}
+                                precip={calculateAveragePerCountry(alaskaData ?? []).precip}
+                            />
+                        </React.Suspense>
 
-                        <CountryTab
-                            country={'Finland'}
-                            temp={calculateAveragePerCountry(finlandData ?? []).avgTemp}
-                            bgImage={FinlandHomeBg}
-                            feelTemp={calculateAveragePerCountry(finlandData ?? []).feelTemp}
-                            wind={calculateAveragePerCountry(finlandData ?? []).wind}
-                            precip={calculateAveragePerCountry(finlandData ?? []).precip}
-                        ></CountryTab>
+                        <React.Suspense fallback={<div>Loading Finland...</div>}>
+                            <LazyCountryTab
+                                country={'Finland'}
+                                temp={calculateAveragePerCountry(finlandData ?? []).avgTemp}
+                                bgImage={FinlandHomeBg}
+                                feelTemp={calculateAveragePerCountry(finlandData ?? []).feelTemp}
+                                wind={calculateAveragePerCountry(finlandData ?? []).wind}
+                                precip={calculateAveragePerCountry(finlandData ?? []).precip}
+                            />
+                        </React.Suspense>
                     </>
                 }
             </Box>
