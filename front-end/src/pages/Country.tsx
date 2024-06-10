@@ -27,11 +27,9 @@ export const Country = () => {
                 enqueueSnackbar("Could not get Weather data", { variant: 'error' })
             })
         }
-    }, []);
+    }, [country]);
 
     const timeStamps = Array.from(timeData).map(time => time[0].getHours());
-
-    console.log(timeStamps);
 
     return timeStamps.length > 0 && (
         <Box>
