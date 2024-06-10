@@ -28,25 +28,24 @@ export const groupByCity = (data: WeatherData[]) => {
 }
 
 export const groupByDateTime = (data: WeatherData[]) => {
-    const knownNames = new Map<string, WeatherData>();
+    const knownNames = new Map<Date, WeatherData>();
     data.map((weatherData) => {
         //Make time the hours + minutes in string format
         const date = new Date(weatherData.datetime);
-        const time = date.getFullYear() + ":"+ date.getDay() + ":" + date.getHours();
 
         weatherData.temp = round(weatherData.temp);
         weatherData.windspeed = round(weatherData.windspeed);
         weatherData.precipitation = round(weatherData.precipitation);
 
-        if (knownNames.has(time)) {
-            const knownData = knownNames.get(time);
+        if (knownNames.has(date)) {
+            const knownData = knownNames.get(date);
             if (knownData) {
                 knownData.temp = round((knownData.temp + weatherData.temp) / 2);
                 knownData.windspeed = round((knownData.windspeed + weatherData.windspeed) / 2);
                 knownData.precipitation = round((knownData.precipitation + weatherData.precipitation) / 2);
             }
         } else {
-            knownNames.set(time, weatherData);
+            knownNames.set(date, weatherData);
         }
     });
     return knownNames;

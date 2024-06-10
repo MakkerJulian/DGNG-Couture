@@ -14,7 +14,7 @@ export const Country = () => {
     const country = queryParameters.get("country");
 
     const [cityData, setCityData] = useState<Map<string, WeatherData>>(new Map());
-    const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
+    const [timeData, setTimeData] = useState<Map<Date, WeatherData>>(new Map());
 
     useEffect(() => {
         if (country && isCountryOption(country)) {
@@ -29,7 +29,11 @@ export const Country = () => {
         }
     }, []);
 
-    return (
+    const timeStamps = Array.from(timeData).map(time => time[0].getHours());
+
+    console.log(timeStamps);
+
+    return timeStamps.length > 0 && (
         <Box>
             <Box className={'logoBar'}>
                 <Typography variant={'h1'}>{country}</Typography>
@@ -42,7 +46,7 @@ export const Country = () => {
                     <LineChart
                         title={"Average Temperature"}
                         xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
-                        series={[{ data: [1, 3, 5, 1, 4] }]}
+                        series={[{ data: [1, 4, 1, 5, 2, 3] }]}
                     />
                 </Box>
                 <Box className={'countryGraphInclTitle'}>

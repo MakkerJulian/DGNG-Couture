@@ -26,7 +26,7 @@ export const CityTab = ({ city, temp, bgImage, feelTemp, wind, precip }: CityTab
             </Box>
 
             <Box className="cityCardName">
-                <Typography variant={'h2'}>- {city} -</Typography>
+                <Typography variant={'h4'}>{city}</Typography>
             </Box>
 
         </Box>
