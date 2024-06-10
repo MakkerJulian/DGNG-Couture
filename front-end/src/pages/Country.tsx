@@ -8,6 +8,7 @@ import { enqueueSnackbar } from "notistack";
 import { isCountryOption } from "../types/CountryOptions.ts";
 import { LineChart } from "@mui/x-charts";
 import { groupByCity, groupByDateTime } from "../util/WDGroupBy.ts";
+import dayjs from "dayjs";
 
 export const Country = () => {
     const queryParameters = new URLSearchParams(window.location.search);
@@ -27,9 +28,10 @@ export const Country = () => {
                 enqueueSnackbar("Could not get Weather data", { variant: 'error' })
             })
         }
-    }, []);
+    }, [country]);
 
-    const timeStamps = Array.from(timeData).map(time => time[0].getHours());
+    const timeStamps = Array.from(timeData).map(time => time[0]);
+    const temps = Array.from(timeData).map(time => time[1].temp);
 
     console.log(timeStamps);
 
@@ -45,8 +47,16 @@ export const Country = () => {
                     </Typography>
                     <LineChart
                         title={"Average Temperature"}
-                        xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
-                        series={[{ data: [1, 4, 1, 5, 2, 3] }]}
+                        xAxis={[
+                            {
+                              label: "Date",
+                              data: timeStamps,
+                              tickInterval: timeStamps,
+                              scaleType: "time",
+                              valueFormatter: (date) => dayjs(date).format("MMM DD HH:MM"),
+                            },
+                          ]}
+                        series={[{ data: temps }]}
                     />
                 </Box>
                 <Box className={'countryGraphInclTitle'}>
@@ -56,7 +66,7 @@ export const Country = () => {
                     <LineChart
                         title={"Average Wind Speed"}
                         xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
-                        series={[{ data: [1, 3, 5, 1, 4] }]}
+                        series={[{ data: [1, 3, 5, 1, 4, 6] }]}
                     />
                 </Box>
                 <Box className={'countryGraphInclTitle'}>
@@ -66,7 +76,7 @@ export const Country = () => {
                     <LineChart
                         title={"Average Precipitation"}
                         xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
-                        series={[{ data: [1, 3, 5, 1, 4] }]}
+                        series={[{ data: [1, 3, 5, 1, 4, 1] }]}
                     />
                 </Box>
             </Box>
