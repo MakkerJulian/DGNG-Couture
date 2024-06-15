@@ -5,9 +5,15 @@
     background-size: cover;
 }
 
+.cityButton {
+    all: inherit;
+    margin: 0;
+    width: fit-content;
+}
+
 .cityCardText {
     position: relative;
-    float:left;
+    float: left;
     margin-left: 5px;
 }
 
@@ -41,7 +47,7 @@
     height: 85vh;
 }
 
-.countryGraphInclTitle{
+.countryGraphInclTitle {
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -49,9 +55,8 @@
 }
 
 .countryCityBox {
-    overflow-y: hidden;
     margin-top: 15vh;
-    display:grid;
+    display: grid;
     grid: auto-flow / 1fr 1fr;
     float: right;
     width: 54vw;

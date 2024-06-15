@@ -1,6 +1,7 @@
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Country } from "./pages/Country.tsx";
+import { City } from "./pages/City.tsx";
 
 interface Route {
     path: string;
@@ -25,5 +26,10 @@ export const routes: Route[] = [
         name: "country",
         path: "/country",
         element: Country,
+    },
+    {
+        name: "city",
+        path: "/city",
+        element: City,
     }
 ];
