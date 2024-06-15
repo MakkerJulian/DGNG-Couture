@@ -1,18 +1,3 @@
-body {
-    background-color: rgb(245, 227, 206);
-}
-
-.logoBar {
-    background-image: linear-gradient(to right, black, rgb(250, 93, 93), black);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 15vh;
-    width: 100vw;
-    position: fixed;
-    z-index: 1000;
-    border-bottom: 2px black solid;
-}
 .homeContent {
     margin-top:15vh;
     background-color: hsla(33, 100%, 56%, 0.205);
@@ -23,132 +8,11 @@ body {
     flex-wrap: wrap;
 }
 
-.logo {
-    height: 15vh;
-}
-
-.countryCard {
-    display: flex;
-    justify-content: space-between;
-    height: 35vh;
-    background-size: cover;
-}
-
-.countryCardText {
-    margin-left: 1vw;
-}
-
-.countryButton {
-    position: absolute;
-}
-
-.Right {
-    margin-right: 1vw;
-    margin-top: 2.5vh;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    height: fit-content;
-    padding: 1%;
-    border-radius: 15px;
-    color: rgb(231, 230, 230);
-}
-
-.cityCard {
-    margin-top: 50px;
-    width: 23vw;
-    height: 30vh;
-    background-size: cover;
-}
-
-.cityCardText {
-    position: relative;
-    float:left;
-    margin-left: 5px;
-}
-
-.cityCardName {
-    margin-top: 255px;
-    width: 23vw;
-    position: relative;
-    background-color: #c99696;
-    text-align: center;
-}
-
-.cityCardTextInfo {
-    margin-left: 297px;
-    position: absolute;
-    text-align: center;
-    background-image: linear-gradient(to top, #ce9393, #cba1a1, #f6c9c9);
-    width: 7vw;
-    padding: 5px;
-    border-radius: 15px;
-}
-
-.countryGraphBox {
-    background-image: linear-gradient(to bottom, #b23737, #c99696, #f6c9c9);
-    overflow-y: hidden;
-    margin-top: 15vh;
-    display: grid;
-    position: fixed;
-    grid: auto-flow / 1fr 1fr;
-    float: left;
-    border-right: 2px solid darkred;
-    width: 40vw;
-    height: 85vh;
-}
-
-.countryGraphInclTitle{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    height: 30vh;
-}
-
-.countryCityBox {
-    overflow-y: hidden;
-    margin-top: 15vh;
-    display:grid;
-    grid: auto-flow / 1fr 1fr;
-    float: right;
-    width: 54vw;
-}
-
-.graph {
-    background-color: lightgrey;
-    text-align: center;
-    margin: 50px 0 0 35px;
-    width: 300px;
-    height: 300px;
-}
-
 /* Add a condition for when users are on mobile */
 @media only screen and (min-width: 1px) {
     .homeContent {
         flex-direction: column;
         flex-wrap: nowrap;
-    }
-
-    .countryCard {
-        width: 90vw;
-        margin: 1vh;
-    }
-
-    .logo {
-        width: 50vw;
-    }
-
-    .countryCardText h2 {
-        font-size: 4vh;
-    }
-
-    .countryCardText h4 {
-        font-size: 2vh;
-    }
-
-    .countryCardText h6 {
-        font-size: 2vh;
     }
 }
 
@@ -156,13 +20,5 @@ body {
     .homeContent {
         flex-direction: row;
         flex-wrap: wrap;
-    }
-
-    .countryCard {
-        width: 45vw;
-    }
-
-    .logo {
-        width: 20vw;
     }
 }

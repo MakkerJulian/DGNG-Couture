@@ -8,10 +8,12 @@ import { enqueueSnackbar } from "notistack";
 import { isCountryOption } from "../types/CountryOptions.ts";
 import { LineChart } from "@mui/x-charts";
 import { groupByCity, groupByDateTime } from "../util/WDGroupBy.ts";
+import { LogoBar } from "../components/topbar.tsx";
+import '../css/country.css'
 
 export const Country = () => {
     const queryParameters = new URLSearchParams(window.location.search);
-    const country = queryParameters.get("country");
+    const country = queryParameters.get("country")??"";
 
     const [cityData, setCityData] = useState<Map<string, WeatherData>>(new Map());
     const [timeData, setTimeData] = useState<Map<Date, WeatherData>>(new Map());
@@ -31,12 +33,10 @@ export const Country = () => {
 
     const timeStamps = Array.from(timeData).map(time => time[0].getHours());
 
-    return timeStamps.length > 0 && (
+    return (
         <Box>
-            <Box className={'logoBar'}>
-                <Typography variant={'h1'}>{country}</Typography>
-            </Box>
-            <Box className={'countryGraphBox'}>
+            <LogoBar title={country} backbutton/>
+            {timeStamps.length > 0 && <Box className={'countryGraphBox'}>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
                         Average Temperature
@@ -67,7 +67,7 @@ export const Country = () => {
                         series={[{ data: [1, 3, 5, 1, 4] }]}
                     />
                 </Box>
-            </Box>
+            </Box>}
             <Box className={'countryCityBox '}>
                 {Array.from(cityData).map((data) => {
                     const weatherData = data[1];
