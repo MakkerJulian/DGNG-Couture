@@ -1,0 +1,66 @@
+.cityCard {
+    margin-top: 50px;
+    width: 23vw;
+    height: 30vh;
+    background-size: cover;
+}
+
+.cityCardText {
+    position: relative;
+    float:left;
+    margin-left: 5px;
+}
+
+.cityCardName {
+    margin-top: 255px;
+    width: 23vw;
+    position: relative;
+    background-color: #c99696;
+    text-align: center;
+}
+
+.cityCardTextInfo {
+    margin-left: 297px;
+    position: absolute;
+    text-align: center;
+    background-image: linear-gradient(to top, #ce9393, #cba1a1, #f6c9c9);
+    width: 7vw;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+.countryGraphBox {
+    overflow-y: hidden;
+    margin-top: 15vh;
+    display: grid;
+    position: fixed;
+    grid: auto-flow / 1fr 1fr;
+    float: left;
+    border-right: 2px solid darkred;
+    width: 40vw;
+    height: 85vh;
+}
+
+.countryGraphInclTitle{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    height: 30vh;
+}
+
+.countryCityBox {
+    overflow-y: hidden;
+    margin-top: 15vh;
+    display:grid;
+    grid: auto-flow / 1fr 1fr;
+    float: right;
+    width: 54vw;
+}
+
+.graph {
+    background-color: lightgrey;
+    text-align: center;
+    margin: 50px 0 0 35px;
+    width: 300px;
+    height: 300px;
+}

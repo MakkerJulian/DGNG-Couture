@@ -7,7 +7,8 @@ export const groupByCity = (data: WeatherData[]) => {
         const name = weatherData.weatherstation.geolocation.city
             ?? weatherData.weatherstation.geolocation.town
             ?? weatherData.weatherstation.geolocation.village
-            ?? weatherData.weatherstation.geolocation.place;
+            ?? weatherData.weatherstation.geolocation.place
+            ?? weatherData.weatherstation.geolocation.county;
 
         weatherData.temp = round(weatherData.temp);
         weatherData.windspeed = round(weatherData.windspeed);

@@ -1,7 +1,6 @@
 import { WeatherData } from "../types/Weatherdata";
 
 export const calculateAveragePerCountry = (data: WeatherData[]) => {
-    console.log(data);
     if(data.length === 0) return { avgTemp: 0, feelTemp: 0, wind: 0, precip: 0 };
     if(!data) return { avgTemp: 0, feelTemp: 0, wind: 0, precip: 0 };
     let avgTemp = data.reduce((acc, curr) => acc + Number(curr.temp), 0) / data.length;

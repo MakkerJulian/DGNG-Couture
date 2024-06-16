@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { Box, Button, MenuItem, TextField, Typography } from "@mui/material";
-import axiosInstance from "../axios";
-import { Account, AccountCreate } from "../types";
 import type { GridColDef } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import { CustomModal } from "../components/customModal";
 import { enqueueSnackbar } from "notistack";
 import {LogoutButton} from "../components/logoutButton.tsx";
+import { axiosInstance } from "../axios/index.tsx";
+import { AccountCreate, Account } from "../types/Account.ts";
 
 const emptyForm: AccountCreate = {
     name: '',

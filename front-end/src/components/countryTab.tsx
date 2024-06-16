@@ -1,6 +1,7 @@
 import {Box, Button, Typography} from "@mui/material";
 import { CloudIcon } from "../icons";
 import {useNavigate} from "react-router-dom";
+import '../css/countryCard.css'
 
 type CountryTabProps = {
     country: string;

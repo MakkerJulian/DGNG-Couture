@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
-import { AlaskaHomeBg, AmericaHomeBg, CoutureLogo, FranceHomeBg, FinlandHomeBg, GreenlandHomeBg, MexicoHomeBg, NorwayHomeBg, SpainHomeBg } from "../assets";
+import { AlaskaHomeBg, AmericaHomeBg, FranceHomeBg, FinlandHomeBg, GreenlandHomeBg, MexicoHomeBg, NorwayHomeBg, SpainHomeBg } from "../assets";
 import '../css/home.css'
 import { getRole } from "../util/getrole";
-import { LogoutButton } from "../components/logoutButton";
 import React, { useEffect, useState } from "react";
 import { enqueueSnackbar } from "notistack";
 import { calculateAveragePerCountry } from "../util/averagePerCountryCalc";
 import { getCountry } from "../util/IWARequests";
 import { WeatherData } from "../types/Weatherdata";
+import { LogoBar } from "../components/topbar";
 
 const LazyCountryTab = React.lazy(() => import("../components/countryTab"));
 
@@ -68,7 +68,7 @@ export const Home = () => {
                 enqueueSnackbar("Could not get Finland Weather data", { variant: 'error' })
             });
         }
-    }, []);
+    }, [role]);
 
     const mexicoCalc = calculateAveragePerCountry(mexicoData ?? []);
     const franceCalc = calculateAveragePerCountry(franceData ?? []);
@@ -77,10 +77,7 @@ export const Home = () => {
 
     return (
         <Box display={'flex'} flexDirection={'column'}>
-            <Box className={'logoBar'}>
-                <img src={CoutureLogo} className="logo"></img>
-                <LogoutButton />
-            </Box>
+            <LogoBar/>
             <Box className={'homeContent'}>
                 {role === "sales" ?
                     <>
@@ -106,7 +103,7 @@ export const Home = () => {
                         </React.Suspense>
                         <React.Suspense fallback={<div>Loading America...</div>}>
                             <LazyCountryTab
-                                country={'America'}
+                                country={'United States'}
                                 temp={americaCalc.avgTemp}
                                 bgImage={AmericaHomeBg}
                                 feelTemp={americaCalc.feelTemp}

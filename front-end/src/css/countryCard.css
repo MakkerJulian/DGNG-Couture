@@ -1,0 +1,57 @@
+.countryCard {
+    display: flex;
+    justify-content: space-between;
+    height: 35vh;
+    background-size: cover;
+}
+
+.countryCardText {
+    margin-left: 1vw;
+}
+
+.countryButton {
+    position: absolute;
+}
+
+.Right {
+    margin-right: 1vw;
+    margin-top: 2.5vh;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: fit-content;
+    padding: 1%;
+    border-radius: 15px;
+    color: rgb(231, 230, 230);
+}
+
+
+@media only screen and (min-width: 1px) {
+    .countryCard {
+        width: 90vw;
+        margin: 1vh;
+    }
+
+    .countryCardText h2 {
+        font-size: 4vh;
+    }
+
+    .countryCardText h4 {
+        font-size: 2vh;
+    }
+
+    .countryCardText h6 {
+        font-size: 2vh;
+    }
+}
+
+@media only screen and (min-width: 768px){
+    .countryCard {
+        width: 45vw;
+    }
+
+    .logo {
+        width: 20vw;
+    }
+}
