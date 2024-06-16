@@ -11,6 +11,7 @@ import '../css/country.css'
 import '../css/city.css'
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import * as Icons from '../icons'
+import { Zara } from "../assets/index.tsx";
 
 export const City = () => {
     const queryParameters = new URLSearchParams(window.location.search);
@@ -106,13 +107,14 @@ export const City = () => {
                 </Box>
             </Box>}
             {cityData.length > 0 && <Box className={'nameAndData'}>
-                <Typography variant="h4"> Zara </Typography>
+                <Typography variant="h2"> Zara </Typography>
                 <DataGrid
                     columns={columns}
                     rows={cityData}
-                    sx={{ width: "40vw", bgcolor: "white" }}
+                    className="dataGrid"
                     initialState={{
                         sorting: { sortModel: [{ field: 'datetime', sort: 'desc' }] },
+                        pagination: {paginationModel: {pageSize: 10}},
                     }}
                 />
             </Box>}
