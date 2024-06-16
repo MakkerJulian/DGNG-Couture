@@ -11,7 +11,7 @@ import '../css/country.css'
 import '../css/city.css'
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import * as Icons from '../icons'
-import { Zara } from "../assets/index.tsx";
+import { DateGraph } from "../components/DateGraph.tsx";
 
 export const City = () => {
     const queryParameters = new URLSearchParams(window.location.search);
@@ -19,20 +19,21 @@ export const City = () => {
     const country = queryParameters.get("country") ?? "";
 
     const [cityData, setCityData] = useState<WeatherData[]>([]);
-    const [timeData, setTimeData] = useState<Map<Date, WeatherData>>(new Map());
+    const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
 
     useEffect(() => {
         if (city && isCountryOption(country)) {
             getCountry(country).then((data) => {
                 if (data) {
-                    setCityData(data.filter((wd) => {
+                    const cityData = data.filter((wd) => {
                         return wd.weatherstation.geolocation.city === city
                             || wd.weatherstation.geolocation.town === city
                             || wd.weatherstation.geolocation.village === city
                             || wd.weatherstation.geolocation.place === city
                             || wd.weatherstation.geolocation.county === city;
-                    }));
-                    setTimeData(groupByDateTime(data));
+                    });
+                    setCityData(cityData);
+                    setTimeData(groupByDateTime(cityData));
                 }
             }).catch(() => {
                 enqueueSnackbar("Could not get Weather data", { variant: 'error' })
@@ -69,7 +70,11 @@ export const City = () => {
     ];
 
 
-    const timeStamps = Array.from(timeData).map(time => time[0].getHours());
+    const timeStamps = Array.from(timeData).map(time => new Date(time[0]));
+    const temps = Array.from(timeData).map(data => data[1].temp);
+    const windspeeds = Array.from(timeData).map(data => data[1].windspeed);
+    const precipitations = Array.from(timeData).map(data => data[1].precipitation);
+    const airpressures = Array.from(timeData).map(data => data[1].s_airpressure);
 
     return (
         <Box>
@@ -79,45 +84,59 @@ export const City = () => {
                     <Typography variant="h4">
                         Average Temperature
                     </Typography>
-                    <LineChart
-                        title={"Average Temperature"}
-                        xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
-                        series={[{ data: [1, 4, 1, 5, 2, 3] }]}
-                    />
+                    <DateGraph
+                        yAxisLabel={"Temperature"}
+                        timeStamps={timeStamps}
+                        data={temps}
+                    ></DateGraph>
                 </Box>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
                         Average Wind Speed
                     </Typography>
-                    <LineChart
-                        title={"Average Wind Speed"}
-                        xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
-                        series={[{ data: [1, 3, 5, 1, 4] }]}
-                    />
+                    <DateGraph
+                        yAxisLabel={"Wind speed"}
+                        timeStamps={timeStamps}
+                        data={windspeeds}
+                    ></DateGraph>
+
                 </Box>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
                         Average Precipitation
                     </Typography>
-                    <LineChart
-                        title={"Average Precipitation"}
-                        xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
-                        series={[{ data: [1, 3, 5, 1, 4] }]}
-                    />
+                    <DateGraph
+                        yAxisLabel={"Precipitation"}
+                        timeStamps={timeStamps}
+                        data={precipitations}
+                    ></DateGraph>
+                </Box>
+
+                <Box className={'countryGraphInclTitle'}>
+                    <Typography variant="h4">
+                        Average Air Pressure
+                    </Typography>
+                    <DateGraph
+                        yAxisLabel={"Air Pressure"}
+                        timeStamps={timeStamps}
+                        data={airpressures}
+                    ></DateGraph>
                 </Box>
             </Box>}
-            {cityData.length > 0 && <Box className={'nameAndData'}>
-                <Typography variant="h2"> Zara </Typography>
-                <DataGrid
-                    columns={columns}
-                    rows={cityData}
-                    className="dataGrid"
-                    initialState={{
-                        sorting: { sortModel: [{ field: 'datetime', sort: 'desc' }] },
-                        pagination: {paginationModel: {pageSize: 10}},
-                    }}
-                />
-            </Box>}
-        </Box>
+            {
+                cityData.length > 0 && <Box className={'nameAndData'}>
+                    <Typography variant="h2"> Zara </Typography>
+                    <DataGrid
+                        columns={columns}
+                        rows={cityData}
+                        className="dataGrid"
+                        initialState={{
+                            sorting: { sortModel: [{ field: 'datetime', sort: 'desc' }] },
+                            pagination: { paginationModel: { pageSize: 10 } },
+                        }}
+                    />
+                </Box>
+            }
+        </Box >
     );
 }
