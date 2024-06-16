@@ -4,7 +4,6 @@ import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
 import { enqueueSnackbar } from "notistack";
 import { isCountryOption } from "../types/CountryOptions.ts";
-import { LineChart } from "@mui/x-charts";
 import { groupByDateTime } from "../util/WDGroupBy.ts";
 import { LogoBar } from "../components/topbar.tsx";
 import '../css/country.css'
@@ -58,9 +57,9 @@ export const City = () => {
                 const data = params.row as WeatherData;
                 return <Box>
                     {data.clouds > 50 && <Icons.CloudIcon />}
-                    {data.freezing && <Icons.SevereColdIcon />}
+                    {data.freezing && <Icons.AcUnitIcon />}
                     {data.rain && <Icons.WaterDropIcon />}
-                    {data.snow && <Icons.AcUnitIcon />}
+                    {data.snow && <Icons.SevereColdIcon />}
                     {data.hail && <Icons.StormIcon />}
                     {data.thunder && <Icons.ThunderstormIcon />}
                     {data.tornado && <Icons.TornadoIcon />}
