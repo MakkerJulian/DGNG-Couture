@@ -36,38 +36,7 @@ export const Country = () => {
     return (
         <Box>
             <LogoBar title={country} backbutton/>
-            {timeStamps.length > 0 && <Box className={'countryGraphBox'}>
-                <Box className={'countryGraphInclTitle'}>
-                    <Typography variant="h4">
-                        Average Temperature
-                    </Typography>
-                    <LineChart
-                        title={"Average Temperature"}
-                        xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
-                        series={[{ data: [1, 4, 1, 5, 2, 3] }]}
-                    />
-                </Box>
-                <Box className={'countryGraphInclTitle'}>
-                    <Typography variant="h4">
-                        Average Wind Speed
-                    </Typography>
-                    <LineChart
-                        title={"Average Wind Speed"}
-                        xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
-                        series={[{ data: [1, 3, 5, 1, 4] }]}
-                    />
-                </Box>
-                <Box className={'countryGraphInclTitle'}>
-                    <Typography variant="h4">
-                        Average Precipitation
-                    </Typography>
-                    <LineChart
-                        title={"Average Precipitation"}
-                        xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
-                        series={[{ data: [1, 3, 5, 1, 4] }]}
-                    />
-                </Box>
-            </Box>}
+
             <Box className={'countryCityBox '}>
                 {Array.from(cityData).map((data) => {
                     const weatherData = data[1];
@@ -84,6 +53,38 @@ export const Country = () => {
                     );
                 })}
             </Box>
+            {timeStamps.length > 0 && <Box className={'countryGraphBox'}>
+            <Box className={'countryGraphInclTitle'}>
+                <Typography variant="h4">
+                    Average Temperature
+                </Typography>
+                <LineChart
+                    title={"Average Temperature"}
+                    xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
+                    series={[{ data: [1, 4, 1, 5, 2, 3] }]}
+                />
+            </Box>
+            <Box className={'countryGraphInclTitle'}>
+                <Typography variant="h4">
+                    Average Wind Speed
+                </Typography>
+                <LineChart
+                    title={"Average Wind Speed"}
+                    xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
+                    series={[{ data: [1, 3, 5, 1, 4] }]}
+                />
+            </Box>
+            <Box className={'countryGraphInclTitle'}>
+                <Typography variant="h4">
+                    Average Precipitation
+                </Typography>
+                <LineChart
+                    title={"Average Precipitation"}
+                    xAxis={[{ data: [0, 1, 2, 3, 4, 5] }]}
+                    series={[{ data: [1, 3, 5, 1, 4] }]}
+                />
+            </Box>
+        </Box>}
         </Box>
     );
 }

@@ -14,6 +14,13 @@
     color: white !important;
 }
 
+#backButton {
+    background-color: #a60000 !important;
+    color: white !important;
+    position: absolute;
+    flex-direction: column;
+}
+
 .logo {
     height: 15vh;
 }
