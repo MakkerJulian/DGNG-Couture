@@ -1,9 +1,9 @@
 .cityCard {
     display:grid;
-    grid-template-columns: 1fr, 1fr, 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-auto-rows: auto;
     justify-content: space-between;
-    margin-top: 50px;
+    margin-top: 30px;
     width: 23vw;
     background-size: cover;
 }

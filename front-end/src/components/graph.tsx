@@ -22,7 +22,7 @@ export const Graph = ({data, name}: GraphData) => {
                            }
                        }]}
             />
-            <Typography style={{position: "absolute", "margin-left": "5vw"}} variant={"h6"}>{name}</Typography>
+            <Typography sx={{position: "absolute", "margin-left": "5vw"}} variant={"h6"}>{name}</Typography>
         </Box>
 
     )

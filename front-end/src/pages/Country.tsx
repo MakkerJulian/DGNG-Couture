@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { MexicoHomeBg } from "../assets";
 import { CityTab } from "../components/cityTab.tsx";
+import { FilterBar } from "../components/filterBar.tsx";
 import { useEffect, useState } from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
@@ -36,6 +37,8 @@ export const Country = () => {
     return (
         <Box>
             <LogoBar title={country} backbutton/>
+
+            <FilterBar/>
 
             <Box className={'countryCityBox '}>
                 {Array.from(cityData).map((data) => {
