@@ -9,6 +9,7 @@ import { getCountry } from "../util/IWARequests";
 import { WeatherData } from "../types/Weatherdata";
 import { LogoBar } from "../components/topbar";
 import FileFormatDialog from "../components/dropdownButton";
+import DownloadData from "../components/DialogHandler";
 
 const LazyCountryTab = React.lazy(() => import("../components/countryTab"));
 
@@ -27,6 +28,7 @@ export const Home = () => {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [downloadData, setDownloadData] = useState<{ country: string, data: WeatherData[] } | null>(null);
+    const [format, setFormat] = useState<string | null>(null);
 
     useEffect(() => {
         if (role === 'sales') {
@@ -77,82 +79,15 @@ export const Home = () => {
     const mexicoCalc = calculateAveragePerCountry(mexicoData ?? []);
     const franceCalc = calculateAveragePerCountry(franceData ?? []);
     const americaCalc = calculateAveragePerCountry(americaData ?? []);
-    const spainCalc = calculateAveragePerCountry(spainData ?? []);
+    const spainCalc = calculateAveragePerCountry(spainData ?? []); 
 
-    const convertToCSV = (data: WeatherData[]): string => {
-        if (!data || data.length === 0) {
-            return '';
-        }
-    
-        // Extract headers from the first object in the array
-        const headers = Object.keys(data[0]);
-    
-        // Generate CSV rows
-        const csvRows = data.map(row => {
-            // Extract values in the order of headers
-            const values = headers.map(header => {
-                let value = row[header as keyof WeatherData];
-    
-                // Handle objects by stringifying them
-                if (typeof value === 'object' && value !== null) {
-                    // Convert objects to JSON strings
-                    value = JSON.stringify(value);
-                } else {
-                    value = String(value); // Convert value to string
-                }
-    
-                // Escape double quotes by doubling them
-                value = value.replace(/"/g, '""');
-    
-                return value; // No enclosing in double quotes here
-            });
-    
-            return values.join(','); // Join values with commas
-        });
-    
-        // Combine headers and rows into a single CSV string
-        const csvString = [headers.join(','), ...csvRows].join('\n');
-        
-        return csvString;
-    };
-    
-
-    // Functie die de ruwe data downloadt
     const handleDownloadClick = (country: string, data: WeatherData[]) => {
         setDownloadData({ country, data });
         setDialogOpen(true);
     };
 
     const handleDialogClose = (format: string | null) => {
-        if (format && downloadData) {
-            const { country, data } = downloadData;
-
-            if (format === 'json') {
-                const json = JSON.stringify(data, null, 2);
-                const blob = new Blob([json], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `${country}-weather-data.json`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-            } else if (format === 'csv') {
-                const csv = convertToCSV(data);
-                const blob = new Blob([csv], { type: 'text/csv' });
-                const url = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = `${country}-weather-data.csv`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-            }
-        }
-        setDialogOpen(false);
-        setDownloadData(null);
+        setFormat(format);
     };
 
     return (
@@ -258,9 +193,18 @@ export const Home = () => {
                     </>
                 }
             </Box>
-            <FileFormatDialog
-                open={dialogOpen}
-                onClose={handleDialogClose}
+            {dialogOpen && (
+                <FileFormatDialog
+                    open={dialogOpen}
+                    onClose={handleDialogClose}
+                />
+            )}
+            <DownloadData
+                format={format}
+                downloadData={downloadData}
+                setDialogOpen={setDialogOpen}
+                setDownloadData={setDownloadData}
+                setFormat={setFormat}
             />
         </Box>
     );
