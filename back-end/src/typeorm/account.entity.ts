@@ -17,6 +17,6 @@ export class Account {
   password: string;
 
   @Column()
-  @IsIn(['research','salaes'])
+  @IsIn(['research','sales'])
   role: string;
 }

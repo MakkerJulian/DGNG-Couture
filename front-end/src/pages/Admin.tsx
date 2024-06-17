@@ -4,9 +4,10 @@ import type { GridColDef } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import { CustomModal } from "../components/customModal";
 import { enqueueSnackbar } from "notistack";
-import {LogoutButton} from "../components/logoutButton.tsx";
 import { axiosInstance } from "../axios/index.tsx";
 import { AccountCreate, Account } from "../types/Account.ts";
+import { LogoBar } from "../components/topbar.tsx";
+
 
 const emptyForm: AccountCreate = {
     name: '',
@@ -38,7 +39,7 @@ export const Admin = () => {
 
     const columns: GridColDef[] = [
         {
-            field: 'id', flex: 0.5, headerName: 'ID',
+            field: 'uuid', flex: 0.5, headerName: 'uuID',
         },
         {
             field: 'name', flex: 1, headerName: 'Name',
@@ -63,89 +64,22 @@ export const Admin = () => {
 
     return (
         <Box flex={1} flexDirection={'column'}>
-            <Box position={'absolute'}>
-                <LogoutButton></LogoutButton>
-            </Box>
-            <Typography variant="h1" justifyContent={"center"} display={"flex"}>
-                Admin
-            </Typography>
-
+            <LogoBar title={'admin'} backbutton />
+            
             <DataGrid
                 rows={accounts}
                 columns={columns}
+                getRowId={(row) => row.uuid}
                 sx={{ maxWidth: '80%', margin: 'auto', height: '78vh' }}
                 initialState={{
                     sorting: {
-                        sortModel: [{ field: 'id', sort: 'asc' }],
+                        sortModel: [{ field: 'uuid', sort: 'asc' }],
                     },
                 }}
             >
             </DataGrid>
 
-            <CustomModal
-                open={openAccount}
-                title="Add new account"
-                setOpen={setOpenAccount}
-                onSubmit={createAccount}
-            >
-                <TextField
-                    sx={{ width: '80%', margin: '20px' }}
-                    label="Name"
-                    value={form.name}
-                    onChange={handleChange}
-                >
-                </TextField>
-
-                <TextField
-                    sx={{ width: '80%', margin: '20px' }}
-                    label="E-mail"
-                    value={form.email}
-                    onChange={handleChange}
-                >
-                </TextField>
-
-
-                <TextField
-                    sx={{ width: '80%', margin: '20px' }}
-                    label="Phone number"
-                    type='phone'
-                    value={form.phone}
-                    onChange={handleChange}
-                >
-                </TextField>
-
-                <TextField
-                    sx={{ width: '80%', margin: '20px' }}
-                    label="Password"
-                    value={form.password}
-                    onChange={handleChange}
-                >
-                </TextField>
-
-                <TextField
-                    sx={{ width: '80%', margin: '20px', color: "black" }}
-                    label="Role"
-                    value={form.role}
-                    select
-                    onChange={(e) => setForm({ ...form, role: e.target.value })}
-                >
-                    <MenuItem value="ADMIN">Admin</MenuItem>
-                    <MenuItem value="Sales">Sales</MenuItem>
-                    <MenuItem value="Onderzoek">Onderzoek</MenuItem>
-                    <MenuItem value="Onderhoud">Onderhoud</MenuItem>
-                </TextField>
-
-            </CustomModal>
-            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Button
-                    sx={{ backgroundColor: 'green', color: 'white', width: '80%', borderRadius: '5px', margin: "auto", mt: 2, '&:hover': { backgroundColor: 'darkgreen' } }}
-                    onClick={() => {
-                        setOpenAccount(!openAccount);
-                    }}
-                >
-                    Add new account
-                </Button>
-            </Box>
+            
         </Box>
     )
 }
