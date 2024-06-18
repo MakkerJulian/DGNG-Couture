@@ -1,7 +1,7 @@
-import {Box, Button, Typography} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { CloudIcon } from "../icons";
-import {useNavigate} from "react-router-dom";
-import '../css/countryCard.css'
+import { useNavigate } from "react-router-dom";
+import '../css/countryCard.css';
 
 type CountryTabProps = {
     country: string;
@@ -10,12 +10,14 @@ type CountryTabProps = {
     feelTemp: number;
     wind: number;
     precip: number;
-}
-const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip}: CountryTabProps) => {
+    onDownloadClick: () => void;
+};
+
+const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip, onDownloadClick }: CountryTabProps) => {
     const navigate = useNavigate();
     return (
-        <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})`}}>
-            <Button sx={{position: "absolute", width: "45vw", height: "35vh"}} onClick={() => navigate("/country?country=" + country)}/>
+        <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }}>
+            <Button sx={{ position: "absolute", width: "45vw", height: "35vh" }} onClick={() => navigate("/country?country=" + country)} />
             <Box className="countryCardText">
                 <Typography variant={'h2'}>{country}</Typography>
                 <Typography variant="h4">{temp}°</Typography>
@@ -26,8 +28,10 @@ const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip}: CountryTa
                 <Typography variant='h6'>Feels like {feelTemp}</Typography>
                 <Typography variant="h6">Wind {wind}km/h</Typography>
                 <Typography variant="h6">Precip {precip}%</Typography>
+                <Button variant="contained" onClick={onDownloadClick}>Download Data</Button>
             </Box>
         </Box>
-    )
-}
-export default CountryTab
+    );
+};
+
+export default CountryTab;
