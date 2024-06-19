@@ -36,6 +36,9 @@ body {
 }
 
 @media only screen and (max-width: 900px){
+    body {
+        overflow-y: scroll;
+    }
     .countryGraphBox {
         float: none;
         width: 100vw;
