@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import { CloudIcon } from "../icons";
 import { Clouds } from "../assets";
 import '../css/cityCard.css';
 import { useNavigate } from "react-router-dom";

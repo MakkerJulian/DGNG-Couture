@@ -1,7 +1,4 @@
 .nameAndData{
-    margin-top: 20vh;
-    width: 60vw;
-    float: right;
     display: flex;
     flex-direction: column;
     align-items: center;
