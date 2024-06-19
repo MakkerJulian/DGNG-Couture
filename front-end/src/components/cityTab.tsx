@@ -4,43 +4,36 @@ import { Clouds } from "../assets";
 import '../css/cityCard.css';
 import { useNavigate } from "react-router-dom";
 import * as Icons from "../icons";
+import { WeatherData } from "../types/Weatherdata";
 
 type CityTabProps = {
     city: string;
     temp: number;
     country: string;
+    weatherData: WeatherData;
     feelTemp: number;
-    wind: number;
-    precip: number;
-    clouds: number;
-    freezing: boolean;
-    rain: boolean;
-    snow: boolean;
-    hail: boolean;
-    thunder: boolean;
-    tornado: boolean;
 }
 
-export const CityTab = ({ country, city, temp, feelTemp, wind, precip, clouds, freezing, rain, snow, hail, thunder, tornado }: CityTabProps) => {
+export const CityTab = ({ country, city, feelTemp, weatherData }: CityTabProps) => {
     const navigate = useNavigate();
     return (
 
         <button className="cityButton" onClick={() => navigate(`/city?city=${city}&country=${country}`)}>
             <Box className="cityCard" sx={{ backgroundImage: `url(${Clouds})` }}>
                 <Box className="cityCardText">
-                    <Typography>{temp}°</Typography>
+                    <Typography>{weatherData.temp}°</Typography>
                     <CloudIcon />
                 </Box>
                 <Box className="cityCard" sx={{ backgroundImage: `url(${Clouds})` }}>
                     <Box className="cityCardText">
-                        <Typography>{temp}°</Typography>
-                        {clouds > 50 && <Icons.CloudIcon />}
-                        {freezing && <Icons.AcUnitIcon />}
-                        {rain && <Icons.WaterDropIcon />}
-                        {snow && <Icons.SevereColdIcon />}
-                        {hail && <Icons.StormIcon />}
-                        {thunder && <Icons.ThunderstormIcon />}
-                        {tornado && <Icons.TornadoIcon />}
+                        <Typography>{weatherData.temp}°</Typography>
+                        {weatherData.clouds > 50 && <Icons.CloudIcon />}
+                        {weatherData.freezing && <Icons.AcUnitIcon />}
+                        {weatherData.rain && <Icons.WaterDropIcon />}
+                        {weatherData.snow && <Icons.SevereColdIcon />}
+                        {weatherData.hail && <Icons.StormIcon />}
+                        {weatherData.thunder && <Icons.ThunderstormIcon />}
+                        {weatherData.tornado && <Icons.TornadoIcon />}
                     </Box>
 
 
@@ -50,8 +43,8 @@ export const CityTab = ({ country, city, temp, feelTemp, wind, precip, clouds, f
 
                     <Box className="cityCardTextInfo">
                         <Typography>Feels like {feelTemp}</Typography>
-                        <Typography>Wind {wind}km/h</Typography>
-                        <Typography>Precip {precip}%</Typography>
+                        <Typography>Wind {weatherData.windspeed}km/h</Typography>
+                        <Typography>Precip {weatherData.precipitation}%</Typography>
                     </Box>
                 </Box>
             </Box>
