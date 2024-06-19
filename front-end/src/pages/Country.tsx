@@ -1,21 +1,28 @@
-import { Box, Typography } from "@mui/material";
+import {Box, Button, MenuItem, Select, SelectChangeEvent, TextField, Typography} from "@mui/material";
 import { CityTab } from "../components/cityTab.tsx";
-import { FilterBar } from "../components/filterBar.tsx";
-import { useEffect, useState } from "react";
+import React, {ReactEventHandler, ReactNode, useEffect, useState} from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
 import { enqueueSnackbar } from "notistack";
 import { isCountryOption } from "../types/CountryOptions.ts";
 import { groupByCity, groupByDateTime } from "../util/WDGroupBy.ts";
 import { LogoBar } from "../components/topbar.tsx";
-import '../css/country.css'
+import '../css/country.css';
+import '../css/filterBar.css';
 import { DateGraph } from "../components/DateGraph.tsx";
+
+export type filterData = {
+    city: string,
+    condition: string;
+}
 
 export const Country = () => {
     const queryParameters = new URLSearchParams(window.location.search);
     const country = queryParameters.get("country") ?? "";
 
     const [cityData, setCityData] = useState<Map<string, WeatherData>>(new Map());
+    const [filteredData, setFilteredData] = useState<[string, WeatherData][]>([]);
+    const [filters, setFilters] = useState<filterData>({city:"", condition:""});
     const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
 
     useEffect(() => {
@@ -31,17 +38,48 @@ export const Country = () => {
         }
     }, [country]);
 
+
+    useEffect(() => {
+        let filtered = Array.from(cityData);
+
+        if (filters.city !== "") {
+            filtered = filtered.filter((data) => data[0] && data[0].startsWith(filters.city));
+        }
+
+        setFilteredData(filtered);
+    }, [filters]);
+
     const timeStamps = Array.from(timeData).map(time => new Date(time[0]));
     const temps = Array.from(timeData).map(time => time[1].temp);
     const windspeeds = Array.from(timeData).map(time => time[1].windspeed);
     const precipitations = Array.from(timeData).map(time => time[1].precipitation);
     const airpressures = Array.from(timeData).map(time => time[1].s_airpressure);
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFilters({ ...filters, [e.target.name]: e.target.value });
+    }
+
+    const handleSelectChange = (e: SelectChangeEvent<string>) => {
+        setFilters({ ...filters, condition: e.target.value});
+    }
+
     return (
         <Box>
             <LogoBar title={country} backbutton />
 
-            <FilterBar />
+            <Box className={"filterBar"}>
+                <Typography className={"filterTitle"}>Filters</Typography>
+                <TextField name={"city"} className={"filterInput"} placeholder={"City"} onChange={handleChange}></TextField>
+                <Select name={"condition"} placeholder={"Conditions"} className={"filterDropDown"} onChange={handleSelectChange}>
+                    <MenuItem value={"Clouds"}>Clouds</MenuItem>
+                    <MenuItem value={"Freezing"}>Freezing</MenuItem>
+                    <MenuItem value={"Tornado"}>Tornado</MenuItem>
+                    <MenuItem value={"Storm"}>Storm</MenuItem>
+                    <MenuItem value={"Hail"}>Hail</MenuItem>
+                    <MenuItem value={"Snow"}>Snow</MenuItem>
+                    <MenuItem value={"Thunder"}>Thunder</MenuItem>
+                </Select>
+            </Box>
             {timeStamps.length > 0 && <Box className={'countryGraphBox'}>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
@@ -69,7 +107,7 @@ export const Country = () => {
                 </Box>
             </Box>}
             <Box className={'countryCityBox '}>
-                {Array.from(cityData).map((data) => {
+                {filteredData.map((data) => {
                     const weatherData = data[1];
                     return (
                         <CityTab
