@@ -7,14 +7,14 @@ import { enqueueSnackbar } from "notistack";
 import { axiosInstance } from "../axios/index.tsx";
 import { AccountCreate, Account } from "../types/Account.ts";
 import { LogoBar } from "../components/topbar.tsx";
+import '../css/admin.css'
 
 
 const emptyForm: AccountCreate = {
     name: '',
     email: '',
-    phone: '',
     password: '',
-    role: 'Sales',
+    role: '',
 }
 
 export const Admin = () => {
@@ -39,16 +39,10 @@ export const Admin = () => {
 
     const columns: GridColDef[] = [
         {
-            field: 'uuid', flex: 0.5, headerName: 'uuID',
-        },
-        {
             field: 'name', flex: 1, headerName: 'Name',
         },
         {
             field: 'email', flex: 1, headerName: 'E-mail',
-        },
-        {
-            field: 'phone', flex: 1, headerName: 'Phone number',
         },
         {
             field: 'role', flex: 1, headerName: 'Role',
@@ -63,23 +57,75 @@ export const Admin = () => {
     }, []);
 
     return (
-        <Box flex={1} flexDirection={'column'}>
+        <Box>
             <LogoBar title={'admin'} backbutton />
-            
-            <DataGrid
-                rows={accounts}
-                columns={columns}
-                getRowId={(row) => row.uuid}
-                sx={{ maxWidth: '80%', margin: 'auto', height: '78vh' }}
-                initialState={{
-                    sorting: {
-                        sortModel: [{ field: 'uuid', sort: 'asc' }],
-                    },
-                }}
-            >
-            </DataGrid>
+            <Box className={'accounts'}>
+                <DataGrid
+                    className="dataGrid"
+                    rows={accounts}
+                    columns={columns}
+                    getRowId={(row) => row.name}
+                    initialState={{
+                        sorting: {
+                            sortModel: [{ field: 'name', sort: 'asc' }],
+                        },
+                    }}
+                >
+                </DataGrid>
+                <CustomModal
+                    open={openAccount}
+                    title="Add new account"
+                    setOpen={setOpenAccount}
+                    onSubmit={createAccount}
+                >
+                    <TextField
+                        sx={{ width: '80%', margin: '20px' }}
+                        label="Name"
+                        value={form.name}
+                        onChange={handleChange}
+                    >
+                    </TextField>
 
-            
+                    <TextField
+                        sx={{ width: '80%', margin: '20px' }}
+                        label="E-mail"
+                        value={form.email}
+                        onChange={handleChange}
+                    >
+                    </TextField>
+
+                    <TextField
+                        sx={{ width: '80%', margin: '20px' }}
+                        label="Password"
+                        value={form.password}
+                        onChange={handleChange}
+                    >
+                    </TextField>
+
+                    <TextField
+                        sx={{ width: '80%', margin: '20px', color: "black" }}
+                        label="Role"
+                        value={form.role}
+                        select
+                        onChange={(e) => setForm({ ...form, role: e.target.value })}
+                    >
+                        <MenuItem value="sales">Sales</MenuItem>
+                        <MenuItem value="research">Research</MenuItem>
+                    </TextField>
+
+                </CustomModal>
+                <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <Button
+                        sx={{ backgroundColor: 'green', color: 'white', width: '80%', borderRadius: '5px', margin: "auto", mt: 2, '&:hover': { backgroundColor: 'darkgreen' } }}
+                        onClick={() => {
+                            setOpenAccount(!openAccount);
+                        }}
+                    >
+                        Add new account
+                    </Button>
+                </Box>
+            </Box>
+
         </Box>
     )
 }
