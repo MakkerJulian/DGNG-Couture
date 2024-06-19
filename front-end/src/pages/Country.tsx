@@ -42,8 +42,6 @@ export const Country = () => {
             <LogoBar title={country} backbutton />
 
             <FilterBar />
-
-            <LogoBar title={country} backbutton />
             {timeStamps.length > 0 && <Box className={'countryGraphBox'}>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
