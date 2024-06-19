@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import { MexicoHomeBg } from "../assets";
 import { CityTab } from "../components/cityTab.tsx";
 import { useEffect, useState } from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
@@ -74,7 +73,7 @@ export const Country = () => {
                             key={data[0]}
                             city={data[0]}
                             temp={weatherData.temp}
-                            bgImage={MexicoHomeBg}
+                            country={country}
                             feelTemp={weatherData.temp}
                             wind={weatherData.windspeed}
                             precip={weatherData.precipitation}

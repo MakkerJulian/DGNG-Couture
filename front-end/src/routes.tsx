@@ -2,6 +2,7 @@ import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Country } from "./pages/Country.tsx";
 import { Admin } from "./pages/Admin.tsx";
+import { City } from "./pages/City.tsx";
 
 interface Route {
     path: string;
@@ -31,5 +32,10 @@ export const routes: Route[] = [
         name: "admin",
         path: "/admin",
         element: Admin,
+    },
+    {
+        name: "city",
+        path: "/city",
+        element: City,
     }
 ];
