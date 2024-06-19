@@ -52,6 +52,13 @@ export const Country = () => {
                             feelTemp={weatherData.temp}
                             wind={weatherData.windspeed}
                             precip={weatherData.precipitation}
+                            clouds={weatherData.clouds}
+                            freezing={weatherData.freezing}
+                            rain={weatherData.rain}
+                            snow={weatherData.snow}
+                            hail={weatherData.hail}
+                            thunder={weatherData.thunder}
+                            tornado={weatherData.tornado}
                         ></CityTab>
                     );
                 })}
