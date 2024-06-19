@@ -30,6 +30,7 @@ export const Country = () => {
             getCountry(country).then((data) => {
                 if (data) {
                     setCityData(groupByCity(data));
+                    setFilteredData(Array.from(groupByCity(data)));
                     setTimeData(groupByDateTime(data));
                 }
             }).catch(() => {
@@ -44,6 +45,31 @@ export const Country = () => {
 
         if (filters.city !== "") {
             filtered = filtered.filter((data) => data[0] && data[0].startsWith(filters.city));
+        }
+
+        console.log(filters.condition);
+
+        if (filters.condition !== "") {
+            switch (filters.condition) {
+                case "Clouds":
+                    filtered = filtered.filter((data) => data[1].clouds);
+                    break;
+                case "Freezing":
+                    filtered = filtered.filter((data) => data[1].freezing);
+                    break;
+                case "Tornado":
+                    filtered = filtered.filter((data) => data[1].tornado);
+                    break;
+                case "Hail":
+                    filtered = filtered.filter((data) => data[1].hail);
+                    break;
+                case "Snow":
+                    filtered = filtered.filter((data) => data[1].snow);
+                    break;
+                case "Thunder":
+                    filtered = filtered.filter((data) => data[1].thunder);
+                    break;
+            }
         }
 
         setFilteredData(filtered);
@@ -74,7 +100,6 @@ export const Country = () => {
                     <MenuItem value={"Clouds"}>Clouds</MenuItem>
                     <MenuItem value={"Freezing"}>Freezing</MenuItem>
                     <MenuItem value={"Tornado"}>Tornado</MenuItem>
-                    <MenuItem value={"Storm"}>Storm</MenuItem>
                     <MenuItem value={"Hail"}>Hail</MenuItem>
                     <MenuItem value={"Snow"}>Snow</MenuItem>
                     <MenuItem value={"Thunder"}>Thunder</MenuItem>
