@@ -17,8 +17,6 @@
 
 .countryCityBox {
     overflow-y: hidden;
-    display:grid;
-    margin-top: 15vh;
     display: grid;
     grid: auto-flow / 1fr 1fr;
     float: right;

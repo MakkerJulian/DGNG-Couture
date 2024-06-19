@@ -8,7 +8,10 @@
     background-size: cover;
 }
 
-.cityButton{
+.cityButton {
+    all: inherit;
+    margin: 0;
+    width: fit-content;
 }
 
 .cityCardText {
