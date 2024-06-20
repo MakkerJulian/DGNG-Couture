@@ -12,7 +12,7 @@ import '../css/admin.css'
 
 const emptyForm: AccountCreate = {
     name: '',
-    email: '',
+    mail: '',
     password: '',
     role: '',
 }
@@ -42,7 +42,7 @@ export const Admin = () => {
             field: 'name', flex: 1, headerName: 'Name',
         },
         {
-            field: 'email', flex: 1, headerName: 'E-mail',
+            field: 'mail', flex: 1, headerName: 'E-mail',
         },
         {
             field: 'role', flex: 1, headerName: 'Role',
@@ -89,7 +89,7 @@ export const Admin = () => {
                     <TextField
                         sx={{ width: '80%', margin: '20px' }}
                         label="E-mail"
-                        value={form.email}
+                        value={form.mail}
                         onChange={handleChange}
                     >
                     </TextField>
