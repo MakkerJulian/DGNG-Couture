@@ -1,7 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { CloudIcon } from "../icons";
 import { useNavigate } from "react-router-dom";
-import '../css/countryCard.css'
+import '../css/countryCard.css';
 
 type CountryTabProps = {
     country: string;
@@ -10,9 +10,17 @@ type CountryTabProps = {
     feelTemp: number;
     wind: number;
     precip: number;
-}
-const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip }: CountryTabProps) => {
+    onDownloadClick: () => void;
+};
+
+const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip, onDownloadClick }: CountryTabProps) => {
     const navigate = useNavigate();
+
+    const handleDownloadClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.stopPropagation();  
+        onDownloadClick();        
+    };
+
     return (
         <button onClick={() => navigate("/country?country=" + country)}>
             <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }}>
@@ -26,9 +34,11 @@ const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip }: CountryT
                     <Typography variant='h6'>Feels like {feelTemp}</Typography>
                     <Typography variant="h6">Wind {wind}km/h</Typography>
                     <Typography variant="h6">Precip {precip}%</Typography>
+                    <Button variant="contained" onClick={handleDownloadClick}>Download Data</Button>
                 </Box>
             </Box>
         </button>
-    )
-}
-export default CountryTab
+    );
+};
+
+export default CountryTab;
