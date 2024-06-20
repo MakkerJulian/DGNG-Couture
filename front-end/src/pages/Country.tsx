@@ -1,5 +1,4 @@
-import { Box, Typography } from "@mui/material";
-import { MexicoHomeBg } from "../assets";
+import {Box, Button, FormControlLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, TextField, Typography} from "@mui/material";
 import { CityTab } from "../components/cityTab.tsx";
 import { useEffect, useState } from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
@@ -10,6 +9,8 @@ import { groupByCity, groupByDateTime } from "../util/WDGroupBy.ts";
 import { LogoBar } from "../components/topbar.tsx";
 import '../css/country.css'
 import { DateGraph } from "../components/DateGraph.tsx";
+import { CustomModal } from "../components/customModal.tsx";
+import { convertToCSV } from "../util/CSVConverter.ts";
 
 export const Country = () => {
     const queryParameters = new URLSearchParams(window.location.search);
@@ -17,11 +18,16 @@ export const Country = () => {
 
     const [cityData, setCityData] = useState<Map<string, WeatherData>>(new Map());
     const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
+    const [countryData, setCountryData] = useState<WeatherData[]>([]);
+    const [open, setOpen] = useState(false);
+    const [city, setCity] = useState<string>("");
+    const [format, setFormat] = useState<string>('json');
 
     useEffect(() => {
         if (country && isCountryOption(country)) {
             getCountry(country).then((data) => {
                 if (data) {
+                    setCountryData(data);
                     setCityData(groupByCity(data));
                     setTimeData(groupByDateTime(data));
                 }
@@ -37,9 +43,83 @@ export const Country = () => {
     const precipitations = Array.from(timeData).map(time => time[1].precipitation);
     const airpressures = Array.from(timeData).map(time => time[1].s_airpressure);
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFilters({ ...filters, [e.target.name]: e.target.value });
+    }
+
+    const handleSelectChange = (e: SelectChangeEvent<string>) => {
+        setFilters({ ...filters, condition: e.target.value});
+    }
+
+    const handleOpen = (city: string) => {
+        setCity(city);
+        setOpen(true);
+    };
+
+    const handleDownload = () => {
+        if (city === "") return;
+        let data: WeatherData[] = []
+        switch (city) {
+            case 'country':
+                data = countryData;
+                break;
+            default:
+                
+        }
+        if(data.length === 0){
+            enqueueSnackbar("No data to download", { variant: 'error' });
+            return;
+        }
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 10); // Format as YYYY-MM-DD
+
+        if (format === 'json') {
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${country}-weather-data-${formattedDate}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        } else if (format === 'csv') {
+            const csv = convertToCSV(data);
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${country}-weather-data-${formattedDate}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    }
+
+
     return (
         <Box>
             <LogoBar title={country} backbutton />
+
+            <Box className={"filterBar"}>
+                <Typography className={"filterTitle"}>Filters</Typography>
+                <TextField name={"city"} className={"filterInput"} placeholder={"City"} onChange={handleChange}></TextField>
+                <Select name={"condition"} placeholder={"Conditions"} className={"filterDropDown"} defaultValue="" onChange={handleSelectChange}>
+                    <MenuItem value={"Clouds"}>Clouds</MenuItem>
+                    <MenuItem value={"Freezing"}>Freezing</MenuItem>
+                    <MenuItem value={"Tornado"}>Tornado</MenuItem>
+                    <MenuItem value={"Hail"}>Hail</MenuItem>
+                    <MenuItem value={"Snow"}>Snow</MenuItem>
+                    <MenuItem value={"Thunder"}>Thunder</MenuItem>
+                </Select>
+                <Button variant="contained" onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    handleOpen("country");
+                }}>
+                    Download Data
+                </Button>
+            </Box>
             {timeStamps.length > 0 && <Box className={'countryGraphBox'}>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
@@ -76,12 +156,35 @@ export const Country = () => {
                             temp={weatherData.temp}
                             bgImage={MexicoHomeBg}
                             feelTemp={weatherData.temp}
-                            wind={weatherData.windspeed}
-                            precip={weatherData.precipitation}
+                            onDownloadClick={() => handleOpen(data[0])}
                         ></CityTab>
                     );
                 })}
             </Box>
+            <CustomModal
+                title="Download Data"
+                open={open}
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    handleDownload();
+                    setOpen(false)
+                }}
+                setOpen={setOpen}
+                onSubmitText="Download"
+            >
+                <Typography>
+                    Select your desired format
+                </Typography>
+
+                <RadioGroup
+                    defaultValue="json"
+                    name="Format selector"
+                    onChange={(event) => setFormat(event.target.value)}
+                >
+                    <FormControlLabel value="json" control={<Radio />} label="Json" />
+                    <FormControlLabel value="csv" control={<Radio />} label="CSV" />
+                </RadioGroup>
+            </CustomModal>
         </Box>
     );
 }
