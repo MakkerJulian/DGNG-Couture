@@ -5,6 +5,7 @@ import { JwtPayload } from 'jwt-decode';
 export type Token = JwtPayload & {
     email: string;
     role: string;
+    appId: string;
 }
 
 const axiosInstance: AxiosInstance = axios.create({
@@ -29,6 +30,6 @@ const IWAAxiosInstance: AxiosInstance = axios.create({
     proxy: false
 });
 
-export {axiosInstance, IWAAxiosInstance };
+export { axiosInstance, IWAAxiosInstance };
 
 
