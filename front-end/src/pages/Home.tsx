@@ -27,7 +27,7 @@ export const Home = () => {
     const [finlandData, setFinlandData] = useState<WeatherData[]>([]);
 
     const [open, setOpen] = useState(false);
-    const [country, setCountry] = useState<string>("");
+    const [downloadData, setDownLoadData] = useState<WeatherData[]>([]);
     const [format, setFormat] = useState<string>('json');
 
     useEffect(() => {
@@ -86,49 +86,22 @@ export const Home = () => {
     const alaskaCalc = calculateAveragePerCountry(alaskaData);
     const finlandCalc = calculateAveragePerCountry(finlandData);
 
-    const handleOpen = (country: string) => {
-        setCountry(country);
+    const handleOpen = (data: WeatherData[]) => {
+        setDownLoadData(data);
         setOpen(true);
     };
 
     const handleDownload = () => {
-        if (country === "") return;
-        let data: WeatherData[] = []
-        switch (country) {
-            case 'Mexico':
-                data = mexicoData;
-                break;
-            case 'France':
-                data = franceData;
-                break;
-            case 'United States':
-                data = americaData;
-                break;
-            case 'Spain':
-                data = spainData;
-                break;
-            case 'Greenland':
-                data = greenlandData;
-                break;
-            case 'Norway':
-                data = norwayData;
-                break;
-            case 'Alaska':
-                data = alaskaData;
-                break;
-            case 'Finland':
-                data = finlandData;
-                break;
-        }
-        if(data.length === 0){
+        if(downloadData.length === 0){
             enqueueSnackbar("No data to download", { variant: 'error' });
             return;
         }
+        const country = downloadData[0].weatherstation.geolocation.country;
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().slice(0, 10); // Format as YYYY-MM-DD
 
         if (format === 'json') {
-            const json = JSON.stringify(data, null, 2);
+            const json = JSON.stringify(downloadData, null, 2);
             const blob = new Blob([json], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -139,7 +112,7 @@ export const Home = () => {
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
         } else if (format === 'csv') {
-            const csv = convertToCSV(data);
+            const csv = convertToCSV(downloadData);
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -166,7 +139,7 @@ export const Home = () => {
                                 bgImage={MexicoHomeBg}
                                 wind={mexicoCalc.wind}
                                 precip={mexicoCalc.precip}
-                                onDownloadClick={() => handleOpen('Mexico')}
+                                onDownloadClick={() => handleOpen(mexicoData)}
                             />
                         </React.Suspense>
                         <React.Suspense fallback={<div>Loading France...</div>}>
@@ -176,7 +149,7 @@ export const Home = () => {
                                 bgImage={FranceHomeBg}
                                 wind={franceCalc.wind}
                                 precip={franceCalc.precip}
-                                onDownloadClick={() => handleOpen('France')}
+                                onDownloadClick={() => handleOpen(franceData)}
                             />
                         </React.Suspense>
                         <React.Suspense fallback={<div>Loading America...</div>}>
@@ -186,7 +159,7 @@ export const Home = () => {
                                 bgImage={AmericaHomeBg}
                                 wind={americaCalc.wind}
                                 precip={americaCalc.precip}
-                                onDownloadClick={() => handleOpen('United States')}
+                                onDownloadClick={() => handleOpen(americaData)}
                             />
                         </React.Suspense>
                         <React.Suspense fallback={<div>Loading Spain...</div>}>
@@ -196,7 +169,7 @@ export const Home = () => {
                                 bgImage={SpainHomeBg}
                                 wind={spainCalc.wind}
                                 precip={spainCalc.precip}
-                                onDownloadClick={() => handleOpen('Spain')}
+                                onDownloadClick={() => handleOpen(spainData)}
                             />
                         </React.Suspense>
                     </>
@@ -209,7 +182,7 @@ export const Home = () => {
                                 bgImage={GreenlandHomeBg}
                                 wind={greenlandCalc.wind}
                                 precip={greenlandCalc.precip}
-                                onDownloadClick={() => handleOpen('Greenland')}
+                                onDownloadClick={() => handleOpen(greenlandData)}
                             />
                         </React.Suspense>
 
@@ -220,7 +193,7 @@ export const Home = () => {
                                 bgImage={NorwayHomeBg}
                                 wind={norwayCalc.wind}
                                 precip={norwayCalc.precip}
-                                onDownloadClick={() => handleOpen('Norway')}
+                                onDownloadClick={() => handleOpen(norwayData)}
                             />
                         </React.Suspense>
 
@@ -231,7 +204,7 @@ export const Home = () => {
                                 bgImage={AlaskaHomeBg}
                                 wind={alaskaCalc.wind}
                                 precip={alaskaCalc.precip}
-                                onDownloadClick={() => handleOpen('Alaska')}
+                                onDownloadClick={() => handleOpen(alaskaData)}
                             />
                         </React.Suspense>
 
@@ -242,7 +215,7 @@ export const Home = () => {
                                 bgImage={FinlandHomeBg}
                                 wind={finlandCalc.wind}
                                 precip={finlandCalc.precip}
-                                onDownloadClick={() => handleOpen('Finland')}
+                                onDownloadClick={() => handleOpen(finlandData)}
                             />
                         </React.Suspense>
                     </>
