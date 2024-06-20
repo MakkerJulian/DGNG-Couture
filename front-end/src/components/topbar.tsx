@@ -16,7 +16,7 @@ export const LogoBar = ({ title, backbutton }: LogoBarProps) => {
             {!title && <img src = {CoutureLogo} alt='Couture Logo' className='logo' />}
             <Typography variant={'h1'}>{title}</Typography>
             <Box className={'spacer'} >
-                {backbutton && <Button id={"backButton"} onClick={()=>nav(-1)}>Back</Button>}
+                {backbutton && <Button className='customButton' onClick={()=>nav(-1)}>Back</Button>}
                 <LogoutButton/>
             </Box>
         </Box>
