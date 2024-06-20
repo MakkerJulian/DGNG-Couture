@@ -47,8 +47,6 @@ export const Country = () => {
             filtered = filtered.filter((data) => data[0] && data[0].startsWith(filters.city));
         }
 
-        console.log(filters.condition);
-
         if (filters.condition !== "") {
             switch (filters.condition) {
                 case "Clouds":
