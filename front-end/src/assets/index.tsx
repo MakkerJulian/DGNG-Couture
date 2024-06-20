@@ -16,9 +16,11 @@ import NorwayCountryBg from './NorwayCountryBg.png';
 import NorwayHomeBg from './NorwayHomeBg.png';
 import GreenlandHomeBg from './GreenlandHomeBg.png';
 import Clouds from './Clouds.png';
+import Zara from './zarashop.png';
 
 export {
     BG_Image,
+    Zara,
     CoutureLogo,
     AmericaCountryBg,
     AmericaHomeBg,

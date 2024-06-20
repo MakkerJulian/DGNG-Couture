@@ -7,17 +7,16 @@ type CountryTabProps = {
     country: string;
     temp: number;
     bgImage: string;
-    feelTemp: number;
     wind: number;
     precip: number;
     onDownloadClick: () => void;
 };
 
-const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip, onDownloadClick }: CountryTabProps) => {
+const CountryTab = ({ country, temp, bgImage, wind, precip, onDownloadClick }: CountryTabProps) => {
     const navigate = useNavigate();
+
     return (
-        <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }}>
-            <Button sx={{ position: "absolute", width: "45vw", height: "35vh" }} onClick={() => navigate("/country?country=" + country)} />
+        <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }} onClick={() => navigate("/country?country=" + country)}>
             <Box className="countryCardText">
                 <Typography variant={'h2'}>{country}</Typography>
                 <Typography variant="h4">{temp}°</Typography>
@@ -25,12 +24,16 @@ const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip, onDownload
             </Box>
 
             <Box className="countryCardText Right">
-                <Typography variant='h6'>Feels like {feelTemp}</Typography>
                 <Typography variant="h6">Wind {wind}km/h</Typography>
                 <Typography variant="h6">Precip {precip}%</Typography>
-                <Button variant="contained" onClick={onDownloadClick}>Download Data</Button>
+                <Button variant="contained" onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.stopPropagation();
+                    onDownloadClick();
+                }}>
+                    Download Data
+                </Button>
             </Box>
-        </Box>
+        </Box >
     );
 };
 

@@ -8,7 +8,8 @@ import { WeatherData } from "../types/Weatherdata";
 type CityTabProps = {
     city: string;
     temp: number;
-    bgImage: string;
+    country: string;
+    weatherData: WeatherData;
     feelTemp: number;
     onDownloadClick: () => void;
 }
@@ -16,7 +17,6 @@ type CityTabProps = {
 export const CityTab = ({ country, city, feelTemp, weatherData, onDownloadClick }: CityTabProps) => {
     const navigate = useNavigate();
     return (
-
         <button className="cityButton" onClick={() => navigate(`/city?city=${city}&country=${country}`)}>
             <Box className="cityCard" sx={{ backgroundImage: `url(${Clouds})` }}>
                 <Box className="cityCardText">
@@ -47,17 +47,6 @@ export const CityTab = ({ country, city, feelTemp, weatherData, onDownloadClick 
                     </Button>
                 </Box>
             </Box>
-
-            <Box className="cityCardTextInfo">
-                <Typography variant='h6'>Feels like {feelTemp}</Typography>
-                <Typography variant="h6">Wind {wind}km/h</Typography>
-                <Typography variant="h6">Precip {precip}%</Typography>
-            </Box>
-
-            <Box className="cityCardName">
-                <Typography variant={'h4'}>{city}</Typography>
-            </Box>
-
-        </Box>
-    )
+        </button>
+    );
 }

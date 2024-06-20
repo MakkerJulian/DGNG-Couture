@@ -1,22 +1,30 @@
 import {Box, Button, FormControlLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, TextField, Typography} from "@mui/material";
 import { CityTab } from "../components/cityTab.tsx";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
 import { enqueueSnackbar } from "notistack";
 import { isCountryOption } from "../types/CountryOptions.ts";
 import { groupByCity, groupByDateTime } from "../util/WDGroupBy.ts";
 import { LogoBar } from "../components/topbar.tsx";
-import '../css/country.css'
+import '../css/country.css';
+import '../css/filterBar.css';
 import { DateGraph } from "../components/DateGraph.tsx";
 import { CustomModal } from "../components/customModal.tsx";
 import { convertToCSV } from "../util/CSVConverter.ts";
+
+export type filterData = {
+    city: string,
+    condition: string;
+}
 
 export const Country = () => {
     const queryParameters = new URLSearchParams(window.location.search);
     const country = queryParameters.get("country") ?? "";
 
     const [cityData, setCityData] = useState<Map<string, WeatherData>>(new Map());
+    const [filteredData, setFilteredData] = useState<[string, WeatherData][]>([]);
+    const [filters, setFilters] = useState<filterData>({city:"", condition:""});
     const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
     const [countryData, setCountryData] = useState<WeatherData[]>([]);
     const [open, setOpen] = useState(false);
@@ -29,6 +37,7 @@ export const Country = () => {
                 if (data) {
                     setCountryData(data);
                     setCityData(groupByCity(data));
+                    setFilteredData(Array.from(groupByCity(data)));
                     setTimeData(groupByDateTime(data));
                 }
             }).catch(() => {
@@ -36,6 +45,40 @@ export const Country = () => {
             })
         }
     }, [country]);
+
+
+    useEffect(() => {
+        let filtered = Array.from(cityData);
+
+        if (filters.city !== "") {
+            filtered = filtered.filter((data) => data[0] && data[0].startsWith(filters.city));
+        }
+
+        if (filters.condition !== "") {
+            switch (filters.condition) {
+                case "Clouds":
+                    filtered = filtered.filter((data) => data[1].clouds);
+                    break;
+                case "Freezing":
+                    filtered = filtered.filter((data) => data[1].freezing);
+                    break;
+                case "Tornado":
+                    filtered = filtered.filter((data) => data[1].tornado);
+                    break;
+                case "Hail":
+                    filtered = filtered.filter((data) => data[1].hail);
+                    break;
+                case "Snow":
+                    filtered = filtered.filter((data) => data[1].snow);
+                    break;
+                case "Thunder":
+                    filtered = filtered.filter((data) => data[1].thunder);
+                    break;
+            }
+        }
+
+        setFilteredData(filtered);
+    }, [cityData, filters]);
 
     const timeStamps = Array.from(timeData).map(time => new Date(time[0]));
     const temps = Array.from(timeData).map(time => time[1].temp);
@@ -125,36 +168,37 @@ export const Country = () => {
                     <Typography variant="h4">
                         Average Temperature
                     </Typography>
-                    <DateGraph  timeStamps={timeStamps} data={temps} yAxisLabel="Temperature" />
+                    <DateGraph timeStamps={timeStamps} data={temps} yAxisLabel="Temperature" />
                 </Box>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
                         Average Wind Speed
                     </Typography>
-                    <DateGraph  timeStamps={timeStamps} data={windspeeds} yAxisLabel="Wind Speed" />
+                    <DateGraph timeStamps={timeStamps} data={windspeeds} yAxisLabel="Wind Speed" />
                 </Box>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
                         Average Precipitation
                     </Typography>
-                    <DateGraph  timeStamps={timeStamps} data={precipitations} yAxisLabel="Precipitation" />
+                    <DateGraph timeStamps={timeStamps} data={precipitations} yAxisLabel="Precipitation" />
                 </Box>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
                         Average Air Pressure
                     </Typography>
-                    <DateGraph  timeStamps={timeStamps} data={airpressures} yAxisLabel="Airpressure" />
+                    <DateGraph timeStamps={timeStamps} data={airpressures} yAxisLabel="Airpressure" />
                 </Box>
             </Box>}
             <Box className={'countryCityBox '}>
-                {Array.from(cityData).map((data) => {
+                {filteredData.map((data) => {
                     const weatherData = data[1];
                     return (
                         <CityTab
                             key={data[0]}
                             city={data[0]}
                             temp={weatherData.temp}
-                            bgImage={MexicoHomeBg}
+                            country={country}
+                            weatherData={weatherData}
                             feelTemp={weatherData.temp}
                             onDownloadClick={() => handleOpen(data[0])}
                         ></CityTab>

@@ -4,6 +4,7 @@ import { AccountService } from './services/account/account.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Account } from 'src/typeorm/account.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { JwtModule } from '@nestjs/jwt';
       secret: 'DRAB_SECRET',
       signOptions: { expiresIn: '1h' },
     }),
+    ConfigModule.forRoot(),
   ],
   controllers: [AccountController],
   providers: [AccountService],
