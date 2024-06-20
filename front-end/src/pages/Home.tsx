@@ -224,7 +224,11 @@ export const Home = () => {
             <CustomModal
                 title="Download Data"
                 open={open}
-                onSubmit={handleDownload}
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    handleDownload();
+                    setOpen(false);
+                }}
                 setOpen={setOpen}
                 onSubmitText="Download"
             >
