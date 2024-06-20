@@ -1,6 +1,6 @@
-import {Box, Button, MenuItem, Select, SelectChangeEvent, TextField, Typography} from "@mui/material";
+import {Box, MenuItem, Select, SelectChangeEvent, TextField, Typography} from "@mui/material";
 import { CityTab } from "../components/cityTab.tsx";
-import React, {ReactEventHandler, ReactNode, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
 import { enqueueSnackbar } from "notistack";
@@ -71,7 +71,7 @@ export const Country = () => {
         }
 
         setFilteredData(filtered);
-    }, [filters]);
+    }, [cityData, filters]);
 
     const timeStamps = Array.from(timeData).map(time => new Date(time[0]));
     const temps = Array.from(timeData).map(time => time[1].temp);
@@ -94,7 +94,7 @@ export const Country = () => {
             <Box className={"filterBar"}>
                 <Typography className={"filterTitle"}>Filters</Typography>
                 <TextField name={"city"} className={"filterInput"} placeholder={"City"} onChange={handleChange}></TextField>
-                <Select name={"condition"} placeholder={"Conditions"} className={"filterDropDown"} onChange={handleSelectChange}>
+                <Select name={"condition"} placeholder={"Conditions"} className={"filterDropDown"} defaultValue="" onChange={handleSelectChange}>
                     <MenuItem value={"Clouds"}>Clouds</MenuItem>
                     <MenuItem value={"Freezing"}>Freezing</MenuItem>
                     <MenuItem value={"Tornado"}>Tornado</MenuItem>

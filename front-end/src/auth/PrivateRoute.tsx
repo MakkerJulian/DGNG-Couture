@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { Token } from "../axios";
 import { useJwt } from "react-jwt";
+import { jwtDecode } from "jwt-decode";
 
 
 export type Route = {
@@ -27,13 +28,11 @@ const Layout = ({ children }: Props) => (
 );
 
 export const PrivateRoutes = ({ route }: PrivateRoutesProps) => {
-    const token = sessionStorage.getItem('token');
-    const { isExpired, decodedToken } = useJwt(token ?? "");
-    const decoded = decodedToken as Token;
-
-    const appId = import.meta.env.VITE_APP_BACKENDID ?? "";
-
-    const authenticated = token && !isExpired && decoded.appId === appId;
+    const token = sessionStorage.getItem('token') as string;
+    const decodedToken = jwtDecode(token) as Token;
+    const isExpired = useJwt(token).isExpired;
+    const backendID = import.meta.env.VITE_APP_BACKENDID as string;
+    const authenticated = token && !isExpired && decodedToken.appId === backendID;
 
     const hasRoles = () => {
         if (!decodedToken) return false;
