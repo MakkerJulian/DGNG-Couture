@@ -5,7 +5,6 @@
     align-items: center;
     height: 15vh;
     width: 100vw;
-    position: fixed;
     z-index: 1000;
     border-bottom: 2px black solid;
 }
@@ -13,6 +12,13 @@
 .customButton {
     background-color: #a60000 !important;
     color: white !important;
+}
+
+#backButton {
+    background-color: #a60000 !important;
+    color: white !important;
+    position: absolute;
+    flex-direction: column;
 }
 
 .logo {

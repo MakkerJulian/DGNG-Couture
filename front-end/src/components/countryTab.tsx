@@ -15,22 +15,29 @@ type CountryTabProps = {
 
 const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip, onDownloadClick }: CountryTabProps) => {
     const navigate = useNavigate();
-    return (
-        <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }}>
-            <Button sx={{ position: "absolute", width: "45vw", height: "35vh" }} onClick={() => navigate("/country?country=" + country)} />
-            <Box className="countryCardText">
-                <Typography variant={'h2'}>{country}</Typography>
-                <Typography variant="h4">{temp}°</Typography>
-                <CloudIcon />
-            </Box>
 
-            <Box className="countryCardText Right">
-                <Typography variant='h6'>Feels like {feelTemp}</Typography>
-                <Typography variant="h6">Wind {wind}km/h</Typography>
-                <Typography variant="h6">Precip {precip}%</Typography>
-                <Button variant="contained" onClick={onDownloadClick}>Download Data</Button>
+    const handleDownloadClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.stopPropagation();  
+        onDownloadClick();        
+    };
+
+    return (
+        <button onClick={() => navigate("/country?country=" + country)}>
+            <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }}>
+                <Box className="countryCardText">
+                    <Typography variant={'h2'}>{country}</Typography>
+                    <Typography variant="h4">{temp}°</Typography>
+                    <CloudIcon />
+                </Box>
+
+                <Box className="countryCardText Right">
+                    <Typography variant='h6'>Feels like {feelTemp}</Typography>
+                    <Typography variant="h6">Wind {wind}km/h</Typography>
+                    <Typography variant="h6">Precip {precip}%</Typography>
+                    <Button variant="contained" onClick={handleDownloadClick}>Download Data</Button>
+                </Box>
             </Box>
-        </Box>
+        </button>
     );
 };
 

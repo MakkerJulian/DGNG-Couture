@@ -1,0 +1,48 @@
+.cityCard {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: auto;
+    justify-content: space-between;
+    margin-top: 30px;
+    width: 23vw;
+    background-size: cover;
+}
+
+.cityButton {
+    all: inherit;
+    margin: 0;
+    width: fit-content;
+}
+
+.cityCardText {
+    margin-left: 5px;
+}
+
+.cityCardText p{
+    font-size: clamp(20px, 1.5vw, 30px);
+}
+
+.cityCardName {
+    margin-top: 100px;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row: 2;
+    font-size: 2vh;
+    background-color: #c99696;
+    text-align: center;
+}
+
+.cityCardName p {
+    font-size: clamp(30px, 2vw, 40px);
+}
+
+.cityCardTextInfo {
+    grid-column: 3;
+    flex-direction: column;
+    text-align: right;
+    background-image: linear-gradient(to top, #ce9393, #cba1a1, #f6c9c9);
+    padding: 5px;
+}
+.cityCardTextInfo p{
+    font-size: clamp(15px, 2vw, 20px);
+}

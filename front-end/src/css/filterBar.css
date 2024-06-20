@@ -1,0 +1,25 @@
+.filterBar {
+    border-bottom: 2px solid black;
+    padding: 10px;
+}
+
+.filterTitle {
+    font-size: clamp(30px, 2vw, 100px);
+    display:inline;
+}
+
+.filterInput {
+    margin-left: 15px;
+    width: 14vw;
+}
+
+.filterDropDown {
+    margin-left: 15px;
+    width: 5vw;
+}
+
+.filterButton {
+    background-color: #a60000 !important;
+    color: white;
+    margin-left: 15px;
+}
