@@ -15,13 +15,16 @@ const DownloadData: React.FC<DownloadDataProps> = ({ format, downloadData, setDi
         if (format && downloadData) {
             const { country, data } = downloadData;
 
+            const currentDate = new Date();
+            const formattedDate = currentDate.toISOString().slice(0, 10); // Format as YYYY-MM-DD
+
             if (format === 'json') {
                 const json = JSON.stringify(data, null, 2);
                 const blob = new Blob([json], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = `${country}-weather-data.json`;
+                link.download = `${country}-weather-data-${formattedDate}.json`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
@@ -32,7 +35,7 @@ const DownloadData: React.FC<DownloadDataProps> = ({ format, downloadData, setDi
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = `${country}-weather-data.csv`;
+                link.download = `${country}-weather-data-${formattedDate}.csv`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
