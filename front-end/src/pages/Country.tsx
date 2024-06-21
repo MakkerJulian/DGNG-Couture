@@ -1,6 +1,6 @@
-import {Box, Button, FormControlLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, TextField, Typography} from "@mui/material";
+import { Box, Button, FormControlLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
 import { CityTab } from "../components/cityTab.tsx";
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
 import { enqueueSnackbar } from "notistack";
@@ -24,7 +24,7 @@ export const Country = () => {
 
     const [cityData, setCityData] = useState<Map<string, WeatherData>>(new Map());
     const [filteredData, setFilteredData] = useState<[string, WeatherData][]>([]);
-    const [filters, setFilters] = useState<filterData>({city:"", condition:""});
+    const [filters, setFilters] = useState<filterData>({ city: "", condition: "" });
     const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
     const [countryData, setCountryData] = useState<WeatherData[]>([]);
     const [open, setOpen] = useState(false);
@@ -91,7 +91,7 @@ export const Country = () => {
     }
 
     const handleSelectChange = (e: SelectChangeEvent<string>) => {
-        setFilters({ ...filters, condition: e.target.value});
+        setFilters({ ...filters, condition: e.target.value });
     }
 
     const handleOpen = (city: string) => {
@@ -107,9 +107,14 @@ export const Country = () => {
                 data = countryData;
                 break;
             default:
-                
+                const cityWeatherData = cityData.get(city);
+                if (cityWeatherData) {
+                    data = [cityWeatherData];
+                }
+                break;
+
         }
-        if(data.length === 0){
+        if (data.length === 0) {
             enqueueSnackbar("No data to download", { variant: 'error' });
             return;
         }
