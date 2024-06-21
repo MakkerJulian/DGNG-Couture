@@ -1,3 +1,11 @@
+html, body {
+    overflow: hidden;
+}
+
+.button {
+    margin: 1%;
+}
+
 .nameAndData{
     display: flex;
     flex-direction: column;
