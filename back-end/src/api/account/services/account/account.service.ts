@@ -5,6 +5,7 @@ import { Account } from 'src/typeorm/account.entity';
 import { Repository } from 'typeorm';
 import * as crypto from 'crypto';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AccountService {
@@ -12,6 +13,7 @@ export class AccountService {
     @InjectRepository(Account)
     private readonly accountRepository: Repository<Account>,
     private jwtService: JwtService,
+    private readonly configService: ConfigService,
   ) { }
 
   createAccount(CreateAccountDto: CreateAccountDto) {
@@ -59,12 +61,12 @@ export class AccountService {
     if (!account) {
       throw new UnauthorizedException();
     }
-
     if (account.password === password) {
       const payload = {
         sub: account.uuid,
         email: account.mail,
         role: account.role,
+        appId: this.configService.get<string>('APP_ID'),
       };
       return {
         access_token: await this.jwtService.signAsync(payload),

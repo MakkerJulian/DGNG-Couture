@@ -81,7 +81,10 @@ export const Admin = () => {
                 open={openAccount}
                 title="Add new account"
                 setOpen={setOpenAccount}
-                onSubmit={handleSubmit(createAccount)}
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    createAccount();
+                }}
             >
                 <TextField
                     sx={{ width: '80%', margin: '20px' }}
@@ -143,6 +146,6 @@ export const Admin = () => {
                     Add new account
                 </Button>
             </Box>
-        </Box>
+        </Box >
     )
 }
