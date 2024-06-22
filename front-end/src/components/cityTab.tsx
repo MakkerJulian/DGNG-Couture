@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { Clouds } from "../assets";
+import {Clouds, Cloudy, Freezing, Sunny, Thunder, Tornado} from "../assets";
 import '../css/cityCard.css';
 import { useNavigate } from "react-router-dom";
 import * as Icons from "../icons";
@@ -15,10 +15,22 @@ type CityTabProps = {
 
 export const CityTab = ({ country, city, feelTemp, weatherData }: CityTabProps) => {
     const navigate = useNavigate();
+    let image = Sunny;
+
+    if (weatherData.clouds > 50) {
+        image = Cloudy;
+    } if (weatherData.freezing || weatherData.snow) {
+        image = Freezing;
+    } if (weatherData.thunder) {
+        image = Thunder;
+    } if (weatherData.tornado) {
+        image = Tornado;
+    }
+
     return (
 
         <button className="cityButton" onClick={() => navigate(`/city?city=${city}&country=${country}`)}>
-            <Box className="cityCard" sx={{ backgroundImage: `url(${Clouds})` }}>
+            <Box className="cityCard" sx={{ backgroundImage: `url(${image})` }}>
                 <Box className="cityCardText">
                     <Typography>{weatherData.temp}°</Typography>
                     {weatherData.clouds > 50 && <Icons.CloudIcon />}
