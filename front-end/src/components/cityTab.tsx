@@ -28,7 +28,6 @@ export const CityTab = ({ country, city, feelTemp, weatherData }: CityTabProps) 
     }
 
     return (
-
         <button className="cityButton" onClick={() => navigate(`/city?city=${city}&country=${country}`)}>
             <Box className="cityCard" sx={{ backgroundImage: `url(${image})` }}>
                 <Box className="cityCardText">

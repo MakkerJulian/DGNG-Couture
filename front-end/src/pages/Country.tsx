@@ -1,4 +1,4 @@
-import {Box, MenuItem, Select, SelectChangeEvent, TextField, Typography} from "@mui/material";
+import {Box, List, MenuItem, Select, SelectChangeEvent, TextField, Typography} from "@mui/material";
 import { CityTab } from "../components/cityTab.tsx";
 import React, { useEffect, useState} from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
@@ -87,6 +87,23 @@ export const Country = () => {
         setFilters({ ...filters, condition: e.target.value});
     }
 
+    let amountOfRain = 0;
+    let amountOfSnow = 0;
+    let amountOfTornados = 0;
+    let amountOfThunder = 0;
+
+    filteredData.map(data => {
+        if (data[1].rain) {
+            amountOfRain++;
+        } if (data[1].snow) {
+            amountOfSnow++;
+        } if (data[1].tornado) {
+            amountOfTornados++;
+        } if (data[1].thunder) {
+            amountOfThunder++;
+        }
+    });
+
     return (
         <Box>
             <LogoBar title={country} backbutton />
@@ -127,6 +144,15 @@ export const Country = () => {
                         Average Air Pressure
                     </Typography>
                     <DateGraph timeStamps={timeStamps} data={airpressures} yAxisLabel="Airpressure" />
+                </Box>
+                <Typography variant="h4" sx={{"margin-left": "2vw", "margin-top": "3vh"}}>
+                    Amount of cities: {filteredData.length}
+                </Typography>
+                <Box className={'countryOtherData'}>
+                    <Typography>Cities with rain: {amountOfRain}</Typography>
+                    <Typography>Cities with snow: {amountOfSnow}</Typography>
+                    <Typography>Cities with tornados: {amountOfTornados}</Typography>
+                    <Typography>Cities with thunder: {amountOfThunder}</Typography>
                 </Box>
             </Box>}
             <Box className={'countryCityBox '}>
