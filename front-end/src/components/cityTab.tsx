@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Clouds } from "../assets";
 import '../css/cityCard.css';
 import { useNavigate } from "react-router-dom";
@@ -11,12 +11,12 @@ type CityTabProps = {
     country: string;
     weatherData: WeatherData;
     feelTemp: number;
+    onDownloadClick: () => void;
 }
 
-export const CityTab = ({ country, city, feelTemp, weatherData }: CityTabProps) => {
+export const CityTab = ({ country, city, feelTemp, weatherData, onDownloadClick }: CityTabProps) => {
     const navigate = useNavigate();
     return (
-
         <button className="cityButton" onClick={() => navigate(`/city?city=${city}&country=${country}`)}>
             <Box className="cityCard" sx={{ backgroundImage: `url(${Clouds})` }}>
                 <Box className="cityCardText">
@@ -39,9 +39,14 @@ export const CityTab = ({ country, city, feelTemp, weatherData }: CityTabProps) 
                     <Typography>Feels like {feelTemp}</Typography>
                     <Typography>Wind {weatherData.windspeed}km/h</Typography>
                     <Typography>Precip {weatherData.precipitation}%</Typography>
+                    <Button variant="contained" onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        e.stopPropagation();
+                        onDownloadClick();
+                    }}>
+                        Download Data
+                    </Button>
                 </Box>
             </Box>
         </button>
-
     );
 }
