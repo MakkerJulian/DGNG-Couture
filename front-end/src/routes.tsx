@@ -21,7 +21,7 @@ export const routes: Route[] = [
         name: "home",
         path: "/home",
         element: Home,
-        requiredRoles: ["sales","research"]
+        requiredRoles: ["sales","research","admin"]
     },
     {
         name: "country",
@@ -32,6 +32,7 @@ export const routes: Route[] = [
         name: "admin",
         path: "/admin",
         element: Admin,
+        requiredRoles: ["admin"]
     },
     {
         name: "city",

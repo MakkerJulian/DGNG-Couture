@@ -36,11 +36,17 @@ export class AccountService {
       password: 'research',
       role: 'research',
     })
-    return await this.createAccount({
+    await this.createAccount({
       name: 'sales',
       mail: 'Sales@mail.com',
       password: 'sales',
       role: 'sales'
+    });
+    return await this.createAccount({
+      name: 'admin',
+      mail: 'Admin@mail.com',
+      password: 'admin',
+      role: 'admin'
     });
   }
 

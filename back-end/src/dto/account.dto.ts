@@ -18,7 +18,7 @@ export class CreateAccountDto {
   password: string;
 
   @IsNotEmpty()
-  @IsIn(['sales', 'research'])
+  @IsIn(['sales', 'research', 'admin'])
   role: string;
 }
 
