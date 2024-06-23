@@ -7,6 +7,7 @@
     width: 100vw;
     border-bottom: 2px black solid;
     text-align: center;
+    position: relative;
 }
 
 .customButton {
@@ -14,10 +15,17 @@
     color: white !important;
 }
 
+.spacer .customButton+.customButton {
+    margin-left: 1vw;
+}
+
 .spacer {
+    position: absolute;
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    right: 5vw;
 }
 
 .logo {
@@ -28,17 +36,18 @@
     .logo {
         width: 50vw;
     }
-
-    .spacer {
-        position: relative;
+    .spacer{
+        flex-direction: column;
     }
 
-    .customButton{
+    .customButton {
         height: 4vh;
         width: auto;
+        height: 25%;
+        bottom: 2.5vh;
     }
 
-    h1{
+    h1 {
         font-size: xx-large !important;
     }
 }
@@ -48,17 +57,12 @@
         width: 20vw;
     }
 
-    .spacer {
-        position: fixed;
-        right: 1vw;
-    }
-
-    .customButton{
+    .customButton {
         height: 3vh;
-        width: 8vw;
+        width: auto;
     }
 
-    h1{
+    h1 {
         font-size: 10vh !important;
     }
 }
