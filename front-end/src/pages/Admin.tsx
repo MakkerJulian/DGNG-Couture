@@ -59,7 +59,7 @@ export const Admin = () => {
 
     return (
         <Box flex={1} flexDirection={'column'}>
-            <LogoBar title="admin" backbutton />
+            <LogoBar title="Admin" backbutton />
             <Box className={"dataGridBox"}>
 
             <DataGrid
