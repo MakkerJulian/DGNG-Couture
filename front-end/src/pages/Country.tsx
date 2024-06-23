@@ -159,7 +159,6 @@ export const Country = () => {
         }
     }
 
-
     return (
         <Box>
             <LogoBar title={country} backbutton />
@@ -167,7 +166,8 @@ export const Country = () => {
             <Box className={"filterBar"}>
                 <Typography className={"filterTitle"}>Filters</Typography>
                 <TextField name={"city"} className={"filterInput"} placeholder={"City"} onChange={handleChange}></TextField>
-                <Select name={"condition"} placeholder={"Conditions"} className={"filterDropDown"} defaultValue="" onChange={handleSelectChange}>
+                <Typography className={"filterTitle"}>Condition</Typography>
+                <Select className={"filterDropDown"} defaultValue="" onChange={handleSelectChange}>
                     <MenuItem value={"Clouds"}>Clouds</MenuItem>
                     <MenuItem value={"Freezing"}>Freezing</MenuItem>
                     <MenuItem value={"Tornado"}>Tornado</MenuItem>
