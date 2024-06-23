@@ -4,7 +4,7 @@ import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
 import { enqueueSnackbar } from "notistack";
 import { isCountryOption } from "../types/CountryOptions.ts";
-import { groupByDateTime } from "../util/WDGroupBy.ts";
+import { getName, groupByDateTime } from "../util/WDGroupBy.ts";
 import { LogoBar } from "../components/topbar.tsx";
 import '../css/country.css'
 import '../css/city.css'
@@ -13,6 +13,7 @@ import * as Icons from '../icons'
 import { DateGraph } from "../components/DateGraph.tsx";
 import { CustomModal } from "../components/customModal.tsx";
 import { convertToCSV } from "../util/CSVConverter.ts";
+import { Penguin, Zara } from "../assets/index.tsx";
 
 export const City = () => {
     const queryParameters = new URLSearchParams(window.location.search);
@@ -23,18 +24,16 @@ export const City = () => {
     const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
     const [open, setOpen] = useState(false);
     const [format, setFormat] = useState<string>('json');
+    const [name, setName] = useState<string>("");
+    const [isSales, setSales] = useState<boolean>(false);
 
     useEffect(() => {
         if (city && isCountryOption(country)) {
             getCountry(country).then((data) => {
                 if (data) {
-                    const cityData = data.filter((wd) => {
-                        return wd.weatherstation.geolocation.city === city
-                            || wd.weatherstation.geolocation.town === city
-                            || wd.weatherstation.geolocation.village === city
-                            || wd.weatherstation.geolocation.place === city
-                            || wd.weatherstation.geolocation.county === city;
-                    });
+                    const cityData = data.filter((wd) => wd.weatherstation.geolocation.id === parseInt(city));
+                    setName(getName(cityData[0]));
+                    setSales(["United States", "Mexico", "France", "Spain"].includes(country));
                     setCityData(cityData);
                     setTimeData(groupByDateTime(cityData));
                 }
@@ -111,8 +110,7 @@ export const City = () => {
             URL.revokeObjectURL(url);
         }
     }
-
-
+    
     const timeStamps = Array.from(timeData).map(time => new Date(time[0]));
     const temps = Array.from(timeData).map(data => data[1].temp);
     const windspeeds = Array.from(timeData).map(data => data[1].windspeed);
@@ -121,7 +119,7 @@ export const City = () => {
 
     return (
         <Box>
-            <LogoBar title={city} backbutton />
+            <LogoBar title={name} backbutton />
             {timeStamps.length > 0 && <Box className={'countryGraphBox'}>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
@@ -166,14 +164,14 @@ export const City = () => {
                     ></DateGraph>
                 </Box>
             </Box>}
-            <Button variant="contained" sx={{margin: "0.4%"}} onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+            <Button variant="contained" sx={{ margin: "0.4%" }} onClick={() => {
                 handleOpen();
             }}>
                 Download Data
             </Button>
             {
                 cityData.length > 0 && <Box className={'nameAndData'}>
-                    <Typography variant="h2"> Zara </Typography>
+                    <Typography variant="h2">{isSales ? "Zara" : "Fiber Research Center"}</Typography>
                     <DataGrid
                         columns={columns}
                         rows={cityData}
@@ -181,6 +179,10 @@ export const City = () => {
                         initialState={{
                             sorting: { sortModel: [{ field: 'datetime', sort: 'desc' }] },
                             pagination: { paginationModel: { pageSize: 10 } },
+                        }}
+                        pageSizeOptions={[10]}
+                        sx={{
+                            backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),url(${isSales ? Zara : Penguin})`,
                         }}
                     />
                 </Box>
