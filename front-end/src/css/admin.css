@@ -23,3 +23,17 @@
     border-radius: '5px';
     margin: "auto";
 }
+
+@media only screen and (max-width: 900px){
+    .dataGridBox {
+        width: 100vw;
+    }
+
+    .dataGrid2 {
+        width: 100vw;
+    }
+    
+    .accountButton {
+        width: 100vw;
+    }
+}
