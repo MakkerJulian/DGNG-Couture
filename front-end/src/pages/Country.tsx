@@ -120,7 +120,7 @@ export const Country = () => {
         let data: WeatherData[] = []
         switch (city) {
             case 'country':
-                data = countryData;
+                data = filteredData.map((data) => data[1]);
                 break;
             default:
                 data = filteredData.filter((data) => data[0] === city).map((data) => data[1]);
