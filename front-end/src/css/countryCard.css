@@ -48,9 +48,8 @@
 
 @media only screen and (min-width: 768px){
     .countryCard {
-        width: 45vw;
+        width: 100vw;
     }
-
     .logo {
         width: 20vw;
     }
