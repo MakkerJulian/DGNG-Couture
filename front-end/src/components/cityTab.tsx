@@ -33,8 +33,12 @@ export const CityTab = ({ country, city, weatherData, onDownloadClick }: CityTab
     const name = getName(weatherData);
 
     return (
-        <Box className="cityCard" sx={{ backgroundImage: `url(${image})` }} onClick={
-            () => navigate(`/city?city=${city}&country=${country}`)}>
+        <Box 
+        className="cityCard" 
+        onClick={() => navigate(`/city?city=${city}&country=${country}`)}>
+            
+            <img loading="lazy" src={image} alt="weather" className="image" />
+            
             <Box className="cityCardText">
                 <Typography>{weatherData.temp}°</Typography>
                 {weatherData.clouds > 50 && <Icons.CloudIcon />}

@@ -49,7 +49,7 @@ export const CountryTab = ({ country, temp, wind, precip, onDownloadClick }: Cou
             className="countryCard"
             onClick={() => navigate("/country?country=" + country)}
         >
-            <img loading="lazy" src={img} className="image" />
+            <img loading="lazy" src={img} className="backgroundImage" />
 
             <Box className="countryCardText">
                 <Typography variant={'h2'}>{country}</Typography>
