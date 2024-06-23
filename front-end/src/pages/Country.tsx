@@ -26,7 +26,6 @@ export const Country = () => {
     const [filteredData, setFilteredData] = useState<[string, WeatherData][]>([]);
     const [filters, setFilters] = useState<filterData>({ city: "", condition: "" });
     const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
-    const [countryData, setCountryData] = useState<WeatherData[]>([]);
     const [open, setOpen] = useState(false);
     const [city, setCity] = useState<string>("");
     const [format, setFormat] = useState<string>('json');
@@ -35,7 +34,6 @@ export const Country = () => {
         if (country && isCountryOption(country)) {
             getCountry(country).then((data) => {
                 if (data) {
-                    setCountryData(data);
                     setCityData(groupByCity(data));
                     setFilteredData(Array.from(groupByCity(data)));
                     setTimeData(groupByDateTime(data));

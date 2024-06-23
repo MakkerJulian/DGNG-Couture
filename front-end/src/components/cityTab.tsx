@@ -43,7 +43,6 @@ export const CityTab = ({ country, city, weatherData, onDownloadClick }: CityTab
                     {weatherData.tornado && <Icons.TornadoIcon />}
                 </Box>
 
-
                 <Box className="cityCardName">
                     <Typography>{city}</Typography>
                 </Box>
