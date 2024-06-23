@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
@@ -11,6 +11,8 @@ import '../css/city.css'
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import * as Icons from '../icons'
 import { DateGraph } from "../components/DateGraph.tsx";
+import { CustomModal } from "../components/customModal.tsx";
+import { convertToCSV } from "../util/CSVConverter.ts";
 
 export const City = () => {
     const queryParameters = new URLSearchParams(window.location.search);
@@ -19,6 +21,8 @@ export const City = () => {
 
     const [cityData, setCityData] = useState<WeatherData[]>([]);
     const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
+    const [open, setOpen] = useState(false);
+    const [format, setFormat] = useState<string>('json');
 
     useEffect(() => {
         if (city && isCountryOption(country)) {
@@ -67,6 +71,46 @@ export const City = () => {
             }
         },
     ];
+
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDownload = () => {
+        let data: WeatherData[] = []
+        data = cityData;
+
+        if (data.length === 0) {
+            enqueueSnackbar("No data to download", { variant: 'error' });
+            return;
+        }
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 10); // Format as YYYY-MM-DD
+
+        if (format === 'json') {
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${country}-weather-data-${formattedDate}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        } else if (format === 'csv') {
+            const csv = convertToCSV(data);
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${country}-weather-data-${formattedDate}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    }
 
 
     const timeStamps = Array.from(timeData).map(time => new Date(time[0]));
@@ -122,6 +166,11 @@ export const City = () => {
                     ></DateGraph>
                 </Box>
             </Box>}
+            <Button variant="contained" sx={{margin: "0.4%"}} onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                handleOpen();
+            }}>
+                Download Data
+            </Button>
             {
                 cityData.length > 0 && <Box className={'nameAndData'}>
                     <Typography variant="h2"> Zara </Typography>
@@ -136,6 +185,30 @@ export const City = () => {
                     />
                 </Box>
             }
+            <CustomModal
+                title="Download Data"
+                open={open}
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    handleDownload();
+                    setOpen(false)
+                }}
+                setOpen={setOpen}
+                onSubmitText="Download"
+            >
+                <Typography>
+                    Select your desired format
+                </Typography>
+
+                <RadioGroup
+                    defaultValue="json"
+                    name="Format selector"
+                    onChange={(event) => setFormat(event.target.value)}
+                >
+                    <FormControlLabel value="json" control={<Radio />} label="Json" />
+                    <FormControlLabel value="csv" control={<Radio />} label="CSV" />
+                </RadioGroup>
+            </CustomModal>
         </Box >
     );
 }

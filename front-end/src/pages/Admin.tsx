@@ -4,7 +4,7 @@ import type { GridColDef } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import { CustomModal } from "../components/customModal";
 import { enqueueSnackbar } from "notistack";
-import {LogoutButton} from "../components/logoutButton.tsx";
+import { LogoutButton } from "../components/logoutButton.tsx";
 import { axiosInstance } from "../axios/index.tsx";
 import { AccountCreate, Account } from "../types/Account.ts";
 
@@ -86,7 +86,10 @@ export const Admin = () => {
                 open={openAccount}
                 title="Add new account"
                 setOpen={setOpenAccount}
-                onSubmit={createAccount}
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    createAccount();
+                }}
             >
                 <TextField
                     sx={{ width: '80%', margin: '20px' }}
@@ -146,6 +149,6 @@ export const Admin = () => {
                     Add new account
                 </Button>
             </Box>
-        </Box>
+        </Box >
     )
 }

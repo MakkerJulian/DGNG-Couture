@@ -9,6 +9,7 @@ type Props = {
     onSubmit: FormEventHandler<HTMLFormElement>,
     title: string,
     children: React.ReactNode
+    onSubmitText?: string
 }
 
 export const CustomModal = ({
@@ -16,6 +17,7 @@ export const CustomModal = ({
     setOpen,
     title,
     children,
+    onSubmitText,
     onSubmit
 }: Props) => (
     <Modal
@@ -70,7 +72,7 @@ export const CustomModal = ({
                                 width: "45%",
                                 margin: "2px"
                             }}>
-                            Submit
+                            {onSubmitText ?? "Submit"}
                         </Button>
                     </Box>
                 </Box>
