@@ -15,17 +15,11 @@
     color: white !important;
 }
 
-.spacer .customButton+.customButton {
-    margin-left: 1vw;
-}
-
 .spacer {
-    position: absolute;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     height: 100%;
-    right: 5vw;
 }
 
 .logo {
@@ -36,8 +30,10 @@
     .logo {
         width: 50vw;
     }
-    .spacer{
+
+    .spacer {
         flex-direction: column;
+        position: relative;
     }
 
     .customButton {
@@ -55,6 +51,11 @@
 @media only screen and (min-width: 768px) {
     .logo {
         width: 20vw;
+    }
+
+    .spacer {
+        position: absolute;
+        right: 5vw;
     }
 
     .customButton {
