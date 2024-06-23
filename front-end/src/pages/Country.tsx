@@ -4,7 +4,7 @@ import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
 import { enqueueSnackbar } from "notistack";
 import { isCountryOption } from "../types/CountryOptions.ts";
-import { groupByCity, groupByDateTime } from "../util/WDGroupBy.ts";
+import { getName, groupByCity, groupByDateTime } from "../util/WDGroupBy.ts";
 import { LogoBar } from "../components/topbar.tsx";
 import '../css/country.css';
 import '../css/filterBar.css';
@@ -49,7 +49,7 @@ export const Country = () => {
         let filtered = Array.from(cityData);
 
         if (filters.city !== "") {
-            filtered = filtered.filter((data) => data[0] && data[0].startsWith(filters.city));
+            filtered = filtered.filter((data) => data[0] && getName(data[1]).startsWith(filters.city));
         }
 
         if (filters.condition !== "") {
@@ -204,7 +204,7 @@ export const Country = () => {
                     </Typography>
                     <DateGraph timeStamps={timeStamps} data={airpressures} yAxisLabel="Airpressure" />
                 </Box>
-                <Typography variant="h4" sx={{"margin-left": "2vw", "margin-top": "3vh"}}>
+                <Typography variant="h4" marginTop={"3vh"} marginLeft={"2vw"}>
                     Amount of cities: {filteredData.length}
                 </Typography>
                 <Box className={'countryOtherData'}>

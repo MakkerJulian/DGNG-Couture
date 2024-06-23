@@ -6,35 +6,40 @@
     height: 15vh;
     width: 100vw;
     border-bottom: 2px black solid;
-    position: relative;
+    text-align: center;
 }
 
 .customButton {
     background-color: #a60000 !important;
     color: white !important;
-    width: 5vw;
-    max-width: 100px;
-}
-.spacer .customButton + .customButton {
-    margin-left: 1vw; 
 }
 
 .spacer {
-    position: absolute;
-    top: 1vh;
-    right: 1vw;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.logo {
+    height: 15vh;
 }
 
 @media only screen and (min-width: 1px) {
     .logo {
         width: 50vw;
     }
+
+    .spacer {
+        position: relative;
+    }
+
+    .customButton{
+        height: 4vh;
+        width: auto;
+    }
+
     h1{
-        font-size: 5vh !important;
+        font-size: xx-large !important;
     }
 }
 
@@ -42,6 +47,17 @@
     .logo {
         width: 20vw;
     }
+
+    .spacer {
+        position: fixed;
+        right: 1vw;
+    }
+
+    .customButton{
+        height: 3vh;
+        width: 8vw;
+    }
+
     h1{
         font-size: 10vh !important;
     }

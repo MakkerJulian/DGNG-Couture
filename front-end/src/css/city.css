@@ -7,6 +7,7 @@
     flex-direction: column;
     align-items: center;
     align-content: center;
+    text-align: center;
 }
 
 .ZaraImage{
@@ -16,9 +17,20 @@
 }
 
 .dataGrid{
-    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('../assets/zarashop.png');
     background-size: cover;
-    width: 40vw;
     background-color: white;
     filter: drop-shadow(0px 0px 5px rgb(116, 116, 116));
+}
+
+@media screen and (min-width: 700px){
+    .dataGrid{
+        width: 50vw;
+    }
+}
+
+@media screen and (max-width: 700px){
+    .dataGrid{
+        width: 90vw;
+    }
+    
 }
