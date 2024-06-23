@@ -13,6 +13,7 @@ import * as Icons from '../icons'
 import { DateGraph } from "../components/DateGraph.tsx";
 import { CustomModal } from "../components/customModal.tsx";
 import { convertToCSV } from "../util/CSVConverter.ts";
+import { Penguin, Zara } from "../assets/index.tsx";
 
 export const City = () => {
     const queryParameters = new URLSearchParams(window.location.search);
@@ -24,6 +25,7 @@ export const City = () => {
     const [open, setOpen] = useState(false);
     const [format, setFormat] = useState<string>('json');
     const [name, setName] = useState<string>("");
+    const [isSales, setSales] = useState<boolean>(false);
 
     useEffect(() => {
         if (city && isCountryOption(country)) {
@@ -31,6 +33,7 @@ export const City = () => {
                 if (data) {
                     const cityData = data.filter((wd) => wd.weatherstation.geolocation.id === parseInt(city));
                     setName(getName(cityData[0]));
+                    setSales(["United States", "Mexico", "France", "Spain"].includes(country));
                     setCityData(cityData);
                     setTimeData(groupByDateTime(cityData));
                 }
@@ -168,7 +171,7 @@ export const City = () => {
             </Button>
             {
                 cityData.length > 0 && <Box className={'nameAndData'}>
-                    <Typography variant="h2"> Zara </Typography>
+                    <Typography variant="h2">{isSales ? "Zara" : "Fiber Research Center"}</Typography>
                     <DataGrid
                         columns={columns}
                         rows={cityData}
@@ -178,6 +181,9 @@ export const City = () => {
                             pagination: { paginationModel: { pageSize: 10 } },
                         }}
                         pageSizeOptions={[10]}
+                        sx={{
+                            backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),url(${isSales ? Zara : Penguin})`,
+                        }}
                     />
                 </Box>
             }

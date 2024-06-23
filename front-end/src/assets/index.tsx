@@ -22,9 +22,11 @@ import Zara from './zarashop.png';
 import Freezing from './Freezing.jpg';
 import Tornado from './Tornado.jpg';
 import Thunder from './Thunder.jpg';
+import Penguin from './pengiun-wearing-insulated-fiber.png'
 
 export {
     BG_Image,
+    Penguin,
     Zara,
     CoutureLogo,
     AmericaCountryBg,
