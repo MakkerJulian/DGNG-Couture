@@ -37,6 +37,10 @@ type Geolocation = {
     state: string;
     place: string;
     county: string;
+    hamlet: string;
+    municipality: string;
+    region:string;
+    locality: string;
 }
 
 type Country = {

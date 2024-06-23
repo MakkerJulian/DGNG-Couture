@@ -6,7 +6,7 @@ import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
 import { enqueueSnackbar } from "notistack";
 import { isCountryOption } from "../types/CountryOptions.ts";
-import { groupByCity, groupByDateTime } from "../util/WDGroupBy.ts";
+import { getName, groupByCity, groupByDateTime } from "../util/WDGroupBy.ts";
 import { LogoBar } from "../components/topbar.tsx";
 import '../css/country.css'
 import { DateGraph } from "../components/DateGraph.tsx";
@@ -30,6 +30,40 @@ export const Country = () => {
             })
         }
     }, [country]);
+
+
+    useEffect(() => {
+        let filtered = Array.from(cityData);
+
+        if (filters.city !== "") {
+            filtered = filtered.filter((data) => data[0] && getName(data[1]).startsWith(filters.city));
+        }
+
+        if (filters.condition !== "") {
+            switch (filters.condition) {
+                case "Clouds":
+                    filtered = filtered.filter((data) => data[1].clouds);
+                    break;
+                case "Freezing":
+                    filtered = filtered.filter((data) => data[1].freezing);
+                    break;
+                case "Tornado":
+                    filtered = filtered.filter((data) => data[1].tornado);
+                    break;
+                case "Hail":
+                    filtered = filtered.filter((data) => data[1].hail);
+                    break;
+                case "Snow":
+                    filtered = filtered.filter((data) => data[1].snow);
+                    break;
+                case "Thunder":
+                    filtered = filtered.filter((data) => data[1].thunder);
+                    break;
+            }
+        }
+
+        setFilteredData(filtered);
+    }, [cityData, filters]);
 
     const timeStamps = Array.from(timeData).map(time => new Date(time[0]));
     const temps = Array.from(timeData).map(time => time[1].temp);

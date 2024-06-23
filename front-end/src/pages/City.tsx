@@ -4,7 +4,7 @@ import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
 import { enqueueSnackbar } from "notistack";
 import { isCountryOption } from "../types/CountryOptions.ts";
-import { groupByDateTime } from "../util/WDGroupBy.ts";
+import { getName, groupByDateTime } from "../util/WDGroupBy.ts";
 import { LogoBar } from "../components/topbar.tsx";
 import '../css/country.css'
 import '../css/city.css'
@@ -19,18 +19,16 @@ export const City = () => {
 
     const [cityData, setCityData] = useState<WeatherData[]>([]);
     const [timeData, setTimeData] = useState<Map<string, WeatherData>>(new Map());
+    const [open, setOpen] = useState(false);
+    const [format, setFormat] = useState<string>('json');
+    const [name, setName] = useState<string>("");
 
     useEffect(() => {
         if (city && isCountryOption(country)) {
             getCountry(country).then((data) => {
                 if (data) {
-                    const cityData = data.filter((wd) => {
-                        return wd.weatherstation.geolocation.city === city
-                            || wd.weatherstation.geolocation.town === city
-                            || wd.weatherstation.geolocation.village === city
-                            || wd.weatherstation.geolocation.place === city
-                            || wd.weatherstation.geolocation.county === city;
-                    });
+                    const cityData = data.filter((wd) => wd.weatherstation.geolocation.id === parseInt(city));
+                    setName(getName(cityData[0]));
                     setCityData(cityData);
                     setTimeData(groupByDateTime(cityData));
                 }
@@ -68,6 +66,45 @@ export const City = () => {
         },
     ];
 
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleDownload = () => {
+        let data: WeatherData[] = []
+        data = cityData;
+
+        if (data.length === 0) {
+            enqueueSnackbar("No data to download", { variant: 'error' });
+            return;
+        }
+        const currentDate = new Date();
+        const formattedDate = currentDate.toISOString().slice(0, 10); // Format as YYYY-MM-DD
+
+        if (format === 'json') {
+            const json = JSON.stringify(data, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${country}-weather-data-${formattedDate}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        } else if (format === 'csv') {
+            const csv = convertToCSV(data);
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${country}-weather-data-${formattedDate}.csv`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    }
 
     const timeStamps = Array.from(timeData).map(time => new Date(time[0]));
     const temps = Array.from(timeData).map(data => data[1].temp);
@@ -77,7 +114,7 @@ export const City = () => {
 
     return (
         <Box>
-            <LogoBar title={city} backbutton />
+            <LogoBar title={name} backbutton />
             {timeStamps.length > 0 && <Box className={'countryGraphBox'}>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
@@ -122,6 +159,11 @@ export const City = () => {
                     ></DateGraph>
                 </Box>
             </Box>}
+            <Button variant="contained" sx={{ margin: "0.4%" }} onClick={() => {
+                handleOpen();
+            }}>
+                Download Data
+            </Button>
             {
                 cityData.length > 0 && <Box className={'nameAndData'}>
                     <Typography variant="h2"> Zara </Typography>
@@ -133,6 +175,7 @@ export const City = () => {
                             sorting: { sortModel: [{ field: 'datetime', sort: 'desc' }] },
                             pagination: { paginationModel: { pageSize: 10 } },
                         }}
+                        pageSizeOptions={[10]}
                     />
                 </Box>
             }

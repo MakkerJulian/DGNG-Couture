@@ -25,6 +25,10 @@
     height: 15vh;
 }
 
+.spacer .customButton+.customButton {
+    margin-left: 1vw;
+}
+
 .spacer {
     display: flex;
     flex-direction: column;
@@ -34,14 +38,26 @@
     justify-content: space-evenly;
 }
 
+.logo {
+    height: 15vh;
+}
+
 @media only screen and (min-width: 1px) {
     .logo {
         width: 50vw;
+    }
+
+    h1 {
+        font-size: 5vh !important;
     }
 }
 
 @media only screen and (min-width: 768px) {
     .logo {
         width: 20vw;
+    }
+
+    h1 {
+        font-size: 10vh !important;
     }
 }
