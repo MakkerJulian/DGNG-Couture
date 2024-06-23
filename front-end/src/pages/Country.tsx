@@ -204,7 +204,7 @@ export const Country = () => {
                     </Typography>
                     <DateGraph timeStamps={timeStamps} data={airpressures} yAxisLabel="Airpressure" />
                 </Box>
-                <Typography variant="h4" sx={{"margin-left": "2vw", "margin-top": "3vh"}}>
+                <Typography variant="h4" marginTop={"3vh"} marginLeft={"2vw"}>
                     Amount of cities: {filteredData.length}
                 </Typography>
                 <Box className={'countryOtherData'}>
