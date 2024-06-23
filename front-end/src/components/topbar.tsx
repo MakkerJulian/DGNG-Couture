@@ -16,7 +16,7 @@ export const LogoBar = ({ title, backbutton }: LogoBarProps) => {
     const role = getRole();
     return (
         <Box className={'logoBar'}>
-            {!title && <img src={CoutureLogo} alt='Couture Logo' className='logo' />}
+            {!title && <img loading='lazy' src={CoutureLogo} alt='Couture Logo' className='logo' />}
             <Typography variant={'h1'}>{title}</Typography>
             <Box className={'spacer'} >
                 {backbutton && <Button className='customButton' onClick={() => nav(-1)}>Back</Button>}

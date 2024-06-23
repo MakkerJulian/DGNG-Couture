@@ -31,18 +31,22 @@ export const Country = () => {
     const [format, setFormat] = useState<string>('json');
 
     useEffect(() => {
-        const interval =setInterval(() => {
-        if (country && isCountryOption(country)) {
-            getCountry(country).then((data) => {
-                if (data) {
-                    setCityData(groupByCity(data));
-                    setFilteredData(Array.from(groupByCity(data)));
-                    setTimeData(groupByDateTime(data));
-                }
-            }).catch(() => {
-                enqueueSnackbar("Could not get Weather data", { variant: 'error' })
-            })
+        const fetch = () => {
+            if (country && isCountryOption(country)) {
+                getCountry(country).then((data) => {
+                    if (data) {
+                        setCityData(groupByCity(data));
+                        setFilteredData(Array.from(groupByCity(data)));
+                        setTimeData(groupByDateTime(data));
+                    }
+                }).catch(() => {
+                    enqueueSnackbar("Could not get Weather data", { variant: 'error' })
+                })
+            }
         }
+        fetch();
+        const interval = setInterval(() => {
+            fetch();
         }, 45000);
         return () => clearInterval(interval);
     }, [country]);

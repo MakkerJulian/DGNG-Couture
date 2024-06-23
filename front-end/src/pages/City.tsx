@@ -28,7 +28,7 @@ export const City = () => {
     const [isSales, setSales] = useState<boolean>(false);
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        const fetch = () => {
             if (city && isCountryOption(country)) {
                 getCountry(country).then((data) => {
                     if (data) {
@@ -42,6 +42,10 @@ export const City = () => {
                     enqueueSnackbar("Could not get Weather data", { variant: 'error' })
                 })
             }
+        };
+        fetch();
+        const interval = setInterval(() => {
+            fetch();
         }, 30000);
         return () => clearInterval(interval);
     }, [city, country]);

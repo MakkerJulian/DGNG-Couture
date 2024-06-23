@@ -6,6 +6,8 @@
     margin-top: 30px;
     width: 23vw;
     background-size: cover;
+    position: relative;
+    overflow: hidden;
 }
 
 .cityButton {
@@ -16,6 +18,7 @@
 
 .cityCardText {
     margin-left: 5px;
+    z-index: 2;
 }
 
 .cityCardText p{
@@ -30,10 +33,18 @@
     font-size: 2vh;
     background-color: #c99696;
     text-align: center;
+    z-index: 2;
 }
 
 .cityCardName p {
     font-size: clamp(30px, 2vw, 40px);
+}
+
+.image{
+    position: absolute;
+    width: inherit;
+    height: inherit   ;
+    object-fit: cover;
 }
 
 .cityCardTextInfo {
@@ -42,13 +53,13 @@
     text-align: right;
     background-image: linear-gradient(to top, #ce9393, #cba1a1, #f6c9c9);
     padding: 5px;
+    z-index: 2;
 }
 .cityCardTextInfo p{
     font-size: clamp(15px, 2vw, 20px);
 }
 @media only screen and (max-width: 900px) {
     .cityCard {
-        display: block;
         width: 90vw;
         margin: 15px auto;
     }
