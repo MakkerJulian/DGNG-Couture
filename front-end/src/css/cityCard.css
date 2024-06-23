@@ -46,3 +46,26 @@
 .cityCardTextInfo p{
     font-size: clamp(15px, 2vw, 20px);
 }
+@media only screen and (max-width: 900px) {
+    .cityCard {
+        display: block;
+        width: 90vw;
+        margin: 15px auto;
+    }
+    .cityButton {
+        width: 100%;
+        text-align: center;
+    }
+    .cityCardText {
+        margin: 10px 0;
+        text-align: left;
+    }
+    .cityCardName {
+        width: 100%;
+        font-size: 3vh;
+    }
+    .cityCardTextInfo {
+        text-align: left;
+        padding: 10px;
+    }
+}

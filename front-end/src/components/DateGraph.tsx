@@ -24,6 +24,6 @@ export const DateGraph = ({timeStamps, data, yAxisLabel}: DateGraphProps) => {
                 data: data,
             },
         ]}
-        height={400}
+        height={300}
     />
 }

@@ -23,3 +23,29 @@
     color: white;
     margin-left: 15px;
 }
+@media only screen and (max-width: 900px){
+    .filterBar {
+        width: 100vw;
+        padding: 8px 2,5vw;
+    }
+    .filterTitle {
+        text-align: center;
+        font-size: clamp(20px, 4vw, 30px); 
+        display: block; 
+        margin-bottom: 8px; 
+    }
+    .filterInput {
+        margin-left: 0;
+        margin-top: 8px;
+        width: 95%; 
+    }
+    .filterDropDown {
+        margin-left: 0;
+        margin-top: 8px; 
+        margin-bottom: 8px; 
+        width: 95%; 
+    }
+    .filterButton {
+        width: 95%; /* Adjust width to fill the container */
+    }
+}
