@@ -1,4 +1,4 @@
-import { Box, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
+import { Box, Button, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { AlaskaHomeBg, AmericaHomeBg, FranceHomeBg, FinlandHomeBg, GreenlandHomeBg, MexicoHomeBg, NorwayHomeBg, SpainHomeBg } from "../assets";
 import '../css/home.css';
 import { getRole } from "../util/getrole";
@@ -129,6 +129,7 @@ export const Home = () => {
     return (
         <Box display={'flex'} flexDirection={'column'}>
             <LogoBar />
+            {role === 'admin' && <Button className='adminButton' href='/admin' sx ={{backgroundColor: '#a60000', color: 'white', '&:hover': { backgroundColor: '#940101' }}}>Admin</Button>}
             <Box className={'homeContent'}>
                 {role === "sales" ?
                     <>
@@ -245,6 +246,7 @@ export const Home = () => {
                     <FormControlLabel value="csv" control={<Radio />} label="CSV" />
                 </RadioGroup>
             </CustomModal>
+            
         </Box>
     );
 };
