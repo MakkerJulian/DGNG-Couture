@@ -1,7 +1,6 @@
 .dataGridBox{
     margin-top: 20vh;
     display: flex;
-    width: 60vw;
     align-items: center;
     align-content: center;
     margin: auto;
@@ -9,31 +8,24 @@
 }
 
 .dataGrid2{
-    background-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('../assets/vitacouture_article-removebg-preview.png');
-    background-size: cover;
-    width: 60vw;
     background-color: white;
     filter: drop-shadow(0px 0px 5px rgb(116, 116, 116));
-    margin: auto;
 }
 
-.accountButton{
-    color: 'white';
-    width: 60vw;
-    border-radius: '5px';
-    margin: "auto";
-}
-
-@media only screen and (max-width: 900px){
+@media only screen and (max-width: 700px){
     .dataGridBox {
-        width: 100vw;
+        width: 90vw;
     }
-
-    .dataGrid2 {
-        width: 100vw;
-    }
-    
+  
     .accountButton {
-        width: 100vw;
+        width: 80vw;
+    }
+}
+@media screen and (min-width: 701px) {
+    .dataGridBox {
+        width: 60vw;
+    }
+    .dataGrid2 {
+        width: 60vw;
     }
 }

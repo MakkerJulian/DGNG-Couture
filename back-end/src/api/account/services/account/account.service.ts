@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAccountDto, LoginDto } from 'src/dto/account.dto';
 import { Account } from 'src/typeorm/account.entity';
@@ -20,6 +20,10 @@ export class AccountService {
     const password = CreateAccountDto.password;
     const hash = crypto.createHash('sha256').update(password).digest('hex');
     const newAccount = { ...CreateAccountDto, password: hash };
+    const savedAccount = this.findbyEmail(newAccount.mail);
+    if(savedAccount) {
+      throw new BadRequestException('Email already exists');
+    }
     return this.accountRepository.save(newAccount);
   }
 

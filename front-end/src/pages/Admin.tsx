@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import { Box, Button, MenuItem, TextField} from "@mui/material";
+import { Box, Button, MenuItem, TextField } from "@mui/material";
 import { axiosInstance } from "../axios/index.tsx";
 import { Account, AccountCreate } from "../types/Account.ts";
 import type { GridColDef } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import { CustomModal } from "../components/customModal";
 import { enqueueSnackbar } from "notistack";
-import { useForm } from "react-hook-form";
 import { LogoBar } from "../components/topbar.tsx"
 import '../css/admin.css'
 
@@ -14,14 +13,14 @@ const emptyForm: AccountCreate = {
     name: '',
     mail: '',
     password: '',
-    role: 'Sales',
+    role: 'sales',
 }
 
 export const Admin = () => {
     const [accounts, setAccounts] = React.useState<Account[]>([]);
     const [openAccount, setOpenAccount] = React.useState<boolean>(false);
     const [form, setForm] = React.useState<AccountCreate>(emptyForm);
-    const { register, formState: { errors }, handleSubmit } = useForm();
+
     const createAccount = () => {
         axiosInstance.post('/account', form).then(() => {
             enqueueSnackbar('Account created', { variant: 'success' });
@@ -61,27 +60,26 @@ export const Admin = () => {
         <Box flex={1} flexDirection={'column'}>
             <LogoBar title="Admin" backbutton />
             <Box className={"dataGridBox"}>
+                <DataGrid
+                    rows={accounts}
+                    columns={columns}
+                    className={"dataGrid2"}
+                    getRowId={(row) => row.name}
+                    initialState={{
+                        sorting: {
+                            sortModel: [{ field: 'id', sort: 'asc' }],
+                        },
+                    }}
+                >
+                </DataGrid>
 
-            <DataGrid
-                rows={accounts}
-                columns={columns}
-                className={"dataGrid2"}
-                getRowId={(row) => row.name}
-                initialState={{
-                    sorting: {
-                        sortModel: [{ field: 'id', sort: 'asc' }],
-                    },
-                }}
-            >
-            </DataGrid>
-            
             </Box>
 
             <CustomModal
                 open={openAccount}
                 title="Add new account"
                 setOpen={setOpenAccount}
-                onSubmit={(event) => {
+                onSubmit={(event)=> {
                     event.preventDefault();
                     createAccount();
                 }}
@@ -89,36 +87,28 @@ export const Admin = () => {
                 <TextField
                     sx={{ width: '80%', margin: '20px' }}
                     label="Name"
+                    name="name"
                     value={form.name}
-                    {...register('name', { required: "name can't be empty", minLength: { value: 5, message: "name must be at least 5 characters" } })}
                     onChange={handleChange}
-                    helperText={errors.name?.message?.toString()}
-                    error={errors.name?.message !== undefined}
                 >
                 </TextField>
 
                 <TextField
                     sx={{ width: '80%', margin: '20px' }}
                     label="Mail"
+                    name="mail"
                     value={form.mail}
-                    {...register('mail', {
-                        required: "E-mail can't be empty"})}
                     onChange={handleChange}
-                    helperText={errors.email?.message?.toString()}
-                    error={errors.email?.message !== undefined}
                 >
                 </TextField>
-
-
 
                 <TextField
                     sx={{ width: '80%', margin: '20px' }}
                     label="Password"
+                    type="password"
+                    name="password"
                     value={form.password}
-                    {...register('password', { required: "password can't be empty" })}
                     onChange={handleChange}
-                    helperText={errors.password?.message?.toString()}
-                    error={errors.password?.message !== undefined}
                 >
                 </TextField>
 
@@ -138,7 +128,7 @@ export const Admin = () => {
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
                     className={"accountButton"}
-                    sx={{ backgroundColor: 'green', mt: 2, '&:hover': { backgroundColor: 'darkgreen' } }}
+                    sx={{ backgroundColor: 'green', mt: 2, '&:hover': { backgroundColor: 'darkgreen' }, color: 'white' }}
                     onClick={() => {
                         setOpenAccount(!openAccount);
                     }}

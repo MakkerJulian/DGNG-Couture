@@ -9,7 +9,7 @@ export class Account {
   @Column()
   name: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true , unique:true})
   @IsEmail()
   mail: string;
 
