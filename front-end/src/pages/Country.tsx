@@ -1,4 +1,3 @@
-import { Box, Button, FormControlLabel, MenuItem, Radio, RadioGroup, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
 import { CityTab } from "../components/cityTab.tsx";
 import React, { useEffect, useState } from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
@@ -11,6 +10,7 @@ import '../css/country.css';
 import '../css/filterBar.css';
 import { DateGraph } from "../components/DateGraph.tsx";
 import { CustomModal } from "../components/customModal.tsx";
+import { SelectChangeEvent, Box, Typography, TextField, Select, MenuItem, Button, RadioGroup, FormControlLabel, Radio } from "@mui/material";
 import { convertToCSV } from "../util/CSVConverter.ts";
 
 export type filterData = {
@@ -94,6 +94,22 @@ export const Country = () => {
         setFilters({ ...filters, condition: e.target.value });
     }
 
+    let amountOfRain = 0;
+    let amountOfSnow = 0;
+    let amountOfTornados = 0;
+    let amountOfThunder = 0;
+
+    filteredData.map(data => {
+        if (data[1].rain) {
+            amountOfRain++;
+        } if (data[1].snow) {
+            amountOfSnow++;
+        } if (data[1].tornado) {
+            amountOfTornados++;
+        } if (data[1].thunder) {
+            amountOfThunder++;
+        }
+    });
     const handleOpen = (city: string) => {
         setCity(city);
         setOpen(true);
@@ -107,10 +123,7 @@ export const Country = () => {
                 data = countryData;
                 break;
             default:
-                const cityWeatherData = cityData.get(city);
-                if (cityWeatherData) {
-                    data = [cityWeatherData];
-                }
+                data = filteredData.filter((data) => data[0] === city).map((data) => data[1]);
                 break;
 
         }
@@ -146,7 +159,6 @@ export const Country = () => {
         }
     }
 
-
     return (
         <Box>
             <LogoBar title={country} backbutton />
@@ -154,7 +166,8 @@ export const Country = () => {
             <Box className={"filterBar"}>
                 <Typography className={"filterTitle"}>Filters</Typography>
                 <TextField name={"city"} className={"filterInput"} placeholder={"City"} onChange={handleChange}></TextField>
-                <Select name={"condition"} placeholder={"Conditions"} className={"filterDropDown"} defaultValue="" onChange={handleSelectChange}>
+                <Typography className={"filterTitle"}>Condition</Typography>
+                <Select className={"filterDropDown"} defaultValue="" onChange={handleSelectChange}>
                     <MenuItem value={"Clouds"}>Clouds</MenuItem>
                     <MenuItem value={"Freezing"}>Freezing</MenuItem>
                     <MenuItem value={"Tornado"}>Tornado</MenuItem>
@@ -162,7 +175,7 @@ export const Country = () => {
                     <MenuItem value={"Snow"}>Snow</MenuItem>
                     <MenuItem value={"Thunder"}>Thunder</MenuItem>
                 </Select>
-                <Button variant="contained" onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                <Button variant="contained" onClick={() => {
                     handleOpen("country");
                 }}>
                     Download Data
@@ -193,6 +206,15 @@ export const Country = () => {
                     </Typography>
                     <DateGraph timeStamps={timeStamps} data={airpressures} yAxisLabel="Airpressure" />
                 </Box>
+                <Typography variant="h4" sx={{"margin-left": "2vw", "margin-top": "3vh"}}>
+                    Amount of cities: {filteredData.length}
+                </Typography>
+                <Box className={'countryOtherData'}>
+                    <Typography>Cities with rain: {amountOfRain}</Typography>
+                    <Typography>Cities with snow: {amountOfSnow}</Typography>
+                    <Typography>Cities with tornados: {amountOfTornados}</Typography>
+                    <Typography>Cities with thunder: {amountOfThunder}</Typography>
+                </Box>
             </Box>}
             <Box className={'countryCityBox '}>
                 {filteredData.map((data) => {
@@ -201,10 +223,8 @@ export const Country = () => {
                         <CityTab
                             key={data[0]}
                             city={data[0]}
-                            temp={weatherData.temp}
                             country={country}
                             weatherData={weatherData}
-                            feelTemp={weatherData.temp}
                             onDownloadClick={() => handleOpen(data[0])}
                         ></CityTab>
                     );

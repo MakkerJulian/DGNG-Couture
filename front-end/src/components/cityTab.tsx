@@ -1,5 +1,5 @@
+import { Cloudy, Freezing, Sunny, Thunder, Tornado } from "../assets";
 import { Box, Button, Typography } from "@mui/material";
-import { Clouds } from "../assets";
 import '../css/cityCard.css';
 import { useNavigate } from "react-router-dom";
 import * as Icons from "../icons";
@@ -7,18 +7,31 @@ import { WeatherData } from "../types/Weatherdata";
 
 type CityTabProps = {
     city: string;
-    temp: number;
     country: string;
     weatherData: WeatherData;
-    feelTemp: number;
     onDownloadClick: () => void;
 }
 
-export const CityTab = ({ country, city, feelTemp, weatherData, onDownloadClick }: CityTabProps) => {
+export const CityTab = ({ country, city, weatherData, onDownloadClick }: CityTabProps) => {
     const navigate = useNavigate();
+    let image = Sunny;
+
+    if (weatherData.tornado) {
+        image = Tornado;
+    }
+    else if (weatherData.thunder) {
+        image = Thunder;
+    }
+    else if (weatherData.freezing || weatherData.snow) {
+        image = Freezing;
+    }
+    else if (weatherData.clouds > 50) {
+        image = Cloudy;
+    }
+
     return (
         <button className="cityButton" onClick={() => navigate(`/city?city=${city}&country=${country}`)}>
-            <Box className="cityCard" sx={{ backgroundImage: `url(${Clouds})` }}>
+            <Box className="cityCard" sx={{ backgroundImage: `url(${image})` }}>
                 <Box className="cityCardText">
                     <Typography>{weatherData.temp}°</Typography>
                     {weatherData.clouds > 50 && <Icons.CloudIcon />}
@@ -36,7 +49,6 @@ export const CityTab = ({ country, city, feelTemp, weatherData, onDownloadClick 
                 </Box>
 
                 <Box className="cityCardTextInfo">
-                    <Typography>Feels like {feelTemp}</Typography>
                     <Typography>Wind {weatherData.windspeed}km/h</Typography>
                     <Typography>Precip {weatherData.precipitation}%</Typography>
                     <Button variant="contained" onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
