@@ -9,7 +9,7 @@ export class Account {
   @Column()
   name: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true , unique:true})
   @IsEmail()
   mail: string;
 
@@ -17,6 +17,6 @@ export class Account {
   password: string;
 
   @Column()
-  @IsIn(['research','salaes'])
+  @IsIn(['research','sales', 'admin'])
   role: string;
 }

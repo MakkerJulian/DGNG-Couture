@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateAccountDto, LoginDto } from 'src/dto/account.dto';
 import { Account } from 'src/typeorm/account.entity';
@@ -16,10 +16,15 @@ export class AccountService {
     private readonly configService: ConfigService,
   ) { }
 
-  createAccount(CreateAccountDto: CreateAccountDto) {
+  async createAccount(CreateAccountDto: CreateAccountDto) {
     const password = CreateAccountDto.password;
     const hash = crypto.createHash('sha256').update(password).digest('hex');
     const newAccount = { ...CreateAccountDto, password: hash };
+    const savedAccount = await this.findbyEmail(newAccount.mail);
+    if(savedAccount) {
+      console.log(savedAccount);
+      throw new BadRequestException('Email already exists');
+    }
     return this.accountRepository.save(newAccount);
   }
 
@@ -38,11 +43,17 @@ export class AccountService {
       password: 'research',
       role: 'research',
     })
-    return await this.createAccount({
+    await this.createAccount({
       name: 'sales',
       mail: 'Sales@mail.com',
       password: 'sales',
       role: 'sales'
+    });
+    return await this.createAccount({
+      name: 'admin',
+      mail: 'Admin@mail.com',
+      password: 'admin',
+      role: 'admin'
     });
   }
 

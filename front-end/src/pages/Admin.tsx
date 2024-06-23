@@ -1,25 +1,26 @@
 import React, { useEffect } from "react";
-import { Box, Button, MenuItem, TextField, Typography } from "@mui/material";
+import { Box, Button, MenuItem, TextField } from "@mui/material";
+import { axiosInstance } from "../axios/index.tsx";
+import { Account, AccountCreate } from "../types/Account.ts";
 import type { GridColDef } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import { CustomModal } from "../components/customModal";
 import { enqueueSnackbar } from "notistack";
-import { LogoutButton } from "../components/logoutButton.tsx";
-import { axiosInstance } from "../axios/index.tsx";
-import { AccountCreate, Account } from "../types/Account.ts";
+import { LogoBar } from "../components/topbar.tsx"
+import '../css/admin.css'
 
 const emptyForm: AccountCreate = {
     name: '',
-    email: '',
-    phone: '',
+    mail: '',
     password: '',
-    role: 'Sales',
+    role: 'sales',
 }
 
 export const Admin = () => {
     const [accounts, setAccounts] = React.useState<Account[]>([]);
     const [openAccount, setOpenAccount] = React.useState<boolean>(false);
     const [form, setForm] = React.useState<AccountCreate>(emptyForm);
+
     const createAccount = () => {
         axiosInstance.post('/account', form).then(() => {
             enqueueSnackbar('Account created', { variant: 'success' });
@@ -38,16 +39,10 @@ export const Admin = () => {
 
     const columns: GridColDef[] = [
         {
-            field: 'id', flex: 0.5, headerName: 'ID',
-        },
-        {
             field: 'name', flex: 1, headerName: 'Name',
         },
         {
-            field: 'email', flex: 1, headerName: 'E-mail',
-        },
-        {
-            field: 'phone', flex: 1, headerName: 'Phone number',
+            field: 'mail', flex: 1, headerName: 'E-mail',
         },
         {
             field: 'role', flex: 1, headerName: 'Role',
@@ -63,30 +58,28 @@ export const Admin = () => {
 
     return (
         <Box flex={1} flexDirection={'column'}>
-            <Box position={'absolute'}>
-                <LogoutButton></LogoutButton>
-            </Box>
-            <Typography variant="h1" justifyContent={"center"} display={"flex"}>
-                Admin
-            </Typography>
+            <LogoBar title="Admin" backbutton />
+            <Box className={"dataGridBox"}>
+                <DataGrid
+                    rows={accounts}
+                    columns={columns}
+                    className={"dataGrid2"}
+                    getRowId={(row) => row.name}
+                    initialState={{
+                        sorting: {
+                            sortModel: [{ field: 'id', sort: 'asc' }],
+                        },
+                    }}
+                >
+                </DataGrid>
 
-            <DataGrid
-                rows={accounts}
-                columns={columns}
-                sx={{ maxWidth: '80%', margin: 'auto', height: '78vh' }}
-                initialState={{
-                    sorting: {
-                        sortModel: [{ field: 'id', sort: 'asc' }],
-                    },
-                }}
-            >
-            </DataGrid>
+            </Box>
 
             <CustomModal
                 open={openAccount}
                 title="Add new account"
                 setOpen={setOpenAccount}
-                onSubmit={(event) => {
+                onSubmit={(event)=> {
                     event.preventDefault();
                     createAccount();
                 }}
@@ -94,6 +87,7 @@ export const Admin = () => {
                 <TextField
                     sx={{ width: '80%', margin: '20px' }}
                     label="Name"
+                    name="name"
                     value={form.name}
                     onChange={handleChange}
                 >
@@ -101,18 +95,9 @@ export const Admin = () => {
 
                 <TextField
                     sx={{ width: '80%', margin: '20px' }}
-                    label="E-mail"
-                    value={form.email}
-                    onChange={handleChange}
-                >
-                </TextField>
-
-
-                <TextField
-                    sx={{ width: '80%', margin: '20px' }}
-                    label="Phone number"
-                    type='phone'
-                    value={form.phone}
+                    label="Mail"
+                    name="mail"
+                    value={form.mail}
                     onChange={handleChange}
                 >
                 </TextField>
@@ -120,6 +105,8 @@ export const Admin = () => {
                 <TextField
                     sx={{ width: '80%', margin: '20px' }}
                     label="Password"
+                    type="password"
+                    name="password"
                     value={form.password}
                     onChange={handleChange}
                 >
@@ -132,16 +119,16 @@ export const Admin = () => {
                     select
                     onChange={(e) => setForm({ ...form, role: e.target.value })}
                 >
-                    <MenuItem value="ADMIN">Admin</MenuItem>
-                    <MenuItem value="Sales">Sales</MenuItem>
-                    <MenuItem value="Onderzoek">Onderzoek</MenuItem>
-                    <MenuItem value="Onderhoud">Onderhoud</MenuItem>
+                    <MenuItem value="admin">Admin</MenuItem>
+                    <MenuItem value="sales">Sales</MenuItem>
+                    <MenuItem value="research">Research</MenuItem>
                 </TextField>
 
             </CustomModal>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button
-                    sx={{ backgroundColor: 'green', color: 'white', width: '80%', borderRadius: '5px', margin: "auto", mt: 2, '&:hover': { backgroundColor: 'darkgreen' } }}
+                    className={"accountButton"}
+                    sx={{ backgroundColor: 'green', mt: 2, '&:hover': { backgroundColor: 'darkgreen' }, color: 'white' }}
                     onClick={() => {
                         setOpenAccount(!openAccount);
                     }}

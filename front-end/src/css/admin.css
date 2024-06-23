@@ -1,0 +1,31 @@
+.dataGridBox{
+    margin-top: 20vh;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    margin: auto;
+    padding-top: 20vh;
+}
+
+.dataGrid2{
+    background-color: white;
+    filter: drop-shadow(0px 0px 5px rgb(116, 116, 116));
+}
+
+@media only screen and (max-width: 700px){
+    .dataGridBox {
+        width: 90vw;
+    }
+  
+    .accountButton {
+        width: 80vw;
+    }
+}
+@media screen and (min-width: 701px) {
+    .dataGridBox {
+        width: 60vw;
+    }
+    .dataGrid2 {
+        width: 60vw;
+    }
+}

@@ -1,16 +1,14 @@
 export type Account ={
-    id: number;
+    uuid: string;
     name: string;
-    email: string;
-    phone: string;
+    mail: string;
     password: string;
     role: string;
 }
 
 export type AccountCreate = {
     name: string;
-    email: string;
-    phone: string;
+    mail: string;
     password: string;
     role: string;
 }

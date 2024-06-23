@@ -42,7 +42,13 @@ export const CustomModal = ({
                         flexDirection: 'column',
                         alignItems: 'center',
                         borderRadius: '10px',
-                        border: "solid darkgray 2px"
+                        border: "solid darkgray 2px",
+                        '@media (max-width: 600px)': {
+                            width: '80vw',
+                        },
+                        '@media (min-width: 601px) and (max-width: 1024px)': {
+                            width: '60vw',
+                        },
                     }}>
                     <Typography id="modal-modal-title" variant="h2" component="h2" fontWeight={"bold"}>
                         {title}

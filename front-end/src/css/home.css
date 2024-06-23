@@ -1,10 +1,15 @@
 .homeContent {
-    background-color: hsla(33, 100%, 56%, 0.205);
+    background-color: rgb(245, 227, 206);
     height: 85vh;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
+}
+
+.adminButton {
+    width: 10vw;
+    border-radius: 10px;
 }
 
 /* Add a condition for when users are on mobile */
@@ -13,11 +18,19 @@
         flex-direction: column;
         flex-wrap: nowrap;
     }
+
+    .adminButton {
+        width: 100vw;
+    }
 }
 
 @media only screen and (min-width: 768px){
     .homeContent {
         flex-direction: row;
         flex-wrap: wrap;
+    }
+
+    .adminButton{
+        width: 10vw;
     }
 }
