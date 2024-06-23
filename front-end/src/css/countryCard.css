@@ -8,10 +8,18 @@
 .countryCardText {
     text-align: left;
     margin-left: 1vw;
+    z-index: 1;
 }
 
 .countryButton {
     position: absolute;
+}
+
+.image{
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    object-fit: cover;
 }
 
 .Right {

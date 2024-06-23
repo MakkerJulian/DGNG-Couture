@@ -6,17 +6,51 @@ import '../css/countryCard.css';
 type CountryTabProps = {
     country: string;
     temp: number;
-    bgImage: string;
     wind: number;
     precip: number;
     onDownloadClick: () => void;
 };
 
-const CountryTab = ({ country, temp, bgImage, wind, precip, onDownloadClick }: CountryTabProps) => {
+export const CountryTab = ({ country, temp, wind, precip, onDownloadClick }: CountryTabProps) => {
     const navigate = useNavigate();
+    let img;
+
+    switch (country) {
+        case "Spain":
+            img = 'src/assets/SpainHomeBg.png';
+            break;
+        case "United States":
+            img = 'src/assets/AmericaHomeBg.png';
+            break;
+        case "France":
+            img = 'src/assets/FranceHomeBg.png';
+            break;
+        case "Mexico":
+            img = 'src/assets/MexicoHomeBg.png';
+            break;
+        case "Greenland":
+            img = 'src/assets/GreenlandHomeBg.png';
+            break;
+        case "Norway":
+            img = 'src/assets/NorwayHomeBg.png';
+            break;
+        case "Alaska":
+            img = 'src/assets/AlaskaHomeBg.png';
+            break;
+        case "Finland":
+            img = 'src/assets/FinlandHomeBg.png';
+            break;
+        default:
+            img = ""
+    }
 
     return (
-        <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }} onClick={() => navigate("/country?country=" + country)}>
+        <Box
+            className="countryCard"
+            onClick={() => navigate("/country?country=" + country)}
+        >
+            <img loading="lazy" src={img} className="image" />
+
             <Box className="countryCardText">
                 <Typography variant={'h2'}>{country}</Typography>
                 <Typography variant="h4">{temp}°</Typography>
@@ -33,8 +67,7 @@ const CountryTab = ({ country, temp, bgImage, wind, precip, onDownloadClick }: C
                     Download Data
                 </Button>
             </Box>
+
         </Box >
     );
 };
-
-export default CountryTab;

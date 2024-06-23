@@ -1,5 +1,4 @@
 import { Box, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
-import { AlaskaHomeBg, AmericaHomeBg, FranceHomeBg, FinlandHomeBg, GreenlandHomeBg, MexicoHomeBg, NorwayHomeBg, SpainHomeBg } from "../assets";
 import '../css/home.css';
 import { getRole } from "../util/getrole";
 import React, { useEffect, useState } from "react";
@@ -10,8 +9,7 @@ import { WeatherData } from "../types/Weatherdata";
 import { LogoBar } from "../components/topbar";
 import { CustomModal } from "../components/customModal";
 import { convertToCSV } from "../util/CSVConverter";
-
-const LazyCountryTab = React.lazy(() => import("../components/countryTab"));
+import { CountryTab } from "../components/countryTab";
 
 export const Home = () => {
     const role = getRole();
@@ -31,7 +29,7 @@ export const Home = () => {
     const [format, setFormat] = useState<string>('json');
 
     useEffect(() => {
-        const interval = setInterval(() => {
+        const fetch = () => {
             if (role === 'sales') {
                 getCountry('Spain').then((data) => {
                     setSpainData(data);
@@ -75,7 +73,9 @@ export const Home = () => {
                     enqueueSnackbar("Could not get Finland Weather data", { variant: 'error' });
                 });
             }
-        }, 60000);
+        };
+        fetch();
+        const interval = setInterval(fetch, 60000);
         return () => clearInterval(interval);
     }, [role]);
 
@@ -135,92 +135,68 @@ export const Home = () => {
             <Box className={'homeContent'}>
                 {role === "sales" ?
                     <>
-                        <React.Suspense fallback={<div>Loading Mexico...</div>}>
-                            <LazyCountryTab
-                                country={'Mexico'}
-                                temp={mexicoCalc.avgTemp}
-                                bgImage={MexicoHomeBg}
-                                wind={mexicoCalc.wind}
-                                precip={mexicoCalc.precip}
-                                onDownloadClick={() => handleOpen(mexicoData)}
-                            />
-                        </React.Suspense>
-                        <React.Suspense fallback={<div>Loading France...</div>}>
-                            <LazyCountryTab
-                                country={'France'}
-                                temp={franceCalc.avgTemp}
-                                bgImage={FranceHomeBg}
-                                wind={franceCalc.wind}
-                                precip={franceCalc.precip}
-                                onDownloadClick={() => handleOpen(franceData)}
-                            />
-                        </React.Suspense>
-                        <React.Suspense fallback={<div>Loading America...</div>}>
-                            <LazyCountryTab
-                                country={'United States'}
-                                temp={americaCalc.avgTemp}
-                                bgImage={AmericaHomeBg}
-                                wind={americaCalc.wind}
-                                precip={americaCalc.precip}
-                                onDownloadClick={() => handleOpen(americaData)}
-                            />
-                        </React.Suspense>
-                        <React.Suspense fallback={<div>Loading Spain...</div>}>
-                            <LazyCountryTab
-                                country={'Spain'}
-                                temp={spainCalc.avgTemp}
-                                bgImage={SpainHomeBg}
-                                wind={spainCalc.wind}
-                                precip={spainCalc.precip}
-                                onDownloadClick={() => handleOpen(spainData)}
-                            />
-                        </React.Suspense>
+                        <CountryTab
+                            country={'Mexico'}
+                            temp={mexicoCalc.avgTemp}
+                            wind={mexicoCalc.wind}
+                            precip={mexicoCalc.precip}
+                            onDownloadClick={() => handleOpen(mexicoData)}
+                        />
+                        <CountryTab
+                            country={'France'}
+                            temp={franceCalc.avgTemp}
+                            wind={franceCalc.wind}
+                            precip={franceCalc.precip}
+                            onDownloadClick={() => handleOpen(franceData)}
+                        />
+                        <CountryTab
+                            country={'United States'}
+                            temp={americaCalc.avgTemp}
+                            wind={americaCalc.wind}
+                            precip={americaCalc.precip}
+                            onDownloadClick={() => handleOpen(americaData)}
+                        />
+                        <CountryTab
+                            country={'Spain'}
+                            temp={spainCalc.avgTemp}
+                            wind={spainCalc.wind}
+                            precip={spainCalc.precip}
+                            onDownloadClick={() => handleOpen(spainData)}
+                        />
                     </>
                     :
                     <>
-                        <React.Suspense fallback={<div>Loading Greenland...</div>}>
-                            <LazyCountryTab
-                                country={'Greenland'}
-                                temp={greenlandCalc.avgTemp}
-                                bgImage={GreenlandHomeBg}
-                                wind={greenlandCalc.wind}
-                                precip={greenlandCalc.precip}
-                                onDownloadClick={() => handleOpen(greenlandData)}
-                            />
-                        </React.Suspense>
+                        <CountryTab
+                            country={'Greenland'}
+                            temp={greenlandCalc.avgTemp}
+                            wind={greenlandCalc.wind}
+                            precip={greenlandCalc.precip}
+                            onDownloadClick={() => handleOpen(greenlandData)}
+                        />
 
-                        <React.Suspense fallback={<div>Loading Norway...</div>}>
-                            <LazyCountryTab
-                                country={'Norway'}
-                                temp={norwayCalc.avgTemp}
-                                bgImage={NorwayHomeBg}
-                                wind={norwayCalc.wind}
-                                precip={norwayCalc.precip}
-                                onDownloadClick={() => handleOpen(norwayData)}
-                            />
-                        </React.Suspense>
+                        <CountryTab
+                            country={'Norway'}
+                            temp={norwayCalc.avgTemp}
+                            wind={norwayCalc.wind}
+                            precip={norwayCalc.precip}
+                            onDownloadClick={() => handleOpen(norwayData)}
+                        />
 
-                        <React.Suspense fallback={<div>Loading Alaska...</div>}>
-                            <LazyCountryTab
-                                country={'Alaska'}
-                                temp={alaskaCalc.avgTemp}
-                                bgImage={AlaskaHomeBg}
-                                wind={alaskaCalc.wind}
-                                precip={alaskaCalc.precip}
-                                onDownloadClick={() => handleOpen(alaskaData)}
-                            />
-                        </React.Suspense>
+                        <CountryTab
+                            country={'Alaska'}
+                            temp={alaskaCalc.avgTemp}
+                            wind={alaskaCalc.wind}
+                            precip={alaskaCalc.precip}
+                            onDownloadClick={() => handleOpen(alaskaData)}
+                        />
 
-                        <React.Suspense fallback={<div>Loading Finland...</div>}>
-                            <LazyCountryTab
-                                country={'Finland'}
-                                temp={finlandCalc.avgTemp}
-                                bgImage={FinlandHomeBg}
-                                wind={finlandCalc.wind}
-                                precip={finlandCalc.precip}
-                                onDownloadClick={() => handleOpen(finlandData)}
-                            />
-                        </React.Suspense>
+                        <CountryTab
+                            country={'Finland'}
+                            temp={finlandCalc.avgTemp}
+                            wind={finlandCalc.wind}
+                            precip={finlandCalc.precip}
+                            onDownloadClick={() => handleOpen(finlandData)}
+                        />
                     </>
                 }
             </Box>
