@@ -47,7 +47,7 @@ export const Login = () => {
                 justifyContent: 'center',
                 height: "100vh"
             }}>
-            <img src={BG_Image} alt='logo' style={{
+            <img loading='lazy' src={BG_Image} alt='logo' style={{
                 display: "block",
                 position: "absolute",
                 width: "100%",
@@ -114,7 +114,7 @@ export const Login = () => {
                 </Box>
             </form>
 
-            <img src={CoutureLogo} alt='logo' style={{
+            <img src={CoutureLogo} alt='logo' loading='lazy' style={{
                 height: '30vh'
             }}></img>
         </Box>
