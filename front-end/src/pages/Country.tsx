@@ -31,6 +31,7 @@ export const Country = () => {
     const [format, setFormat] = useState<string>('json');
 
     useEffect(() => {
+        const interval =setInterval(() => {
         if (country && isCountryOption(country)) {
             getCountry(country).then((data) => {
                 if (data) {
@@ -42,6 +43,8 @@ export const Country = () => {
                 enqueueSnackbar("Could not get Weather data", { variant: 'error' })
             })
         }
+        }, 45000);
+        return () => clearInterval(interval);
     }, [country]);
 
 

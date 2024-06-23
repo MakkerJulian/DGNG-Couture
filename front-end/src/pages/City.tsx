@@ -28,19 +28,22 @@ export const City = () => {
     const [isSales, setSales] = useState<boolean>(false);
 
     useEffect(() => {
-        if (city && isCountryOption(country)) {
-            getCountry(country).then((data) => {
-                if (data) {
-                    const cityData = data.filter((wd) => wd.weatherstation.geolocation.id === parseInt(city));
-                    setName(getName(cityData[0]));
-                    setSales(["United States", "Mexico", "France", "Spain"].includes(country));
-                    setCityData(cityData);
-                    setTimeData(groupByDateTime(cityData));
-                }
-            }).catch(() => {
-                enqueueSnackbar("Could not get Weather data", { variant: 'error' })
-            })
-        }
+        const interval = setInterval(() => {
+            if (city && isCountryOption(country)) {
+                getCountry(country).then((data) => {
+                    if (data) {
+                        const cityData = data.filter((wd) => wd.weatherstation.geolocation.id === parseInt(city));
+                        setName(getName(cityData[0]));
+                        setSales(["United States", "Mexico", "France", "Spain"].includes(country));
+                        setCityData(cityData);
+                        setTimeData(groupByDateTime(cityData));
+                    }
+                }).catch(() => {
+                    enqueueSnackbar("Could not get Weather data", { variant: 'error' })
+                })
+            }
+        }, 30000);
+        return () => clearInterval(interval);
     }, [city, country]);
 
     const columns: GridColDef<WeatherData>[] = [
@@ -110,7 +113,7 @@ export const City = () => {
             URL.revokeObjectURL(url);
         }
     }
-    
+
     const timeStamps = Array.from(timeData).map(time => new Date(time[0]));
     const temps = Array.from(timeData).map(data => data[1].temp);
     const windspeeds = Array.from(timeData).map(data => data[1].windspeed);

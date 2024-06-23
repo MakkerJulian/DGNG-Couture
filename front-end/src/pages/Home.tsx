@@ -31,56 +31,59 @@ export const Home = () => {
     const [format, setFormat] = useState<string>('json');
 
     useEffect(() => {
-        if (role === 'sales') {
-            getCountry('Spain').then((data) => {
-                setSpainData(data);
-            }).catch(() => {
-                enqueueSnackbar("Could not get Spain Weather data", { variant: 'error' });
-            });
-            getCountry('Mexico').then((data) => {
-                setMexicoData(data);
-            }).catch(() => {
-                enqueueSnackbar("Could not get Mexico Weather data", { variant: 'error' });
-            });
-            getCountry('France').then((data) => {
-                setFranceData(data);
-            }).catch(() => {
-                enqueueSnackbar("Could not get France Weather data", { variant: 'error' });
-            });
-            getCountry('United States').then((data) => {
-                setAmericaData(data);
-            }).catch(() => {
-                enqueueSnackbar("Could not get America Weather data", { variant: 'error' });
-            });
-        } else {
-            getCountry('Greenland').then((data) => {
-                setGreenlandData(data);
-            }).catch(() => {
-                enqueueSnackbar("Could not get Greenland Weather data", { variant: 'error' });
-            });
-            getCountry('Norway').then((data) => {
-                setNorwayData(data);
-            }).catch(() => {
-                enqueueSnackbar("Could not get Norway Weather data", { variant: 'error' });
-            });
-            getCountry('Alaska').then((data) => {
-                setAlaskaData(data);
-            }).catch(() => {
-                enqueueSnackbar("Could not get Alaska Weather data", { variant: 'error' });
-            });
-            getCountry('Finland').then((data) => {
-                setFinlandData(data);
-            }).catch(() => {
-                enqueueSnackbar("Could not get Finland Weather data", { variant: 'error' });
-            });
-        }
+        const interval = setInterval(() => {
+            if (role === 'sales') {
+                getCountry('Spain').then((data) => {
+                    setSpainData(data);
+                }).catch(() => {
+                    enqueueSnackbar("Could not get Spain Weather data", { variant: 'error' });
+                });
+                getCountry('Mexico').then((data) => {
+                    setMexicoData(data);
+                }).catch(() => {
+                    enqueueSnackbar("Could not get Mexico Weather data", { variant: 'error' });
+                });
+                getCountry('France').then((data) => {
+                    setFranceData(data);
+                }).catch(() => {
+                    enqueueSnackbar("Could not get France Weather data", { variant: 'error' });
+                });
+                getCountry('United States').then((data) => {
+                    setAmericaData(data);
+                }).catch(() => {
+                    enqueueSnackbar("Could not get America Weather data", { variant: 'error' });
+                });
+            } else {
+                getCountry('Greenland').then((data) => {
+                    setGreenlandData(data);
+                }).catch(() => {
+                    enqueueSnackbar("Could not get Greenland Weather data", { variant: 'error' });
+                });
+                getCountry('Norway').then((data) => {
+                    setNorwayData(data);
+                }).catch(() => {
+                    enqueueSnackbar("Could not get Norway Weather data", { variant: 'error' });
+                });
+                getCountry('Alaska').then((data) => {
+                    setAlaskaData(data);
+                }).catch(() => {
+                    enqueueSnackbar("Could not get Alaska Weather data", { variant: 'error' });
+                });
+                getCountry('Finland').then((data) => {
+                    setFinlandData(data);
+                }).catch(() => {
+                    enqueueSnackbar("Could not get Finland Weather data", { variant: 'error' });
+                });
+            }
+        }, 60000);
+        return () => clearInterval(interval);
     }, [role]);
 
     const mexicoCalc = calculateAveragePerCountry(mexicoData);
     const franceCalc = calculateAveragePerCountry(franceData);
     const americaCalc = calculateAveragePerCountry(americaData);
     const spainCalc = calculateAveragePerCountry(spainData);
-    
+
     const greenlandCalc = calculateAveragePerCountry(greenlandData);
     const norwayCalc = calculateAveragePerCountry(norwayData);
     const alaskaCalc = calculateAveragePerCountry(alaskaData);
@@ -92,7 +95,7 @@ export const Home = () => {
     };
 
     const handleDownload = () => {
-        if(downloadData.length === 0){
+        if (downloadData.length === 0) {
             enqueueSnackbar("No data to download", { variant: 'error' });
             return;
         }
@@ -245,7 +248,7 @@ export const Home = () => {
                     <FormControlLabel value="csv" control={<Radio />} label="CSV" />
                 </RadioGroup>
             </CustomModal>
-            
+
         </Box>
     );
 };
