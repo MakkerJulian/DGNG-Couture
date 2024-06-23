@@ -1,5 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import {Clouds, Cloudy, Freezing, Sunny, Thunder, Tornado} from "../assets";
+import { Cloudy, Freezing, Sunny, Thunder, Tornado } from "../assets";
+import { Box, Button, Typography } from "@mui/material";
 import '../css/cityCard.css';
 import { useNavigate } from "react-router-dom";
 import * as Icons from "../icons";
@@ -7,24 +7,26 @@ import { WeatherData } from "../types/Weatherdata";
 
 type CityTabProps = {
     city: string;
-    temp: number;
     country: string;
     weatherData: WeatherData;
-    feelTemp: number;
+    onDownloadClick: () => void;
 }
 
-export const CityTab = ({ country, city, feelTemp, weatherData }: CityTabProps) => {
+export const CityTab = ({ country, city, weatherData, onDownloadClick }: CityTabProps) => {
     const navigate = useNavigate();
     let image = Sunny;
 
-    if (weatherData.clouds > 50) {
-        image = Cloudy;
-    } if (weatherData.freezing || weatherData.snow) {
-        image = Freezing;
-    } if (weatherData.thunder) {
-        image = Thunder;
-    } if (weatherData.tornado) {
+    if (weatherData.tornado) {
         image = Tornado;
+    }
+    else if (weatherData.thunder) {
+        image = Thunder;
+    }
+    else if (weatherData.freezing || weatherData.snow) {
+        image = Freezing;
+    }
+    else if (weatherData.clouds > 50) {
+        image = Cloudy;
     }
 
     return (
@@ -47,12 +49,16 @@ export const CityTab = ({ country, city, feelTemp, weatherData }: CityTabProps) 
                 </Box>
 
                 <Box className="cityCardTextInfo">
-                    <Typography>Feels like {feelTemp}</Typography>
                     <Typography>Wind {weatherData.windspeed}km/h</Typography>
                     <Typography>Precip {weatherData.precipitation}%</Typography>
+                    <Button variant="contained" onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                        e.stopPropagation();
+                        onDownloadClick();
+                    }}>
+                        Download Data
+                    </Button>
                 </Box>
             </Box>
         </button>
-
     );
 }
