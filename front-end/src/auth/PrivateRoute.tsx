@@ -1,8 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import { Token } from "../axios";
+import { useJwt } from "react-jwt";
+import { jwtDecode } from "jwt-decode";
 
 
 export type Route = {
@@ -26,12 +27,17 @@ const Layout = ({ children }: Props) => (
     </Box>
 );
 
-export const PrivateRoutes = ({route}: PrivateRoutesProps) => {
-    const authenticated = sessionStorage.getItem('token') !== null;
+export const PrivateRoutes = ({ route }: PrivateRoutesProps) => {
+    const token = sessionStorage.getItem('token') as string;
+    const decodedToken = jwtDecode(token) as Token;
+    const isExpired = useJwt(token).isExpired;
+    const backendID = import.meta.env.VITE_APP_BACKENDID as string;
+    const authenticated = token && !isExpired && decodedToken.appId === backendID;
 
-    const hasRoles = () =>{
-        if(route.requiredRoles){
-            const role = (jwtDecode(sessionStorage.getItem('token') ?? "") as unknown as Token).role;
+    const hasRoles = () => {
+        if (!decodedToken) return false;
+        if (route.requiredRoles) {
+            const role = (decodedToken as Token).role;
             return route.requiredRoles.includes(role);
         }
         return true;
@@ -41,7 +47,7 @@ export const PrivateRoutes = ({route}: PrivateRoutesProps) => {
         authenticated ? (
             hasRoles() ? (
                 <Layout><Outlet /></Layout>
-            ): (
+            ) : (
                 <Typography variant="h3">You do not have permission to access this page</Typography>
             )
         ) : <Navigate to="/" />

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, FormControlLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { WeatherData } from "../types/Weatherdata.ts";
 import { getCountry } from "../util/IWARequests.ts";
@@ -11,6 +11,8 @@ import '../css/city.css'
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import * as Icons from '../icons'
 import { DateGraph } from "../components/DateGraph.tsx";
+import { CustomModal } from "../components/customModal.tsx";
+import { convertToCSV } from "../util/CSVConverter.ts";
 
 export const City = () => {
     const queryParameters = new URLSearchParams(window.location.search);
@@ -105,7 +107,7 @@ export const City = () => {
             URL.revokeObjectURL(url);
         }
     }
-
+    
     const timeStamps = Array.from(timeData).map(time => new Date(time[0]));
     const temps = Array.from(timeData).map(data => data[1].temp);
     const windspeeds = Array.from(timeData).map(data => data[1].windspeed);
@@ -179,6 +181,30 @@ export const City = () => {
                     />
                 </Box>
             }
+            <CustomModal
+                title="Download Data"
+                open={open}
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    handleDownload();
+                    setOpen(false)
+                }}
+                setOpen={setOpen}
+                onSubmitText="Download"
+            >
+                <Typography>
+                    Select your desired format
+                </Typography>
+
+                <RadioGroup
+                    defaultValue="json"
+                    name="Format selector"
+                    onChange={(event) => setFormat(event.target.value)}
+                >
+                    <FormControlLabel value="json" control={<Radio />} label="Json" />
+                    <FormControlLabel value="csv" control={<Radio />} label="CSV" />
+                </RadioGroup>
+            </CustomModal>
         </Box >
     );
 }

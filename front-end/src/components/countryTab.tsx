@@ -1,34 +1,40 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { CloudIcon } from "../icons";
 import { useNavigate } from "react-router-dom";
-import '../css/countryCard.css'
+import '../css/countryCard.css';
 
 type CountryTabProps = {
     country: string;
     temp: number;
     bgImage: string;
-    feelTemp: number;
     wind: number;
     precip: number;
-}
-const CountryTab = ({ country, temp, bgImage, feelTemp, wind, precip }: CountryTabProps) => {
-    const navigate = useNavigate();
-    return (
-        <button onClick={() => navigate("/country?country=" + country)}>
-            <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }}>
-                <Box className="countryCardText">
-                    <Typography variant={'h2'}>{country}</Typography>
-                    <Typography variant="h4">{temp}°</Typography>
-                    <CloudIcon />
-                </Box>
+    onDownloadClick: () => void;
+};
 
-                <Box className="countryCardText Right">
-                    <Typography variant='h6'>Feels like {feelTemp}</Typography>
-                    <Typography variant="h6">Wind {wind}km/h</Typography>
-                    <Typography variant="h6">Precip {precip}%</Typography>
-                </Box>
+const CountryTab = ({ country, temp, bgImage, wind, precip, onDownloadClick }: CountryTabProps) => {
+    const navigate = useNavigate();
+
+    return (
+        <Box className="countryCard" sx={{ backgroundImage: `url(${bgImage})` }} onClick={() => navigate("/country?country=" + country)}>
+            <Box className="countryCardText">
+                <Typography variant={'h2'}>{country}</Typography>
+                <Typography variant="h4">{temp}°</Typography>
+                <CloudIcon />
             </Box>
-        </button>
-    )
-}
-export default CountryTab
+
+            <Box className="countryCardText Right">
+                <Typography variant="h6">Wind {wind}km/h</Typography>
+                <Typography variant="h6">Precip {precip}%</Typography>
+                <Button variant="contained" onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.stopPropagation();
+                    onDownloadClick();
+                }}>
+                    Download Data
+                </Button>
+            </Box>
+        </Box >
+    );
+};
+
+export default CountryTab;

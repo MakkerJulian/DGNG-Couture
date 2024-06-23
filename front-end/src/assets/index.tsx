@@ -16,7 +16,12 @@ import NorwayCountryBg from './NorwayCountryBg.png';
 import NorwayHomeBg from './NorwayHomeBg.png';
 import GreenlandHomeBg from './GreenlandHomeBg.png';
 import Clouds from './Clouds.png';
+import Sunny from './Sunny.jpg';
+import Cloudy from './Cloudy.jpg';
 import Zara from './zarashop.png';
+import Freezing from './Freezing.jpg';
+import Tornado from './Tornado.jpg';
+import Thunder from './Thunder.jpg';
 
 export {
     BG_Image,
@@ -38,4 +43,9 @@ export {
     NorwayHomeBg,
     GreenlandHomeBg,
     Clouds,
+    Sunny,
+    Cloudy,
+    Freezing,
+    Tornado,
+    Thunder
 };
