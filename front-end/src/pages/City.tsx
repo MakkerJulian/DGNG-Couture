@@ -130,7 +130,7 @@ export const City = () => {
             {timeStamps.length > 0 && <Box className={'countryGraphBox'}>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
-                        Average Temperature
+                        Temperature
                     </Typography>
                     <DateGraph
                         yAxisLabel={"Temperature"}
@@ -140,7 +140,7 @@ export const City = () => {
                 </Box>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
-                        Average Wind Speed
+                        Wind Speed
                     </Typography>
                     <DateGraph
                         yAxisLabel={"Wind speed"}
@@ -151,7 +151,7 @@ export const City = () => {
                 </Box>
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
-                        Average Precipitation
+                        Precipitation
                     </Typography>
                     <DateGraph
                         yAxisLabel={"Precipitation"}
@@ -162,7 +162,7 @@ export const City = () => {
 
                 <Box className={'countryGraphInclTitle'}>
                     <Typography variant="h4">
-                        Average Air Pressure
+                        Air Pressure
                     </Typography>
                     <DateGraph
                         yAxisLabel={"Air Pressure"}

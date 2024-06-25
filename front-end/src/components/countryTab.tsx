@@ -1,5 +1,4 @@
 import { Box, Button, Typography } from "@mui/material";
-import { CloudIcon } from "../icons";
 import { useNavigate } from "react-router-dom";
 import '../css/countryCard.css';
 
@@ -54,7 +53,6 @@ export const CountryTab = ({ country, temp, wind, precip, onDownloadClick }: Cou
             <Box className="countryCardText">
                 <Typography variant={'h2'}>{country}</Typography>
                 <Typography variant="h4">{temp}°</Typography>
-                <CloudIcon />
             </Box>
 
             <Box className="countryCardText Right">

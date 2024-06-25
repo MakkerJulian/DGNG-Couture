@@ -62,7 +62,7 @@ export const Country = () => {
         if (filters.condition !== "") {
             switch (filters.condition) {
                 case "Clouds":
-                    filtered = filtered.filter((data) => data[1].clouds);
+                    filtered = filtered.filter((data) => data[1].clouds > 50);
                     break;
                 case "Freezing":
                     filtered = filtered.filter((data) => data[1].freezing);

@@ -41,6 +41,7 @@ export const CustomModal = ({
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        zIndex: 4,
                         borderRadius: '10px',
                         border: "solid darkgray 2px",
                         '@media (max-width: 600px)': {

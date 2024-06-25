@@ -99,7 +99,7 @@ export const Home = () => {
             enqueueSnackbar("No data to download", { variant: 'error' });
             return;
         }
-        const country = downloadData[0].weatherstation.geolocation.country;
+        const country = downloadData[0].weatherstation.geolocation.country.name;
         const currentDate = new Date();
         const formattedDate = currentDate.toISOString().slice(0, 10); // Format as YYYY-MM-DD
 

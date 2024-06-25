@@ -18,7 +18,7 @@
 .backgroundImage{
     position: absolute;
     width: inherit;
-    height: 35vh;
+    height: inherit;
     object-fit: cover;
 }
 
